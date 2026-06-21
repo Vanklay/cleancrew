@@ -25,7 +25,8 @@ const labels = {
         <div id="monthLabel" class="font-semibold"></div>
         <button id="next" class="px-3 py-1 rounded-lg hover:bg-accent-soft text-ink-soft">→</button>
       </div>
-      <div id="grid" class="grid grid-cols-7 gap-1 text-center text-sm"></div>
+      <!-- min-h reserves the calendar's height so the client-rendered grid doesn't shift layout (CLS) -->
+      <div id="grid" class="grid grid-cols-7 gap-1 text-center text-sm min-h-72"></div>
       <p id="calNote" class="mt-4 text-xs text-mist"></p>
     </div>
 
