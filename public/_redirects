@@ -1,0 +1,27 @@
+# GarageCrew.lu → CleanCrew.lu  —  301 redirects (T2.3)
+# Preserve SEO from the old garage-clearance site after the rebrand.
+#
+# ⚠️ THESE ARE ASSUMPTIONS. Replace/extend the left-hand paths with the REAL
+# old GarageCrew URLs (check Search Console / the old sitemap) before relying on
+# them. New site is locale-prefixed; default locale is /fr. Unmatched paths fall
+# through to normal routing.
+
+# --- Unprefixed core pages → default locale (also catches no-locale visitors) ---
+/services            /fr/services            301
+/about               /fr/about               301
+/a-propos            /fr/about               301
+/contact             /fr/contact             301
+/book                /fr/book                301
+/blog                /fr/blog                301
+
+# --- Garage clearance was GarageCrew's lead service ---
+/garage-clearance    /fr/services/clearance  301
+/debarras            /fr/services/clearance  301
+/debarras-garage     /fr/services/clearance  301
+/prix                /fr/services/clearance  301
+
+# --- Other services (only if they existed on the old site) ---
+/window-cleaning     /fr/services/windows    301
+/nettoyage-vitres    /fr/services/windows    301
+/common-area-cleaning /fr/services/entrances 301
+/parties-communes    /fr/services/entrances  301
