@@ -17,12 +17,11 @@ const services = [
 ];
 const why = ['1','2','3','4'];
 
-// AEO/LLM answer block — concise Q&A that LLMs and featured snippets lift verbatim
+// AEO/LLM answer block — concise Q&A that LLMs and featured snippets lift verbatim.
+// Copy lives in ui.ts (one source of truth, all six locales).
 const faq = [
-  { q: lang==='fr' ? 'Combien coûte un débarras de garage au Luxembourg ?' : lang==='de' ? 'Was kostet eine Garagenentrümpelung in Luxemburg?' : 'How much does a garage clearance cost in Luxembourg?',
-    a: lang==='fr' ? 'Le prix dépend du volume, de l’accès et de l’étage. CleanCrew annonce un devis clair avant l’intervention, sans coûts cachés.' : lang==='de' ? 'Der Preis hängt von Volumen, Zugang und Stockwerk ab. CleanCrew nennt vor der Ausführung ein klares Angebot, ohne versteckte Kosten.' : 'The price depends on volume, access and floor. CleanCrew gives a clear quote before the visit, with no hidden costs.' },
-  { q: lang==='fr' ? 'Intervenez-vous partout au Luxembourg ?' : lang==='de' ? 'Sind Sie in ganz Luxemburg tätig?' : 'Do you operate across Luxembourg?',
-    a: lang==='fr' ? 'Oui. Basés à Strassen, nous intervenons dans tout le Grand-Duché, du nord au sud.' : lang==='de' ? 'Ja. Mit Sitz in Strassen sind wir im gesamten Großherzogtum tätig, von Nord bis Süd.' : 'Yes. Based in Strassen, we cover the whole Grand Duchy, north to south.' },
+  { q: t('faq.1.q'), a: t('faq.1.a') },
+  { q: t('faq.2.q'), a: t('faq.2.a') },
 ];
 
 const meta = {

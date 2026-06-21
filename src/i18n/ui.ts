@@ -39,6 +39,11 @@ const fr = {
   'why.4.t': 'Partout au Luxembourg',
   'why.4.d': 'Strassen et tout le Grand-Duché, du nord au sud.',
 
+  'faq.1.q': 'Combien coûte un débarras de garage au Luxembourg ?',
+  'faq.1.a': 'Le prix dépend du volume, de l’accès et de l’étage. CleanCrew annonce un devis clair avant l’intervention, sans coûts cachés.',
+  'faq.2.q': 'Intervenez-vous partout au Luxembourg ?',
+  'faq.2.a': 'Oui. Basés à Strassen, nous intervenons dans tout le Grand-Duché, du nord au sud.',
+
   'book.title': 'Réservez votre intervention',
   'book.sub': 'Choisissez un créneau. On confirme par email sous 24 h.',
   'book.name': 'Nom',
@@ -111,6 +116,11 @@ const de: FullDict = {
   'why.4.t': 'In ganz Luxemburg',
   'why.4.d': 'Strassen und das gesamte Großherzogtum, von Nord bis Süd.',
 
+  'faq.1.q': 'Was kostet eine Garagenentrümpelung in Luxemburg?',
+  'faq.1.a': 'Der Preis hängt von Volumen, Zugang und Stockwerk ab. CleanCrew nennt vor der Ausführung ein klares Angebot, ohne versteckte Kosten.',
+  'faq.2.q': 'Sind Sie in ganz Luxemburg tätig?',
+  'faq.2.a': 'Ja. Mit Sitz in Strassen sind wir im gesamten Großherzogtum tätig, von Nord bis Süd.',
+
   'book.title': 'Buchen Sie Ihren Termin',
   'book.sub': 'Wählen Sie einen Termin. Bestätigung per E-Mail innerhalb von 24 Std.',
   'book.name': 'Name',
@@ -175,6 +185,11 @@ const en: FullDict = {
   'why.3.d': 'A rare execution speed, never at the cost of detail.',
   'why.4.t': 'Across Luxembourg',
   'why.4.d': 'Strassen and the whole Grand Duchy, north to south.',
+
+  'faq.1.q': 'How much does a garage clearance cost in Luxembourg?',
+  'faq.1.a': 'The price depends on volume, access and floor. CleanCrew gives a clear quote before the visit, with no hidden costs.',
+  'faq.2.q': 'Do you operate across Luxembourg?',
+  'faq.2.a': 'Yes. Based in Strassen, we cover the whole Grand Duchy, north to south.',
 
   'book.title': 'Book your visit',
   'book.sub': 'Pick a slot. We confirm by email within 24 h.',
@@ -244,6 +259,11 @@ const lu: PartialDict = {
   'why.4.t': 'Am ganze Land',
   'why.4.d': 'Stroossen an dat ganzt Groussherzogtum, vun Norden bis Süden.',
 
+  'faq.1.q': 'Wat kascht eng Garagenentrëmpelung zu Lëtzebuerg?',
+  'faq.1.a': 'De Präis hänkt vum Volume, vum Zougang a vum Stack of. CleanCrew nennt virum Asaz e kloren Devis, ouni verstoppte Käschten.',
+  'faq.2.q': 'Schafft Dir am ganze Land?',
+  'faq.2.a': 'Jo. Mat Sëtz zu Stroossen schaffe mir am ganze Groussherzogtum, vun Norden bis Süden.',
+
   'book.title': 'Buchen Ären Asaz',
   'book.sub': 'Wielt en Termin. Mir confirméieren per Email bannent 24 Stonnen.',
   'book.name': 'Numm',
@@ -309,6 +329,11 @@ const pt: PartialDict = {
   'why.4.t': 'Em todo o Luxemburgo',
   'why.4.d': 'Strassen e todo o Grão-Ducado, de norte a sul.',
 
+  'faq.1.q': 'Quanto custa o esvaziamento de uma garagem no Luxemburgo?',
+  'faq.1.a': 'O preço depende do volume, do acesso e do andar. A CleanCrew apresenta um orçamento claro antes da intervenção, sem custos escondidos.',
+  'faq.2.q': 'Intervêm em todo o Luxemburgo?',
+  'faq.2.a': 'Sim. Sediados em Strassen, intervimos em todo o Grão-Ducado, de norte a sul.',
+
   'book.title': 'Reserve a sua intervenção',
   'book.sub': 'Escolha um horário. Confirmamos por email em 24 h.',
   'book.name': 'Nome',
@@ -373,6 +398,11 @@ const es: PartialDict = {
   'why.3.d': 'Una rapidez de ejecución poco común, sin sacrificar nunca el detalle.',
   'why.4.t': 'En todo Luxemburgo',
   'why.4.d': 'Strassen y todo el Gran Ducado, de norte a sur.',
+
+  'faq.1.q': '¿Cuánto cuesta el vaciado de un garaje en Luxemburgo?',
+  'faq.1.a': 'El precio depende del volumen, el acceso y la planta. CleanCrew ofrece un presupuesto claro antes de la intervención, sin costes ocultos.',
+  'faq.2.q': '¿Trabajáis en todo Luxemburgo?',
+  'faq.2.a': 'Sí. Con sede en Strassen, intervenimos en todo el Gran Ducado, de norte a sur.',
 
   'book.title': 'Reserva tu intervención',
   'book.sub': 'Elige una franja. Confirmamos por email en 24 h.',
