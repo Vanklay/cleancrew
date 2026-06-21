@@ -1,0 +1,84 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { LANG_KEYS, localizedPath, type Lang } from '../../i18n/config';
+import { useTranslations } from '../../i18n/ui';
+
+export function getStaticPaths() {
+  return LANG_KEYS.map((lang) => ({ params: { lang } }));
+}
+const lang = Astro.params.lang as Lang;
+const t = useTranslations(lang);
+const p = (s: string) => localizedPath(lang, s);
+
+const services = [
+  { key: 'clearance', href: p('services') + '#clearance' },
+  { key: 'windows',   href: p('services') + '#windows' },
+  { key: 'entrances', href: p('services') + '#entrances' },
+];
+const why = ['1','2','3','4'];
+
+// AEO/LLM answer block — concise Q&A that LLMs and featured snippets lift verbatim
+const faq = [
+  { q: lang==='fr' ? 'Combien coûte un débarras de garage au Luxembourg ?' : lang==='de' ? 'Was kostet eine Garagenentrümpelung in Luxemburg?' : 'How much does a garage clearance cost in Luxembourg?',
+    a: lang==='fr' ? 'Le prix dépend du volume, de l’accès et de l’étage. CleanCrew annonce un devis clair avant l’intervention, sans coûts cachés.' : lang==='de' ? 'Der Preis hängt von Volumen, Zugang und Stockwerk ab. CleanCrew nennt vor der Ausführung ein klares Angebot, ohne versteckte Kosten.' : 'The price depends on volume, access and floor. CleanCrew gives a clear quote before the visit, with no hidden costs.' },
+  { q: lang==='fr' ? 'Intervenez-vous partout au Luxembourg ?' : lang==='de' ? 'Sind Sie in ganz Luxemburg tätig?' : 'Do you operate across Luxembourg?',
+    a: lang==='fr' ? 'Oui. Basés à Strassen, nous intervenons dans tout le Grand-Duché, du nord au sud.' : lang==='de' ? 'Ja. Mit Sitz in Strassen sind wir im gesamten Großherzogtum tätig, von Nord bis Süd.' : 'Yes. Based in Strassen, we cover the whole Grand Duchy, north to south.' },
+];
+
+const meta = {
+  fr: { title: 'CleanCrew · Débarras de garage & nettoyage au Luxembourg', desc: 'Débarras de garages, caves et greniers, puis nettoyage de vitres et parties communes. Devis clair, équipe rapide, partout au Luxembourg.' },
+  de: { title: 'CleanCrew · Garagenentrümpelung & Reinigung in Luxemburg', desc: 'Entrümpelung von Garagen, Kellern und Dachböden, dann Fenster- und Gemeinschaftsreinigung. Klares Angebot, schnelles Team, in ganz Luxemburg.' },
+  en: { title: 'CleanCrew · Garage clearance & cleaning in Luxembourg', desc: 'Garage, cellar and attic clearance, then window and common-area cleaning. Clear quote, fast crew, anywhere in Luxembourg.' },
+  lu: { title: 'CleanCrew · Garagen entrëmpelen & botzen zu Lëtzebuerg', desc: 'Entrëmpelung vu Garagen, Kelleren a Späicheren, duerno Fënster- a Gemeinschaftsbotzen. Klore Devis, séiert Team, am ganze Land.' },
+  pt: { title: 'CleanCrew · Esvaziamento de garagens & limpeza no Luxemburgo', desc: 'Esvaziamento de garagens, caves e sótãos, depois limpeza de vidros e zonas comuns. Orçamento claro, equipa rápida, em todo o Luxemburgo.' },
+  es: { title: 'CleanCrew · Vaciado de garajes & limpieza en Luxemburgo', desc: 'Vaciado de garajes, sótanos y desvanes, luego limpieza de cristales y zonas comunes. Presupuesto claro, equipo rápido, en todo Luxemburgo.' },
+}[lang];
+---
+<Layout lang={lang} title={meta.title} description={meta.desc} faq={faq}>
+  <!-- HERO: clearance-led -->
+  <section class="container-x pt-24 pb-20 md:pt-36 md:pb-28">
+    <p class="fade-up text-sm tracking-wider uppercase text-accent mb-6">{t('hero.kicker')}</p>
+    <h1 class="fade-up headline text-5xl md:text-8xl font-semibold max-w-4xl">
+      {t('hero.title')}<br /><span class="text-mist">{t('hero.title2')}</span>
+    </h1>
+    <p class="fade-up mt-8 text-lg md:text-xl text-ink-soft max-w-2xl leading-relaxed">{t('hero.sub')}</p>
+    <div class="fade-up mt-10 flex flex-wrap gap-4">
+      <a href={p('book')} class="btn">{t('hero.cta')}</a>
+      <a href={p('services')} class="btn-ghost">{t('hero.cta2')}</a>
+    </div>
+  </section>
+
+  <!-- SERVICES: three equal -->
+  <section class="container-x py-20 border-t border-line">
+    <h2 class="headline text-3xl md:text-5xl font-semibold mb-14 max-w-2xl">{t('services.title')}</h2>
+    <div class="grid gap-px bg-line rounded-2xl overflow-hidden md:grid-cols-3">
+      {services.map((s) => (
+        <a href={s.href} class="group bg-paper p-8 md:p-10 hover:bg-white transition-colors">
+          <h3 class="text-xl font-semibold mb-3">{t(`services.${s.key}.title`)}</h3>
+          <p class="text-ink-soft leading-relaxed text-[15px]">{t(`services.${s.key}.desc`)}</p>
+          <span class="mt-6 inline-block text-sm text-accent group-hover:translate-x-1 transition-transform">{t('services.learn')} →</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- WHY -->
+  <section class="container-x py-20 border-t border-line">
+    <h2 class="headline text-3xl md:text-5xl font-semibold mb-14">{t('why.title')}</h2>
+    <div class="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
+      {why.map((n) => (
+        <div>
+          <div class="text-accent text-sm font-mono mb-3">0{n}</div>
+          <h3 class="font-semibold mb-2">{t(`why.${n}.t`)}</h3>
+          <p class="text-ink-soft text-[15px] leading-relaxed">{t(`why.${n}.d`)}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="container-x py-24 border-t border-line text-center">
+    <h2 class="headline text-4xl md:text-6xl font-semibold mb-8">{t('book.title')}</h2>
+    <a href={p('book')} class="btn">{t('hero.cta')}</a>
+  </section>
+</Layout>

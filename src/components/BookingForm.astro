@@ -1,0 +1,110 @@
+---
+import { type Lang } from '../i18n/config';
+import { useTranslations, useRaw } from '../i18n/ui';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const r = useRaw(lang);
+
+// Labels for the client island — built from ui.ts, never hardcoded in the script.
+const labels = {
+  success: t('book.success'),
+  error: t('book.error'),
+  available: t('book.calendar.available'),
+  none: t('book.calendar.none'),
+  months: r('book.calendar.months') as string[],
+  days: r('book.calendar.days') as string[],
+};
+---
+<div id="booking" class="max-w-2xl mx-auto" data-lang={lang}>
+  <script type="application/json" id="bookingLabels" set:html={JSON.stringify(labels)} />
+  <div class="grid gap-5">
+    <div id="cal" class="rounded-2xl border border-line bg-white p-6">
+      <div class="flex items-center justify-between mb-4">
+        <button id="prev" class="px-3 py-1 rounded-lg hover:bg-accent-soft text-ink-soft">←</button>
+        <div id="monthLabel" class="font-semibold"></div>
+        <button id="next" class="px-3 py-1 rounded-lg hover:bg-accent-soft text-ink-soft">→</button>
+      </div>
+      <div id="grid" class="grid grid-cols-7 gap-1 text-center text-sm"></div>
+      <p id="calNote" class="mt-4 text-xs text-mist"></p>
+    </div>
+
+    <div class="grid sm:grid-cols-2 gap-4">
+      <label class="text-sm">{t('book.name')}<input id="f_name" class="mt-1 w-full rounded-lg border border-line px-3 py-2.5" required /></label>
+      <label class="text-sm">{t('book.email')}<input id="f_email" type="email" class="mt-1 w-full rounded-lg border border-line px-3 py-2.5" required /></label>
+      <label class="text-sm">{t('book.phone')}<input id="f_phone" class="mt-1 w-full rounded-lg border border-line px-3 py-2.5" /></label>
+      <label class="text-sm">{t('book.service')}
+        <select id="f_service" class="mt-1 w-full rounded-lg border border-line px-3 py-2.5 bg-white">
+          <option value="clearance">{t('services.clearance.title')}</option>
+          <option value="windows">{t('services.windows.title')}</option>
+          <option value="entrances">{t('services.entrances.title')}</option>
+        </select>
+      </label>
+    </div>
+    <label class="text-sm">{t('book.date')}<input id="f_date" type="date" class="mt-1 w-full rounded-lg border border-line px-3 py-2.5" required /></label>
+    <label class="text-sm">{t('book.message')}<textarea id="f_message" rows="3" class="mt-1 w-full rounded-lg border border-line px-3 py-2.5"></textarea></label>
+    <button id="submitBtn" class="btn">{t('book.submit')}</button>
+    <p id="formMsg" class="text-sm"></p>
+  </div>
+</div>
+
+<script>
+  import { supabase } from '../lib/supabase';
+  const root = document.getElementById('booking')!;
+  const lang = root.dataset.lang || 'fr';
+  const S = JSON.parse(document.getElementById('bookingLabels')!.textContent || '{}') as {
+    success:string; error:string; available:string; none:string; months:string[]; days:string[];
+  };
+
+  let view = new Date(); view.setDate(1);
+  let availableDates = new Set<string>();
+
+  async function loadSlots() {
+    if (!supabase) return;
+    const { data } = await supabase.from('available_slots').select('slot_date');
+    if (data) availableDates = new Set(data.map((r:any)=>r.slot_date));
+    render();
+  }
+  function iso(d:Date){ return d.toISOString().slice(0,10); }
+  function render() {
+    document.getElementById('monthLabel')!.textContent = `${S.months[view.getMonth()]} ${view.getFullYear()}`;
+    document.getElementById('calNote')!.textContent = availableDates.size ? S.available : S.none;
+    const grid = document.getElementById('grid')!; grid.innerHTML='';
+    S.days.forEach(d=>{ const e=document.createElement('div'); e.className='text-mist text-xs py-1'; e.textContent=d; grid.appendChild(e); });
+    const first=(new Date(view.getFullYear(),view.getMonth(),1).getDay()+6)%7;
+    for(let i=0;i<first;i++) grid.appendChild(document.createElement('div'));
+    const days=new Date(view.getFullYear(),view.getMonth()+1,0).getDate();
+    const today=iso(new Date());
+    for(let d=1;d<=days;d++){
+      const date=new Date(view.getFullYear(),view.getMonth(),d); const k=iso(date);
+      const btn=document.createElement('button');
+      const has=availableDates.has(k); const past=k<today;
+      btn.textContent=String(d);
+      btn.className=`py-2 rounded-lg text-sm ${past?'text-line cursor-not-allowed':has?'bg-accent-soft text-accent font-medium hover:bg-accent hover:text-white':'text-ink-soft hover:bg-paper'}`;
+      if(!past) btn.onclick=()=>{ (document.getElementById('f_date') as HTMLInputElement).value=k; document.querySelectorAll('#grid button').forEach(b=>b.classList.remove('ring-2','ring-accent')); btn.classList.add('ring-2','ring-accent'); };
+      grid.appendChild(btn);
+    }
+  }
+  document.getElementById('prev')!.onclick=()=>{ view.setMonth(view.getMonth()-1); render(); };
+  document.getElementById('next')!.onclick=()=>{ view.setMonth(view.getMonth()+1); render(); };
+
+  document.getElementById('submitBtn')!.addEventListener('click', async ()=>{
+    const msg=document.getElementById('formMsg')!;
+    const payload={
+      name:(document.getElementById('f_name') as HTMLInputElement).value.trim(),
+      email:(document.getElementById('f_email') as HTMLInputElement).value.trim(),
+      phone:(document.getElementById('f_phone') as HTMLInputElement).value.trim(),
+      service:(document.getElementById('f_service') as HTMLSelectElement).value,
+      req_date:(document.getElementById('f_date') as HTMLInputElement).value,
+      message:(document.getElementById('f_message') as HTMLTextAreaElement).value.trim(),
+      lang,
+    };
+    if(!payload.name||!payload.email||!payload.req_date){ msg.className='text-sm text-red-600'; msg.textContent=S.error; return; }
+    if(!supabase){ msg.className='text-sm text-accent'; msg.textContent=S.success; return; }
+    const { error }=await supabase.from('bookings').insert(payload);
+    msg.className=`text-sm ${error?'text-red-600':'text-accent'}`;
+    msg.textContent=error?S.error:S.success;
+  });
+
+  loadSlots(); render();
+</script>

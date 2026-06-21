@@ -1,0 +1,71 @@
+---
+import { LANGUAGES, LANG_KEYS, SITE, type Lang } from '../i18n/config';
+
+interface Props {
+  lang: Lang;
+  title: string;
+  description: string;
+  path?: string;        // path WITHOUT lang prefix, e.g. 'services'
+  type?: 'website' | 'article';
+  faq?: { q: string; a: string }[];
+}
+const { lang, title, description, path = '', type = 'website', faq } = Astro.props;
+
+const clean = path.replace(/^\/+|\/+$/g, '');
+const sub = clean ? '/' + clean : '';
+const canonical = `${SITE.domain}/${lang}${sub}`;
+const og = LANGUAGES[lang].locale.replace('-', '_');
+
+// hreflang alternates for every locale + x-default
+const alternates = LANG_KEYS.map((l) => ({ l, href: `${SITE.domain}/${l}${sub}` }));
+
+// LocalBusiness schema — the spine of GEO/local SEO
+const localBusiness = {
+  '@context': 'https://schema.org',
+  '@type': 'CleaningBusiness',
+  '@id': `${SITE.domain}/#business`,
+  name: SITE.name,
+  url: SITE.domain,
+  email: SITE.email,
+  telephone: SITE.phone,
+  description,
+  areaServed: { '@type': 'Country', name: 'Luxembourg' },
+  address: { '@type': 'PostalAddress', addressLocality: SITE.city, addressCountry: SITE.country },
+  geo: { '@type': 'GeoCoordinates', latitude: SITE.geo.lat, longitude: SITE.geo.lng },
+  knowsLanguage: ['fr', 'de', 'en', 'lb', 'pt', 'es'],
+  makesOffer: [
+    { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Garage clearance', serviceType: 'Garage, cellar and attic clearance' } },
+    { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Window cleaning', serviceType: 'Residential and commercial window cleaning' } },
+    { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Common-area cleaning', serviceType: 'Building entrance and stairwell cleaning' } },
+  ],
+};
+
+const faqSchema = faq && faq.length ? {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faq.map((f) => ({
+    '@type': 'Question', name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+} : null;
+---
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+<meta name="robots" content="index,follow,max-image-preview:large" />
+
+{alternates.map((a) => (
+  <link rel="alternate" hreflang={LANGUAGES[a.l].locale} href={a.href} />
+))}
+<link rel="alternate" hreflang="x-default" href={`${SITE.domain}/fr${sub}`} />
+
+<meta property="og:type" content={type} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:locale" content={og} />
+<meta property="og:site_name" content={SITE.name} />
+<meta name="twitter:card" content="summary_large_image" />
+
+<script type="application/ld+json" set:html={JSON.stringify(localBusiness)} />
+{faqSchema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />}

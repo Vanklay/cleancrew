@@ -1,0 +1,15 @@
+---
+import { langStaticPaths } from '../../lib/paths';
+import Layout from '../../layouts/Layout.astro';
+import { type Lang } from '../../i18n/config';
+import { useTranslations } from '../../i18n/ui';
+export const getStaticPaths = langStaticPaths;
+const lang = Astro.params.lang as Lang;
+const t = useTranslations(lang);
+---
+<Layout lang={lang} path="about" title={`${t('about.title')} · CleanCrew`} description={t('about.body')}>
+  <section class="container-x py-20 md:py-28 max-w-3xl">
+    <h1 class="headline text-4xl md:text-6xl font-semibold mb-10">{t('about.title')}</h1>
+    <p class="text-xl text-ink-soft leading-relaxed">{t('about.body')}</p>
+  </section>
+</Layout>

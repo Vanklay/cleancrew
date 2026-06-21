@@ -1,0 +1,17 @@
+---
+import { langStaticPaths } from '../../lib/paths';
+import Layout from '../../layouts/Layout.astro';
+import BookingForm from '../../components/BookingForm.astro';
+import { type Lang } from '../../i18n/config';
+import { useTranslations } from '../../i18n/ui';
+export const getStaticPaths = langStaticPaths;
+const lang = Astro.params.lang as Lang;
+const t = useTranslations(lang);
+---
+<Layout lang={lang} path="book" title={`${t('book.title')} · CleanCrew`} description={t('book.sub')}>
+  <section class="container-x py-20 md:py-28">
+    <h1 class="headline text-4xl md:text-6xl font-semibold mb-4">{t('book.title')}</h1>
+    <p class="text-lg text-ink-soft mb-12 max-w-xl">{t('book.sub')}</p>
+    <BookingForm lang={lang} />
+  </section>
+</Layout>

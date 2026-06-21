@@ -1,0 +1,33 @@
+---
+import '../styles/global.css';
+import Seo from '../components/Seo.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import { LANGUAGES, type Lang } from '../i18n/config';
+
+interface Props {
+  lang: Lang;
+  title: string;
+  description: string;
+  path?: string;
+  type?: 'website' | 'article';
+  faq?: { q: string; a: string }[];
+}
+const { lang, title, description, path, type, faq } = Astro.props;
+---
+<!doctype html>
+<html lang={LANGUAGES[lang].locale} dir={LANGUAGES[lang].dir}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://rsms.me/" />
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+    <Seo lang={lang} title={title} description={description} path={path} type={type} faq={faq} />
+  </head>
+  <body>
+    <Nav />
+    <main><slot /></main>
+    <Footer />
+  </body>
+</html>

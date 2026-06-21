@@ -1,0 +1,40 @@
+---
+import { LANGUAGES, LANG_KEYS, getLangFromUrl, localizedPath, type Lang } from '../i18n/config';
+import { useTranslations } from '../i18n/ui';
+import Logo from './Logo.astro';
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const p = (s: string) => localizedPath(lang, s);
+
+// build current path without lang prefix for the switcher
+const seg = Astro.url.pathname.split('/').filter(Boolean);
+const rest = LANG_KEYS.includes(seg[0] as Lang) ? seg.slice(1).join('/') : seg.join('/');
+---
+<header class="sticky top-0 z-50 border-b border-line/70 bg-paper/80 backdrop-blur-xl">
+  <nav class="container-x flex items-center justify-between h-16">
+    <a href={p('')} class="text-ink hover:text-accent transition-colors" aria-label="CleanCrew">
+      <Logo variant="full" class="h-7 w-auto" />
+    </a>
+    <div class="hidden md:flex items-center gap-8 text-sm text-ink-soft">
+      <a href={p('services')} class="hover:text-ink transition">{t('nav.services')}</a>
+      <a href={p('about')} class="hover:text-ink transition">{t('nav.about')}</a>
+      <a href={p('blog')} class="hover:text-ink transition">{t('nav.blog')}</a>
+      <a href={p('contact')} class="hover:text-ink transition">{t('nav.contact')}</a>
+    </div>
+    <div class="flex items-center gap-3">
+      <details class="relative group">
+        <summary class="list-none cursor-pointer text-sm text-ink-soft hover:text-ink select-none">
+          {LANGUAGES[lang].flag} {lang.toUpperCase()}
+        </summary>
+        <div class="absolute right-0 mt-2 w-44 rounded-xl border border-line bg-white shadow-soft p-1">
+          {LANG_KEYS.map((l) => (
+            <a href={`/${l}${rest ? '/' + rest : ''}`} class={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm hover:bg-accent-soft ${l===lang?'text-accent font-medium':'text-ink-soft'}`}>
+              <span>{LANGUAGES[l].flag}</span>{LANGUAGES[l].label}
+            </a>
+          ))}
+        </div>
+      </details>
+      <a href={p('book')} class="rounded-full bg-ink text-white text-sm px-5 py-2 hover:bg-accent transition-colors">{t('nav.book')}</a>
+    </div>
+  </nav>
+</header>
