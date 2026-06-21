@@ -12,3 +12,6 @@ dist/
 
 # os / editor
 .DS_Store
+
+# Local Netlify folder
+.netlify

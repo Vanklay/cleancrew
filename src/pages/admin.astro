@@ -1,0 +1,91 @@
+---
+// Internal bookings view. Server-rendered on demand (never static), gated by
+// HTTP Basic Auth, reads with the service-role key. Not part of the localized
+// public site, so labels are plain English and live inline by design.
+export const prerender = false;
+
+import { getSecret } from 'astro:env/server';
+import '../styles/global.css';
+import { supabaseAdmin } from '../lib/supabase-admin';
+
+// getSecret reads at runtime (never inlined into the bundle), so the values
+// come from the deploy environment (Netlify), not the build.
+const AUTH_USER = getSecret('ADMIN_USER');
+const AUTH_PASS = getSecret('ADMIN_PASSWORD');
+
+// Fail closed: without configured credentials, the page is unreachable.
+if (!AUTH_USER || !AUTH_PASS) {
+  return new Response('Admin not configured.', { status: 503 });
+}
+
+const expected = 'Basic ' + btoa(`${AUTH_USER}:${AUTH_PASS}`);
+const provided = Astro.request.headers.get('authorization') ?? '';
+if (provided !== expected) {
+  return new Response('Authentication required.', {
+    status: 401,
+    headers: { 'WWW-Authenticate': 'Basic realm="CleanCrew admin"' },
+  });
+}
+
+const { data: bookings, error } = supabaseAdmin
+  ? await supabaseAdmin
+      .from('bookings')
+      .select('id, created_at, status, service, req_date, name, email, phone, message, lang')
+      .order('created_at', { ascending: false })
+  : { data: null, error: null };
+
+const fmt = (ts: string | null) => (ts ? new Date(ts).toLocaleString('fr-LU') : '—');
+const cols = ['Received', 'Status', 'Service', 'Requested', 'Name', 'Email', 'Phone', 'Lang', 'Message'];
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>Bookings · CleanCrew admin</title>
+  </head>
+  <body>
+    <section class="container-x py-12">
+      <header class="flex items-baseline justify-between mb-8">
+        <h1 class="headline text-3xl font-semibold">Bookings</h1>
+        <span class="text-sm text-mist">{bookings?.length ?? 0} total</span>
+      </header>
+
+      {!supabaseAdmin && (
+        <p class="card text-ink-soft">Supabase service credentials are not set — no data to show.</p>
+      )}
+      {error && (
+        <p class="card text-red-600">Error loading bookings: {error.message}</p>
+      )}
+      {supabaseAdmin && !error && bookings && bookings.length === 0 && (
+        <p class="card text-ink-soft">No bookings yet.</p>
+      )}
+
+      {bookings && bookings.length > 0 && (
+        <div class="overflow-x-auto rounded-2xl border border-line">
+          <table class="w-full text-sm text-left">
+            <thead class="bg-paper text-mist text-xs uppercase tracking-wider">
+              <tr>{cols.map((c) => <th class="px-4 py-3 font-medium whitespace-nowrap">{c}</th>)}</tr>
+            </thead>
+            <tbody>
+              {bookings.map((b) => (
+                <tr class="border-t border-line align-top hover:bg-paper">
+                  <td class="px-4 py-3 whitespace-nowrap text-ink-soft">{fmt(b.created_at)}</td>
+                  <td class="px-4 py-3 whitespace-nowrap">{b.status}</td>
+                  <td class="px-4 py-3 whitespace-nowrap">{b.service}</td>
+                  <td class="px-4 py-3 whitespace-nowrap text-ink-soft">{b.req_date}</td>
+                  <td class="px-4 py-3 whitespace-nowrap">{b.name}</td>
+                  <td class="px-4 py-3 whitespace-nowrap"><a class="text-accent hover:underline" href={`mailto:${b.email}`}>{b.email}</a></td>
+                  <td class="px-4 py-3 whitespace-nowrap text-ink-soft">{b.phone || '—'}</td>
+                  <td class="px-4 py-3 whitespace-nowrap text-mist uppercase">{b.lang}</td>
+                  <td class="px-4 py-3 max-w-xs text-ink-soft">{b.message || '—'}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </section>
+  </body>
+</html>

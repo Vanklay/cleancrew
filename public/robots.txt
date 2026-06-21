@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
+Disallow: /admin
 Sitemap: https://cleancrew.lu/sitemap-index.xml
