@@ -12,8 +12,8 @@ const rest = LANG_KEYS.includes(seg[0] as Lang) ? seg.slice(1).join('/') : seg.j
 ---
 <header class="sticky top-0 z-50 border-b border-line/70 bg-paper/80 backdrop-blur-xl">
   <nav class="container-x flex items-center justify-between h-16">
-    <a href={p('')} class="text-ink hover:text-accent transition-colors" aria-label="CleanCrew">
-      <Logo variant="full" class="h-7 w-auto" />
+    <a href={p('')} class="transition-opacity hover:opacity-70" aria-label="CleanCrew">
+      <Logo variant="full" class="h-9 w-auto" />
     </a>
     <div class="hidden md:flex items-center gap-8 text-sm text-ink-soft">
       <a href={p('services')} class="hover:text-ink transition">{t('nav.services')}</a>
