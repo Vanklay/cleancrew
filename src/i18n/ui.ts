@@ -74,6 +74,28 @@ const fr = {
   'blog.title': 'Le journal',
   'blog.sub': 'Conseils débarras, entretien et organisation de l’espace.',
   'blog.readmore': 'Lire',
+
+  // per-service landing pages (T2.1)
+  'faq.title': 'Questions fréquentes',
+  'service.included': 'Ce qui est inclus',
+  'service.clearance.lead': 'Garages, caves et greniers vidés en une seule intervention — triés, évacués et recyclés. Vous récupérez l’espace le jour même.',
+  'service.clearance.points': ['Débarras complet en une visite, du meuble au bric-à-brac', 'Tri sur place : don, recyclage, déchetterie', 'Espace rendu propre et balayé'],
+  'service.clearance.faq.1.q': 'Combien coûte un débarras de garage ?',
+  'service.clearance.faq.1.a': 'Cela dépend du volume, de l’accès et de l’étage. Nous donnons un devis clair et ferme avant de commencer, sans coûts cachés.',
+  'service.clearance.faq.2.q': 'Évacuez-vous tout le jour même ?',
+  'service.clearance.faq.2.a': 'Dans la plupart des cas, oui. Un garage ou une cave standard est vidé et évacué en une seule intervention.',
+  'service.windows.lead': 'Vitres, baies et vérandas sans traces — en ponctuel ou en abonnement qui garde le verre clair toute l’année.',
+  'service.windows.points': ['Verre sans traces, intérieur et extérieur', 'Cadres et rebords essuyés également', 'Ponctuel ou récurrent — de l’hebdomadaire au saisonnier'],
+  'service.windows.faq.1.q': 'Nettoyez-vous les vitres en étage ?',
+  'service.windows.faq.1.a': 'Oui. Nous utilisons des perches télescopiques et le matériel d’accès adapté pour atteindre les vitres en hauteur et les vérandas en toute sécurité.',
+  'service.windows.faq.2.q': 'L’abonnement est-il moins cher que le ponctuel ?',
+  'service.windows.faq.2.a': 'Par passage, oui. Un rythme régulier évite que le verre ne s’encrasse, donc chaque nettoyage est plus rapide et moins cher.',
+  'service.entrances.lead': 'Halls, entrées et cages d’escalier d’immeubles entretenus selon un planning fixe — propreté constante pour copropriétés et résidences.',
+  'service.entrances.points': ['Sols, escaliers et rampes nettoyés à chaque passage', 'Vitres d’entrée et portes d’ascenseur essuyées', 'Planning fixe, même équipe à chaque fois'],
+  'service.entrances.faq.1.q': 'À quelle fréquence nettoyez-vous les parties communes ?',
+  'service.entrances.faq.1.a': 'Selon un rythme adapté à l’immeuble — l’hebdomadaire est le plus courant, mais nous fixons la cadence avec la copropriété.',
+  'service.entrances.faq.2.q': 'Intervenez-vous dans les grandes résidences ?',
+  'service.entrances.faq.2.a': 'Oui. D’une entrée unique aux résidences multi-blocs, la même équipe maintient un niveau constant.',
 } satisfies Record<string, Value>;
 
 /** Every translation key on the site, derived from the canonical `fr` dictionary. */
@@ -151,6 +173,28 @@ const de: FullDict = {
   'blog.title': 'Das Journal',
   'blog.sub': 'Tipps zu Entrümpelung, Pflege und Raumorganisation.',
   'blog.readmore': 'Lesen',
+
+  // per-service landing pages (T2.1)
+  'faq.title': 'Häufige Fragen',
+  'service.included': 'Was enthalten ist',
+  'service.clearance.lead': 'Garagen, Keller und Dachböden in einem Durchgang geräumt — sortiert, abtransportiert und recycelt. Sie gewinnen den Platz noch am selben Tag zurück.',
+  'service.clearance.points': ['Komplette Räumung in einem Termin, vom Möbel bis zum Krimskrams', 'Sortierung vor Ort: spenden, recyceln, entsorgen', 'Sauber gekehrter Raum zurückgegeben'],
+  'service.clearance.faq.1.q': 'Was kostet eine Garagenentrümpelung?',
+  'service.clearance.faq.1.a': 'Das hängt von Volumen, Zugang und Stockwerk ab. Wir nennen vor Beginn ein klares Festangebot, ohne versteckte Kosten.',
+  'service.clearance.faq.2.q': 'Transportieren Sie alles am selben Tag ab?',
+  'service.clearance.faq.2.a': 'In den meisten Fällen ja. Eine normale Garage oder ein Keller wird in einem Termin geräumt und abtransportiert.',
+  'service.windows.lead': 'Fenster, Fronten und Wintergärten streifenfrei — einmalig oder im Abo, das das Glas das ganze Jahr klar hält.',
+  'service.windows.points': ['Streifenfreies Glas, innen und außen', 'Rahmen und Fensterbänke ebenfalls gewischt', 'Einmalig oder wiederkehrend — wöchentlich bis saisonal'],
+  'service.windows.faq.1.q': 'Reinigen Sie auch Fenster in oberen Stockwerken?',
+  'service.windows.faq.1.a': 'Ja. Mit Teleskopstangen und passender Zugangstechnik erreichen wir Fenster in der Höhe und Wintergärten sicher.',
+  'service.windows.faq.2.q': 'Ist ein Abo günstiger als Einzelreinigungen?',
+  'service.windows.faq.2.a': 'Pro Termin ja. Ein regelmäßiger Rhythmus verhindert starke Verschmutzung, sodass jede Reinigung schneller und günstiger ist.',
+  'service.entrances.lead': 'Eingänge, Flure und Treppenhäuser nach festem Plan gepflegt — konstante Sauberkeit für Eigentümergemeinschaften und Residenzen.',
+  'service.entrances.points': ['Böden, Treppen und Handläufe bei jedem Termin gereinigt', 'Eingangsglas und Aufzugstüren abgewischt', 'Fester Plan, immer dasselbe Team'],
+  'service.entrances.faq.1.q': 'Wie oft reinigen Sie die Gemeinschaftsflächen?',
+  'service.entrances.faq.1.a': 'Nach einem zum Gebäude passenden Rhythmus — wöchentlich ist am häufigsten, doch wir legen den Takt mit der Eigentümergemeinschaft fest.',
+  'service.entrances.faq.2.q': 'Betreuen Sie auch größere Residenzen?',
+  'service.entrances.faq.2.a': 'Ja. Vom einzelnen Eingang bis zur Mehrblock-Residenz hält dasselbe Team den Standard konstant.',
 };
 
 const en: FullDict = {
@@ -221,6 +265,28 @@ const en: FullDict = {
   'blog.title': 'The journal',
   'blog.sub': 'Tips on clearance, upkeep and organising your space.',
   'blog.readmore': 'Read',
+
+  // per-service landing pages (T2.1)
+  'faq.title': 'Frequently asked questions',
+  'service.included': 'What’s included',
+  'service.clearance.lead': 'Garages, cellars and attics emptied in a single visit — sorted, hauled away and recycled. You get the space back the same day.',
+  'service.clearance.points': ['Full clear-out in one visit, furniture to clutter', 'On-site sorting: donate, recycle, dispose', 'Clean, swept space handed back to you'],
+  'service.clearance.faq.1.q': 'How much does a garage clearance cost?',
+  'service.clearance.faq.1.a': 'It depends on volume, access and floor. We give a clear, fixed quote before we start — no hidden costs.',
+  'service.clearance.faq.2.q': 'Do you take everything away the same day?',
+  'service.clearance.faq.2.a': 'In most cases, yes. A standard garage or cellar is cleared and hauled away in a single visit.',
+  'service.windows.lead': 'Windows, fronts and conservatories left streak-free — one-off or on a schedule that keeps the glass clear all year.',
+  'service.windows.points': ['Streak-free glass, inside and out', 'Frames and sills wiped down too', 'One-off or recurring — weekly to seasonal'],
+  'service.windows.faq.1.q': 'Do you clean windows on upper floors?',
+  'service.windows.faq.1.a': 'Yes. We use pole-fed systems and the right access gear to reach upper-floor and conservatory glass safely.',
+  'service.windows.faq.2.q': 'Is a subscription cheaper than one-off cleans?',
+  'service.windows.faq.2.a': 'Per visit, yes. A regular schedule keeps glass from getting bad, so each clean is faster and costs less.',
+  'service.entrances.lead': 'Building entrances, halls and stairwells kept up on a fixed schedule — consistent cleanliness for co-ownerships and residences.',
+  'service.entrances.points': ['Floors, stairs and handrails cleaned each visit', 'Entrance glass and lift doors wiped down', 'Fixed schedule, same crew every time'],
+  'service.entrances.faq.1.q': 'How often do you clean common areas?',
+  'service.entrances.faq.1.a': 'On a schedule that fits the building — weekly is most common, but we set the rhythm with the co-ownership.',
+  'service.entrances.faq.2.q': 'Do you cover larger residences?',
+  'service.entrances.faq.2.a': 'Yes. From a single entrance to multi-block residences, the same crew keeps the standard consistent.',
 };
 
 // Full native dictionaries. lu/pt/es currently translate every fr key, but are
@@ -294,6 +360,28 @@ const lu: PartialDict = {
   'blog.title': 'De Journal',
   'blog.sub': 'Tipps fir Entrëmpelung, Pfleeg an d’Organisatioun vum Raum.',
   'blog.readmore': 'Liesen',
+
+  // per-service landing pages (T2.1)
+  'faq.title': 'Dacks gestallte Froen',
+  'service.included': 'Wat abegraff ass',
+  'service.clearance.lead': 'Garagen, Kelleren a Späicheren an engem eenzegen Asaz eidelgemaach — zortéiert, ewechgefouert a recycléiert. Dir kritt de Raum nach am selwechten Dag zréck.',
+  'service.clearance.points': ['Komplett Entrëmpelung an engem eenzegen Asaz', 'Zortéieren op der Plaz: spenden, recycléieren, ewechmaachen', 'Raum propper a gekiert zréckginn'],
+  'service.clearance.faq.1.q': 'Wat kascht eng Garagenentrëmpelung?',
+  'service.clearance.faq.1.a': 'Dat hänkt vum Volume, vum Zougang a vum Stack of. Mir ginn e kloren a feste Präis ier mir ufänken, ouni verstoppte Käschten.',
+  'service.clearance.faq.2.q': 'Huelt Dir alles nach am selwechten Dag ewech?',
+  'service.clearance.faq.2.a': 'An de meeschte Fäll jo. Eng normal Garage oder e Keller gëtt an engem eenzegen Asaz eidelgemaach an ewechgefouert.',
+  'service.windows.lead': 'Fënsteren, Façaden a Wantergäert ouni Spueren — eemoleg oder am Abo, dat d’Glas dat ganzt Joer kloer hält.',
+  'service.windows.points': ['Glas ouni Spueren, bannen an dobaussen', 'Kadere a Fënsterbänk ginn och ofgewëscht', 'Eemoleg oder regelméisseg — vu wöchentlech bis saisonal'],
+  'service.windows.faq.1.q': 'Botzt Dir och Fënsteren an den ieweschte Stäck?',
+  'service.windows.faq.1.a': 'Jo. Mat Teleskopstaangen an der passender Zougangstechnik erreeche mir Fënsteren an der Héicht a Wantergäert sécher.',
+  'service.windows.faq.2.q': 'Ass en Abo méi bëlleg wéi eenzel Botzungen?',
+  'service.windows.faq.2.a': 'Pro Asaz jo. E regelméissege Rhythmus verhënnert staark Verschmotzung, sou datt all Botzung méi séier a méi bëlleg ass.',
+  'service.entrances.lead': 'Agäng, Couloiren an Trapenhaiser no engem feste Plang gepflegt — konstant Proppertéit fir Matbesëtzergemeinschaften a Residenzen.',
+  'service.entrances.points': ['Bidem, Trapen a Handleeschten bei all Asaz gebotzt', 'Agangsglas a Liftdieren ofgewëscht', 'Feste Plang, ëmmer dat selwecht Team'],
+  'service.entrances.faq.1.q': 'Wéi dacks botzt Dir d’Gemeinschaftsraim?',
+  'service.entrances.faq.1.a': 'No engem Rhythmus deen zum Gebai passt — wöchentlech ass am heefegsten, mä mir leeën den Takt mat der Matbesëtzergemeinschaft fest.',
+  'service.entrances.faq.2.q': 'Schafft Dir och a grousse Residenzen?',
+  'service.entrances.faq.2.a': 'Jo. Vun engem eenzegen Agang bis zu Residenze mat méi Bléck hält dat selwecht Team den Niveau konstant.',
 };
 
 const pt: PartialDict = {
@@ -364,6 +452,28 @@ const pt: PartialDict = {
   'blog.title': 'O jornal',
   'blog.sub': 'Conselhos de esvaziamento, manutenção e organização do espaço.',
   'blog.readmore': 'Ler',
+
+  // per-service landing pages (T2.1)
+  'faq.title': 'Perguntas frequentes',
+  'service.included': 'O que está incluído',
+  'service.clearance.lead': 'Garagens, caves e sótãos esvaziados numa só visita — triados, removidos e reciclados. Recupera o espaço no próprio dia.',
+  'service.clearance.points': ['Esvaziamento completo numa só visita, de móveis a objetos soltos', 'Triagem no local: doar, reciclar, ecocentro', 'Espaço devolvido limpo e varrido'],
+  'service.clearance.faq.1.q': 'Quanto custa um esvaziamento de garagem?',
+  'service.clearance.faq.1.a': 'Depende do volume, do acesso e do andar. Damos um orçamento claro e fixo antes de começar, sem custos escondidos.',
+  'service.clearance.faq.2.q': 'Levam tudo no próprio dia?',
+  'service.clearance.faq.2.a': 'Na maioria dos casos, sim. Uma garagem ou cave normal é esvaziada e removida numa só intervenção.',
+  'service.windows.lead': 'Vidros, janelas e marquises sem marcas — pontual ou por subscrição que mantém o vidro limpo todo o ano.',
+  'service.windows.points': ['Vidro sem marcas, por dentro e por fora', 'Caixilhos e parapeitos também limpos', 'Pontual ou regular — de semanal a sazonal'],
+  'service.windows.faq.1.q': 'Limpam vidros em andares altos?',
+  'service.windows.faq.1.a': 'Sim. Usamos sistemas de vara telescópica e o equipamento de acesso adequado para chegar com segurança a vidros altos e marquises.',
+  'service.windows.faq.2.q': 'A subscrição fica mais barata do que limpezas pontuais?',
+  'service.windows.faq.2.a': 'Por visita, sim. Um ritmo regular evita que o vidro se suje muito, por isso cada limpeza é mais rápida e mais barata.',
+  'service.entrances.lead': 'Halls, entradas e escadas de prédios mantidos com um plano fixo — limpeza constante para condomínios e residências.',
+  'service.entrances.points': ['Pisos, escadas e corrimãos limpos em cada visita', 'Vidros da entrada e portas do elevador limpos', 'Plano fixo, sempre a mesma equipa'],
+  'service.entrances.faq.1.q': 'Com que frequência limpam as zonas comuns?',
+  'service.entrances.faq.1.a': 'Num ritmo adequado ao prédio — semanal é o mais comum, mas definimos a cadência com o condomínio.',
+  'service.entrances.faq.2.q': 'Trabalham em residências maiores?',
+  'service.entrances.faq.2.a': 'Sim. De uma única entrada a residências de vários blocos, a mesma equipa mantém o nível constante.',
 };
 
 const es: PartialDict = {
@@ -434,6 +544,28 @@ const es: PartialDict = {
   'blog.title': 'El diario',
   'blog.sub': 'Consejos de vaciado, mantenimiento y organización del espacio.',
   'blog.readmore': 'Leer',
+
+  // per-service landing pages (T2.1)
+  'faq.title': 'Preguntas frecuentes',
+  'service.included': 'Qué incluye',
+  'service.clearance.lead': 'Garajes, sótanos y desvanes vaciados en una sola visita — clasificados, retirados y reciclados. Recuperas el espacio el mismo día.',
+  'service.clearance.points': ['Vaciado completo en una visita, del mueble al trasto', 'Clasificación in situ: donar, reciclar, punto limpio', 'Espacio devuelto limpio y barrido'],
+  'service.clearance.faq.1.q': '¿Cuánto cuesta un vaciado de garaje?',
+  'service.clearance.faq.1.a': 'Depende del volumen, el acceso y la planta. Damos un presupuesto claro y cerrado antes de empezar, sin costes ocultos.',
+  'service.clearance.faq.2.q': '¿Os lleváis todo el mismo día?',
+  'service.clearance.faq.2.a': 'En la mayoría de los casos, sí. Un garaje o sótano estándar se vacía y se retira en una sola intervención.',
+  'service.windows.lead': 'Cristales, ventanales y galerías sin marcas — puntual o por suscripción que mantiene el cristal limpio todo el año.',
+  'service.windows.points': ['Cristal sin marcas, por dentro y por fuera', 'Marcos y alféizares también limpios', 'Puntual o periódico — de semanal a estacional'],
+  'service.windows.faq.1.q': '¿Limpiáis cristales en plantas altas?',
+  'service.windows.faq.1.a': 'Sí. Usamos sistemas de pértiga telescópica y el equipo de acceso adecuado para llegar con seguridad a cristales en altura y galerías.',
+  'service.windows.faq.2.q': '¿Sale más barata la suscripción que las limpiezas puntuales?',
+  'service.windows.faq.2.a': 'Por visita, sí. Un ritmo regular evita que el cristal se ensucie mucho, así cada limpieza es más rápida y más barata.',
+  'service.entrances.lead': 'Portales, entradas y escaleras de edificios mantenidos con un plan fijo — limpieza constante para comunidades y residencias.',
+  'service.entrances.points': ['Suelos, escaleras y barandillas limpios en cada visita', 'Cristales del portal y puertas del ascensor repasados', 'Plan fijo, siempre el mismo equipo'],
+  'service.entrances.faq.1.q': '¿Con qué frecuencia limpiáis las zonas comunes?',
+  'service.entrances.faq.1.a': 'Con un ritmo adaptado al edificio — lo más común es semanal, pero fijamos la cadencia con la comunidad.',
+  'service.entrances.faq.2.q': '¿Trabajáis en residencias grandes?',
+  'service.entrances.faq.2.a': 'Sí. De un solo portal a residencias de varios bloques, el mismo equipo mantiene el nivel constante.',
 };
 
 export const ui: Record<Lang, PartialDict> = { fr, de, en, lu, pt, es };

@@ -8,8 +8,9 @@ interface Props {
   path?: string;        // path WITHOUT lang prefix, e.g. 'services'
   type?: 'website' | 'article';
   faq?: { q: string; a: string }[];
+  service?: { name: string; serviceType: string; description: string };
 }
-const { lang, title, description, path = '', type = 'website', faq } = Astro.props;
+const { lang, title, description, path = '', type = 'website', faq, service } = Astro.props;
 
 const clean = path.replace(/^\/+|\/+$/g, '');
 const sub = clean ? '/' + clean : '';
@@ -48,6 +49,18 @@ const faqSchema = faq && faq.length ? {
     acceptedAnswer: { '@type': 'Answer', text: f.a },
   })),
 } : null;
+
+// Per-service schema — provider links back to the LocalBusiness node by @id.
+const serviceSchema = service ? {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: service.name,
+  serviceType: service.serviceType,
+  description: service.description,
+  provider: { '@type': 'CleaningBusiness', '@id': `${SITE.domain}/#business` },
+  areaServed: { '@type': 'Country', name: 'Luxembourg' },
+  url: canonical,
+} : null;
 ---
 <title>{title}</title>
 <meta name="description" content={description} />
@@ -69,3 +82,4 @@ const faqSchema = faq && faq.length ? {
 
 <script type="application/ld+json" set:html={JSON.stringify(localBusiness)} />
 {faqSchema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />}
+{serviceSchema && <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />}

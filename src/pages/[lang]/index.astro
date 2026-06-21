@@ -1,11 +1,10 @@
 ---
+import { langStaticPaths } from '../../lib/paths';
 import Layout from '../../layouts/Layout.astro';
-import { LANG_KEYS, localizedPath, type Lang } from '../../i18n/config';
+import { localizedPath, type Lang } from '../../i18n/config';
 import { useTranslations } from '../../i18n/ui';
 
-export function getStaticPaths() {
-  return LANG_KEYS.map((lang) => ({ params: { lang } }));
-}
+export const getStaticPaths = langStaticPaths;
 const lang = Astro.params.lang as Lang;
 const t = useTranslations(lang);
 const p = (s: string) => localizedPath(lang, s);
@@ -50,7 +49,7 @@ const meta = {
   <!-- SERVICES: three equal -->
   <section class="container-x py-20 border-t border-line">
     <h2 class="headline text-3xl md:text-5xl font-semibold mb-14 max-w-2xl">{t('services.title')}</h2>
-    <div class="grid gap-px bg-line rounded-2xl overflow-hidden md:grid-cols-3">
+    <div class="tile-grid md:grid-cols-3">
       {services.map((s) => (
         <a href={s.href} class="group bg-paper p-8 md:p-10 hover:bg-white transition-colors">
           <h3 class="text-xl font-semibold mb-3">{t(`services.${s.key}.title`)}</h3>

@@ -12,8 +12,9 @@ interface Props {
   path?: string;
   type?: 'website' | 'article';
   faq?: { q: string; a: string }[];
+  service?: { name: string; serviceType: string; description: string };
 }
-const { lang, title, description, path, type, faq } = Astro.props;
+const { lang, title, description, path, type, faq, service } = Astro.props;
 ---
 <!doctype html>
 <html lang={LANGUAGES[lang].locale} dir={LANGUAGES[lang].dir}>
@@ -23,7 +24,7 @@ const { lang, title, description, path, type, faq } = Astro.props;
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://rsms.me/" />
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
-    <Seo lang={lang} title={title} description={description} path={path} type={type} faq={faq} />
+    <Seo lang={lang} title={title} description={description} path={path} type={type} faq={faq} service={service} />
   </head>
   <body>
     <Nav />

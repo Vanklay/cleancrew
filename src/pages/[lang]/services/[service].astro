@@ -1,0 +1,61 @@
+---
+import { langServiceStaticPaths } from '../../../lib/paths';
+import Layout from '../../../layouts/Layout.astro';
+import Faq from '../../../components/Faq.astro';
+import { localizedPath, type Lang, type Service } from '../../../i18n/config';
+import { useTranslations, useRaw } from '../../../i18n/ui';
+
+export const getStaticPaths = langServiceStaticPaths;
+const lang = Astro.params.lang as Lang;
+const service = Astro.params.service as Service;
+const t = useTranslations(lang);
+const r = useRaw(lang);
+const p = (s: string) => localizedPath(lang, s);
+
+const title = t(`services.${service}.title`);
+const points = r(`service.${service}.points`) as string[];
+const faq = [
+  { q: t(`service.${service}.faq.1.q`), a: t(`service.${service}.faq.1.a`) },
+  { q: t(`service.${service}.faq.2.q`), a: t(`service.${service}.faq.2.a`) },
+];
+const serviceSchema = {
+  name: title,
+  serviceType: title,
+  description: t(`services.${service}.desc`),
+};
+---
+<Layout
+  lang={lang}
+  path={`services/${service}`}
+  title={`${title} · CleanCrew`}
+  description={t(`services.${service}.desc`)}
+  faq={faq}
+  service={serviceSchema}
+>
+  <section class="container-x pt-24 pb-16 md:pt-32 md:pb-20">
+    <p class="text-sm tracking-wider uppercase text-accent mb-6">{t('hero.kicker')}</p>
+    <h1 class="headline text-4xl md:text-7xl font-semibold max-w-3xl">{title}</h1>
+    <p class="mt-8 text-lg md:text-xl text-ink-soft max-w-2xl leading-relaxed">{t(`service.${service}.lead`)}</p>
+    <div class="mt-10"><a href={p('book')} class="btn">{t('hero.cta')}</a></div>
+  </section>
+
+  <section class="section">
+    <div class="container-x">
+      <h2 class="headline text-3xl md:text-4xl font-semibold mb-10">{t('service.included')}</h2>
+      <ul class="tile-grid md:grid-cols-3">
+        {points.map((point) => (
+          <li class="card text-ink-soft leading-relaxed">{point}</li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <Faq title={t('faq.title')} items={faq} />
+
+  <section class="section text-center">
+    <div class="container-x">
+      <h2 class="headline text-3xl md:text-5xl font-semibold mb-8">{t('book.title')}</h2>
+      <a href={p('book')} class="btn">{t('hero.cta')}</a>
+    </div>
+  </section>
+</Layout>

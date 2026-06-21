@@ -1,5 +1,5 @@
 ---
-import { getLangFromUrl, localizedPath, SITE } from '../i18n/config';
+import { getLangFromUrl, localizedPath, SERVICES, SITE } from '../i18n/config';
 import { useTranslations } from '../i18n/ui';
 import Logo from './Logo.astro';
 const lang = getLangFromUrl(Astro.url);
@@ -17,9 +17,9 @@ const year = new Date().getFullYear();
     <div>
       <div class="text-xs uppercase tracking-wider text-mist mb-3">{t('footer.services')}</div>
       <ul class="space-y-2 text-sm text-ink-soft">
-        <li><a href={p('services')} class="hover:text-ink">{t('services.clearance.title')}</a></li>
-        <li><a href={p('services')} class="hover:text-ink">{t('services.windows.title')}</a></li>
-        <li><a href={p('services')} class="hover:text-ink">{t('services.entrances.title')}</a></li>
+        {SERVICES.map((s) => (
+          <li><a href={p(`services/${s}`)} class="hover:text-ink">{t(`services.${s}.title`)}</a></li>
+        ))}
       </ul>
     </div>
     <div>

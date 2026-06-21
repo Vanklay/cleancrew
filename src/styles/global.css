@@ -31,6 +31,9 @@ body { background: var(--color-paper); color: var(--color-ink); font-family: var
 .card { @apply bg-paper p-8 md:p-10 transition-colors; }
 .card:hover { @apply bg-white; }
 
+/* hairline-separated tile grid (services, "what's included") */
+.tile-grid { @apply grid gap-px bg-line rounded-2xl overflow-hidden; }
+
 .prose-cc { @apply space-y-5 text-lg text-ink-soft leading-relaxed; }
 .prose-cc h2 { @apply text-ink text-2xl font-semibold mt-10 mb-3 tracking-tight; }
 .prose-cc a { @apply text-accent; }
