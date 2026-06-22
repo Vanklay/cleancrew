@@ -14,6 +14,7 @@
   --font-display: "Satoshi", -apple-system, sans-serif;
 
   --shadow-soft: 0 2px 4px rgba(20,23,26,.04), 0 22px 55px rgba(20,23,26,.08);
+  --shadow-lift: 0 10px 22px -6px rgba(20,23,26,.08), 0 28px 52px -12px rgba(20,23,26,.14);
   --shadow-hero: 0 50px 90px -28px rgba(20,23,26,.28);
 }
 
@@ -42,6 +43,10 @@ body { background: var(--color-paper); color: var(--color-ink); font-family: var
 
 .card { @apply bg-paper p-8 md:p-10 transition-colors; }
 .card:hover { @apply bg-white; }
+
+/* soft white panel — gentle lift on hover (e.g. the "why" reasons) */
+.reason-card { @apply rounded-2xl bg-white p-7 md:p-8; box-shadow: var(--shadow-soft); transition: transform .35s cubic-bezier(.2,.7,.2,1), box-shadow .35s cubic-bezier(.2,.7,.2,1); }
+.reason-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lift); }
 
 .tile-grid { @apply grid gap-px bg-line rounded-2xl overflow-hidden; }
 
