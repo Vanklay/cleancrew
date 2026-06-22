@@ -18,9 +18,9 @@ const links: [string, string][] = [
 ];
 ---
 <header class={`site-nav sticky top-0 z-50 ${overlay ? 'at-top' : ''}`} data-overlay={overlay ? '' : undefined}>
-  <nav class="container-x flex h-20 items-center justify-between">
+  <nav class="container-x flex items-center justify-between py-1">
     <a href={p('')} class="transition-opacity hover:opacity-70" aria-label="CleanCrew">
-      <Logo variant="full" class="nav-logo h-12 w-auto md:h-[3.25rem]" />
+      <Logo variant="full" class="nav-logo h-[3.25rem] w-auto" />
     </a>
 
     <!-- everything else, grouped on the right -->
@@ -32,6 +32,11 @@ const links: [string, string][] = [
       </div>
 
       <div class="flex items-center gap-2.5 sm:gap-4">
+        <a href={p('book')} class="nav-book group hidden items-center gap-2 rounded-full py-2.5 pl-6 pr-5 text-[15px] font-semibold sm:inline-flex">
+          {t('nav.book')}
+          <svg class="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+        </a>
+
         <details class="group relative">
           <summary class="nav-ctrl flex cursor-pointer list-none select-none items-center gap-1 rounded-lg px-1.5 py-1.5 text-[15px] font-medium hover:opacity-80">
             {lang.toUpperCase()}
@@ -45,11 +50,6 @@ const links: [string, string][] = [
             ))}
           </div>
         </details>
-
-        <a href={p('book')} class="nav-book group hidden items-center gap-2 rounded-full py-2.5 pl-6 pr-5 text-[15px] font-semibold sm:inline-flex">
-          {t('nav.book')}
-          <svg class="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
-        </a>
 
         <!-- mobile menu -->
         <details class="md:hidden">
