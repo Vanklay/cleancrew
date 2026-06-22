@@ -43,7 +43,7 @@ const meta = {
     <div class="absolute inset-0 -z-10 bg-gradient-to-r from-ink/40 to-transparent"></div>
     <div class="absolute inset-x-0 top-0 -z-10 h-32 bg-gradient-to-b from-ink/55 to-transparent"></div>
 
-    <div class="container-x flex min-h-[88vh] flex-col justify-end pb-24 pt-40 md:min-h-[92vh] md:pb-32">
+    <div class="container-x flex min-h-[94vh] flex-col justify-end pb-24 pt-40 md:min-h-[100vh] md:pb-32">
       <div class="max-w-3xl">
         <h1 class="reveal font-display font-extrabold tracking-tight leading-[1.2] text-white text-[clamp(2rem,4.4vw,4rem)]" style="--d:.08s">
           {t('hero.title')}
@@ -57,20 +57,10 @@ const meta = {
       </div>
     </div>
 
-    <!-- slide indicators -->
-    <div class="absolute inset-x-0 bottom-12 z-10">
-      <div class="container-x flex justify-center">
-        <div class="flex gap-2">
-          <button type="button" class="hero-dot h-1 w-9 rounded-full bg-white transition-colors" data-go="0" aria-label="1"></button>
-          <button type="button" class="hero-dot h-1 w-9 rounded-full bg-white/35 transition-colors" data-go="1" aria-label="2"></button>
-          <button type="button" class="hero-dot h-1 w-9 rounded-full bg-white/35 transition-colors" data-go="2" aria-label="3"></button>
-        </div>
-      </div>
-    </div>
   </section>
 
   <!-- THREE SERVICES — equal peers, each shown with its result image, alternating sides -->
-  <section id="services" class="container-x section scroll-mt-28">
+  <section id="services" class="container-x py-28 md:py-36 scroll-mt-28">
     <div class="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
       <h2 class="headline reveal text-4xl md:text-6xl max-w-2xl">{t('services.title')}</h2>
       <p class="reveal max-w-sm text-lg text-ink-soft leading-relaxed md:text-right" style="--d:.06s">{t('home.services.lead')}</p>
@@ -154,21 +144,15 @@ const meta = {
   const hero = document.querySelector<HTMLElement>('[data-hero-slider]');
   if (hero) {
     const slides = Array.from(hero.querySelectorAll<HTMLElement>('.hero-slide'));
-    const dots = Array.from(hero.querySelectorAll<HTMLButtonElement>('.hero-dot'));
     const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
     let i = 0;
     let timer: number | undefined;
     const go = (n: number) => {
       i = (n + slides.length) % slides.length;
       slides.forEach((s, k) => (s.style.opacity = k === i ? '1' : '0'));
-      dots.forEach((d, k) => {
-        d.classList.toggle('bg-white', k === i);
-        d.classList.toggle('bg-white/35', k !== i);
-      });
     };
     const start = () => { if (!reduce && slides.length > 1) timer = window.setInterval(() => go(i + 1), 5500); };
     const stop = () => { if (timer) { clearInterval(timer); timer = undefined; } };
-    dots.forEach((d, k) => d.addEventListener('click', () => { go(k); stop(); start(); }));
     hero.addEventListener('mouseenter', stop);
     hero.addEventListener('mouseleave', start);
     go(0); start();
