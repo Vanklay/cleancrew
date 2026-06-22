@@ -30,6 +30,7 @@ const fr = {
   'services.learn': 'En savoir plus',
 
   'why.title': 'Pourquoi CleanCrew',
+  'why.lead': 'Ce qui fait revenir propriétaires et syndics — une équipe fiable, un prix clair, partout au Grand-Duché.',
   'why.1.t': 'Une équipe qui revient',
   'why.1.d': 'On vide une fois, on entretient ensuite. La même équipe connaît déjà les lieux.',
   'why.2.t': 'Devis clair, sans surprise',
@@ -153,6 +154,7 @@ const de: FullDict = {
   'services.learn': 'Mehr erfahren',
 
   'why.title': 'Warum CleanCrew',
+  'why.lead': 'Warum Eigentümer und Hausverwaltungen wiederkommen — ein zuverlässiges Team, ein klarer Preis, im ganzen Großherzogtum.',
   'why.1.t': 'Ein Team, das wiederkommt',
   'why.1.d': 'Einmal räumen, dann pflegen. Dasselbe Team kennt den Ort bereits.',
   'why.2.t': 'Klares Angebot, keine Überraschungen',
@@ -269,6 +271,7 @@ const en: FullDict = {
   'services.learn': 'Learn more',
 
   'why.title': 'Why CleanCrew',
+  'why.lead': 'Why owners and property managers keep us on call — a reliable crew, a clear price, across the Grand Duchy.',
   'why.1.t': 'A crew that returns',
   'why.1.d': 'We clear once, then maintain. The same crew already knows the place.',
   'why.2.t': 'Clear quote, no surprises',
@@ -388,6 +391,7 @@ const lu: PartialDict = {
   'services.learn': 'Méi gewuer ginn',
 
   'why.title': 'Firwat CleanCrew',
+  'why.lead': 'Firwat Proprietären a Syndicen eis erëmruffen — en zouverléissegt Team, e kloren Präis, am ganze Grand-Duché.',
   'why.1.t': 'En Team, dat erëmkënnt',
   'why.1.d': 'Eemol eidelmaachen, da pflegen. Dat selwecht Team kennt d’Plaz scho.',
   'why.2.t': 'Klore Devis, keng Iwwerraschungen',
@@ -504,6 +508,7 @@ const pt: PartialDict = {
   'services.learn': 'Saber mais',
 
   'why.title': 'Porquê a CleanCrew',
+  'why.lead': 'O que faz proprietários e administradores voltar a chamar-nos — uma equipa fiável, um preço claro, em todo o Grão-Ducado.',
   'why.1.t': 'Uma equipa que regressa',
   'why.1.d': 'Esvaziamos uma vez, depois mantemos. A mesma equipa já conhece o local.',
   'why.2.t': 'Orçamento claro, sem surpresas',
@@ -620,6 +625,7 @@ const es: PartialDict = {
   'services.learn': 'Saber más',
 
   'why.title': 'Por qué CleanCrew',
+  'why.lead': 'Por qué propietarios y administradores nos vuelven a llamar — un equipo fiable, un precio claro, en todo el Gran Ducado.',
   'why.1.t': 'Un equipo que vuelve',
   'why.1.d': 'Vaciamos una vez, luego mantenemos. El mismo equipo ya conoce el lugar.',
   'why.2.t': 'Presupuesto claro, sin sorpresas',
