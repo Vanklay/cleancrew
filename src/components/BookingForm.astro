@@ -1,5 +1,5 @@
 ---
-import { SERVICES, type Lang } from '../i18n/config';
+import { SERVICES, SERVICE_HOURS, type Lang } from '../i18n/config';
 import { useTranslations, useRaw } from '../i18n/ui';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
@@ -13,76 +13,122 @@ const labels = {
   submit: t('book.submit'), next: t('book.next'), back: t('book.back'),
   months: r('book.calendar.months') as string[], days: r('book.calendar.days') as string[],
   steps: [t('book.service'), t('book.date'), t('book.details')],
+  time: t('book.time'), duration: t('book.duration'), ends: t('book.ends'),
+  services: t('book.service'), address: t('book.address'), dash: '—',
 };
-const services = SERVICES.map((s) => ({ key: s, title: t(`services.${s}.title`) }));
+const services = SERVICES.map((s) => ({ key: s, title: t(`services.${s}.title`), hours: SERVICE_HOURS[s] }));
+// Preferred start times — locale-neutral numerals, so they live here, not in ui.ts.
+const TIMES = ['08:00', '09:00', '10:00', '11:00', '13:00', '14:00', '15:00', '16:00'];
 ---
-<div id="booking" data-lang={lang} class="mx-auto max-w-xl">
+<div id="booking" data-lang={lang} class="mx-auto max-w-4xl">
   <script type="application/json" id="bookingLabels" set:html={JSON.stringify(labels)} />
-  <div class="rounded-[1.75rem] bg-white p-6 text-ink sm:p-8" style="box-shadow: var(--shadow-soft);">
+  <div class="grid overflow-hidden rounded-[1.75rem] border border-line bg-white md:grid-cols-[0.82fr_1.18fr]" style="box-shadow: var(--shadow-soft);">
 
-    <!-- progress — caption + slim bar -->
-    <div id="stepper" class="mb-8">
-      <div class="flex items-baseline justify-between">
-        <span id="stepName" class="text-sm font-semibold text-ink"></span>
-        <span id="stepCount" class="text-xs font-medium tabular-nums text-mist"></span>
-      </div>
-      <div class="mt-3 h-1 w-full overflow-hidden rounded-full bg-line">
-        <div id="progress" class="h-full rounded-full bg-accent transition-all duration-500 ease-out" style="width:33%"></div>
-      </div>
-    </div>
-
-    <!-- STEP 1: services — multi-select checklist -->
-    <section data-step="1" class="step">
-      <div class="divide-y divide-line overflow-hidden rounded-2xl border border-line">
-        {services.map((s, i) => (
-          <button type="button" data-service={s.key} data-title={s.title} aria-pressed={i === 0 ? 'true' : 'false'}
-            class="svc-card group flex w-full items-center gap-3.5 px-4 py-4 text-left font-semibold leading-tight transition-colors hover:bg-paper aria-pressed:bg-accent-soft aria-pressed:text-accent-ink">
-            <span class="grid h-5 w-5 shrink-0 place-items-center rounded-md border-2 border-line transition-colors group-aria-pressed:border-accent group-aria-pressed:bg-accent">
-              <svg class="h-3 w-3 text-white opacity-0 transition-opacity group-aria-pressed:opacity-100" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
-            </span>
-            {s.title}
-          </button>
-        ))}
-      </div>
-    </section>
-
-    <!-- STEP 2: date -->
-    <section data-step="2" class="step hidden">
-      <div id="cal">
-        <div class="mb-3 flex items-center justify-between">
-          <button id="prev" type="button" aria-label="–" class="grid h-9 w-9 place-items-center rounded-full text-ink-soft transition-colors hover:bg-paper hover:text-accent">←</button>
-          <div id="monthLabel" class="text-sm font-semibold"></div>
-          <button id="next" type="button" aria-label="+" class="grid h-9 w-9 place-items-center rounded-full text-ink-soft transition-colors hover:bg-paper hover:text-accent">→</button>
+    <!-- LIVE SUMMARY — builds as you go -->
+    <aside class="order-last flex flex-col gap-7 border-t border-line bg-paper p-7 sm:p-9 md:order-first md:border-r md:border-t-0">
+      <h3 class="display text-xl">{t('book.summary')}</h3>
+      <dl class="flex flex-1 flex-col gap-5 text-sm">
+        <div>
+          <dt class="text-xs font-medium uppercase tracking-wider text-mist">{t('book.service')}</dt>
+          <dd id="sumServices" class="mt-1.5 font-semibold leading-snug text-ink">—</dd>
+          <dd id="sumDuration" class="mt-0.5 text-xs text-accent-ink"></dd>
         </div>
-        <div id="grid" class="grid min-h-60 grid-cols-7 gap-1 text-center text-sm"></div>
-        <p id="calNote" class="mt-3 text-xs text-mist"></p>
+        <div>
+          <dt class="text-xs font-medium uppercase tracking-wider text-mist">{t('book.lblDate')}</dt>
+          <dd id="sumDate" class="mt-1.5 font-semibold text-ink">—</dd>
+        </div>
+        <div>
+          <dt class="text-xs font-medium uppercase tracking-wider text-mist">{t('book.time')}</dt>
+          <dd id="sumTime" class="mt-1.5 font-semibold text-ink">—</dd>
+        </div>
+        <div>
+          <dt class="text-xs font-medium uppercase tracking-wider text-mist">{t('book.address')}</dt>
+          <dd id="sumAddress" class="mt-1.5 font-semibold leading-snug text-ink">—</dd>
+        </div>
+      </dl>
+      <p class="text-xs leading-relaxed text-ink-soft">{t('book.sub')}</p>
+    </aside>
+
+    <!-- WIZARD -->
+    <div class="p-6 text-ink sm:p-8">
+      <!-- progress -->
+      <div id="stepper" class="mb-8">
+        <div class="flex items-baseline justify-between">
+          <span id="stepName" class="text-sm font-semibold text-ink"></span>
+          <span id="stepCount" class="text-xs font-medium tabular-nums text-mist"></span>
+        </div>
+        <div class="mt-3 h-1 w-full overflow-hidden rounded-full bg-line">
+          <div id="progress" class="h-full rounded-full bg-accent transition-all duration-500 ease-out" style="width:33%"></div>
+        </div>
       </div>
-      <input id="f_date" type="hidden" />
-    </section>
 
-    <!-- STEP 3: details -->
-    <section data-step="3" class="step hidden">
-      <div id="recap" class="mb-6 flex items-center gap-2 rounded-2xl bg-paper px-4 py-3 text-sm font-semibold text-ink"></div>
-      <div class="grid gap-4 sm:grid-cols-2">
-        <label class="block text-sm font-medium text-ink-soft">{t('book.name')}<input id="f_name" class="field" required /></label>
-        <label class="block text-sm font-medium text-ink-soft">{t('book.email')}<input id="f_email" type="email" class="field" required /></label>
-        <label class="block text-sm font-medium text-ink-soft">{t('book.phone')}<input id="f_phone" class="field" /></label>
-        <label class="block text-sm font-medium text-ink-soft sm:col-span-2">{t('book.message')}<textarea id="f_message" rows="2" class="field"></textarea></label>
+      <!-- STEP 1: services — multi-select checklist with durations -->
+      <section data-step="1" class="step">
+        <div class="divide-y divide-line overflow-hidden rounded-2xl border border-line">
+          {services.map((s, i) => (
+            <button type="button" data-service={s.key} data-title={s.title} data-hours={s.hours} aria-pressed={i === 0 ? 'true' : 'false'}
+              class="svc-card group flex w-full items-center gap-3.5 px-4 py-4 text-left transition-colors hover:bg-paper aria-pressed:bg-accent-soft">
+              <span class="grid h-5 w-5 shrink-0 place-items-center rounded-md border-2 border-line transition-colors group-aria-pressed:border-accent group-aria-pressed:bg-accent">
+                <svg class="h-3 w-3 text-white opacity-0 transition-opacity group-aria-pressed:opacity-100" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
+              </span>
+              <span class="flex-1 font-semibold leading-tight group-aria-pressed:text-accent-ink">{s.title}</span>
+              <span class="shrink-0 text-xs font-medium tabular-nums text-mist">~{s.hours} h</span>
+            </button>
+          ))}
+        </div>
+      </section>
+
+      <!-- STEP 2: date & time -->
+      <section data-step="2" class="step hidden">
+        <div id="cal">
+          <div class="mb-3 flex items-center justify-between">
+            <button id="prev" type="button" aria-label="–" class="grid h-9 w-9 place-items-center rounded-full text-ink-soft transition-colors hover:bg-paper hover:text-accent">←</button>
+            <div id="monthLabel" class="text-sm font-semibold"></div>
+            <button id="next" type="button" aria-label="+" class="grid h-9 w-9 place-items-center rounded-full text-ink-soft transition-colors hover:bg-paper hover:text-accent">→</button>
+          </div>
+          <div id="grid" class="grid grid-cols-7 gap-1 text-center text-sm"></div>
+          <p id="calNote" class="mt-2.5 text-xs text-mist"></p>
+        </div>
+        <div class="mt-6 border-t border-line pt-5">
+          <p class="mb-3 text-sm font-semibold text-ink">{t('book.time')}</p>
+          <div class="flex flex-wrap gap-2">
+            {TIMES.map((tm) => (
+              <button type="button" data-time={tm} aria-pressed="false"
+                class="time-chip rounded-full border border-line px-3.5 py-2 text-sm font-medium text-ink-soft transition-colors hover:border-ink/25 aria-pressed:border-accent aria-pressed:bg-accent-soft aria-pressed:text-accent-ink">{tm}</button>
+            ))}
+          </div>
+          <p id="estimate" class="mt-3.5 text-xs text-ink-soft"></p>
+        </div>
+        <input id="f_date" type="hidden" />
+        <input id="f_time" type="hidden" />
+      </section>
+
+      <!-- STEP 3: address & contact -->
+      <section data-step="3" class="step hidden">
+        <div class="grid gap-4 sm:grid-cols-2">
+          <label class="block text-sm font-medium text-ink-soft sm:col-span-2">{t('book.name')}<input id="f_name" class="field" required /></label>
+          <label class="block text-sm font-medium text-ink-soft">{t('book.email')}<input id="f_email" type="email" class="field" required /></label>
+          <label class="block text-sm font-medium text-ink-soft">{t('book.phone')}<input id="f_phone" class="field" /></label>
+          <label class="block text-sm font-medium text-ink-soft sm:col-span-2">{t('book.address')}<input id="f_address" class="field" required /></label>
+          <label class="block text-sm font-medium text-ink-soft">{t('book.postal')}<input id="f_postal" class="field" /></label>
+          <label class="block text-sm font-medium text-ink-soft">{t('book.city')}<input id="f_city" class="field" /></label>
+          <label class="block text-sm font-medium text-ink-soft sm:col-span-2">{t('book.message')}<textarea id="f_message" rows="2" class="field"></textarea></label>
+        </div>
+        <p id="formMsg" class="mt-4 text-sm text-red-600" role="status" aria-live="polite"></p>
+      </section>
+
+      <!-- SUCCESS -->
+      <section data-step="done" class="hidden py-10 text-center">
+        <div class="mx-auto grid h-14 w-14 place-items-center rounded-full bg-accent text-2xl text-white">✓</div>
+        <h2 id="doneTitle" class="display mt-5 text-2xl"></h2>
+        <p id="doneMsg" class="mx-auto mt-2 max-w-sm text-ink-soft"></p>
+      </section>
+
+      <!-- nav -->
+      <div id="nav" class="mt-8 flex items-center justify-between gap-4">
+        <button id="back" type="button" class="invisible text-sm font-semibold text-ink-soft transition-colors hover:text-ink">{t('book.back')}</button>
+        <button id="primary" type="button" class="btn">{t('book.next')}</button>
       </div>
-      <p id="formMsg" class="mt-4 text-sm text-red-600" role="status" aria-live="polite"></p>
-    </section>
-
-    <!-- SUCCESS -->
-    <section data-step="done" class="hidden py-10 text-center">
-      <div class="mx-auto grid h-14 w-14 place-items-center rounded-full bg-accent text-2xl text-white">✓</div>
-      <h2 id="doneTitle" class="display mt-5 text-2xl"></h2>
-      <p id="doneMsg" class="mx-auto mt-2 max-w-sm text-ink-soft"></p>
-    </section>
-
-    <!-- nav -->
-    <div id="nav" class="mt-8 flex items-center justify-between gap-4">
-      <button id="back" type="button" class="invisible text-sm font-semibold text-ink-soft transition-colors hover:text-ink">{t('book.back')}</button>
-      <button id="primary" type="button" class="btn">{t('book.next')}</button>
     </div>
   </div>
 </div>
@@ -94,22 +140,27 @@ const services = SERVICES.map((s) => ({ key: s, title: t(`services.${s}.title`) 
   const S = JSON.parse(document.getElementById('bookingLabels')!.textContent || '{}') as {
     success: string; error: string; thanks: string; available: string; none: string;
     submit: string; next: string; back: string; months: string[]; days: string[]; steps: string[];
+    time: string; duration: string; ends: string; services: string; address: string; dash: string;
   };
 
+  const $ = (id: string) => document.getElementById(id)!;
   const panels = Array.from(root.querySelectorAll<HTMLElement>('.step'));
   const donePanel = root.querySelector<HTMLElement>('[data-step="done"]')!;
-  const stepper = document.getElementById('stepper')!;
-  const progress = document.getElementById('progress')!;
-  const stepName = document.getElementById('stepName')!;
-  const stepCount = document.getElementById('stepCount')!;
-  const nav = document.getElementById('nav')!;
-  const back = document.getElementById('back') as HTMLButtonElement;
-  const primary = document.getElementById('primary') as HTMLButtonElement;
-  const dateInput = document.getElementById('f_date') as HTMLInputElement;
-  const formMsg = document.getElementById('formMsg')!;
+  const stepper = $('stepper');
+  const progress = $('progress');
+  const stepName = $('stepName');
+  const stepCount = $('stepCount');
+  const nav = $('nav');
+  const back = $('back') as HTMLButtonElement;
+  const primary = $('primary') as HTMLButtonElement;
+  const dateInput = $('f_date') as HTMLInputElement;
+  const timeInput = $('f_time') as HTMLInputElement;
+  const formMsg = $('formMsg');
 
   const segBtns = Array.from(root.querySelectorAll<HTMLButtonElement>('.svc-card'));
-  const selectedBtns = () => segBtns.filter((b) => b.getAttribute('aria-pressed') === 'true');
+  const timeBtns = Array.from(root.querySelectorAll<HTMLButtonElement>('.time-chip'));
+  const selected = () => segBtns.filter((b) => b.getAttribute('aria-pressed') === 'true');
+  const totalHours = () => selected().reduce((sum, b) => sum + Number(b.dataset.hours || 0), 0);
   const TOTAL = 3;
   let step = 1;
 
@@ -129,16 +180,51 @@ const services = SERVICES.map((s) => ({ key: s, title: t(`services.${s}.title`) 
   }
 
   function updatePrimary() {
-    const ok = step === 1 ? selectedBtns().length > 0 : step === 2 ? !!dateInput.value : true;
+    const ok = step === 1 ? selected().length > 0
+      : step === 2 ? !!dateInput.value && !!timeInput.value
+      : true;
     primary.disabled = !ok;
     primary.classList.toggle('opacity-40', !ok);
     primary.classList.toggle('pointer-events-none', !ok);
   }
 
+  function endTime(start: string, hours: number) {
+    const [h, m] = start.split(':').map(Number);
+    return `${String(h + hours).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
+  }
+  function composeAddress() {
+    const street = ($('f_address') as HTMLInputElement).value.trim();
+    const loc = [($('f_postal') as HTMLInputElement).value.trim(), ($('f_city') as HTMLInputElement).value.trim()].filter(Boolean).join(' ');
+    return [street, loc].filter(Boolean).join(', ');
+  }
+
+  // Keep the live summary + the step-2 estimate in sync with every choice.
+  function refresh() {
+    const sel = selected();
+    const h = totalHours();
+    $('sumServices').textContent = sel.length ? sel.map((b) => b.dataset.title).join(', ') : S.dash;
+    $('sumDuration').textContent = h ? `~${h} h` : '';
+    $('sumDate').textContent = dateInput.value ? fmtDate(dateInput.value) : S.dash;
+    $('sumTime').textContent = timeInput.value || S.dash;
+    $('sumAddress').textContent = composeAddress() || S.dash;
+    let line = h ? `${S.duration} ~${h} h` : '';
+    if (h && timeInput.value) line += ` · ${S.ends} ${endTime(timeInput.value, h)}`;
+    $('estimate').textContent = line;
+  }
+
   segBtns.forEach((btn) => btn.addEventListener('click', () => {
     btn.setAttribute('aria-pressed', btn.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
-    updatePrimary();
+    updatePrimary(); refresh();
   }));
+
+  timeBtns.forEach((btn) => btn.addEventListener('click', () => {
+    timeBtns.forEach((b) => b.setAttribute('aria-pressed', 'false'));
+    btn.setAttribute('aria-pressed', 'true');
+    timeInput.value = btn.dataset.time || '';
+    updatePrimary(); refresh();
+  }));
+
+  ['f_address', 'f_postal', 'f_city'].forEach((id) => $(id).addEventListener('input', refresh));
 
   // calendar
   let view = new Date(); view.setDate(1);
@@ -154,9 +240,9 @@ const services = SERVICES.map((s) => ({ key: s, title: t(`services.${s}.title`) 
   }
 
   function renderCal() {
-    document.getElementById('monthLabel')!.textContent = `${S.months[view.getMonth()]} ${view.getFullYear()}`;
-    document.getElementById('calNote')!.textContent = availableDates.size ? S.available : S.none;
-    const grid = document.getElementById('grid')!; grid.innerHTML = '';
+    $('monthLabel').textContent = `${S.months[view.getMonth()]} ${view.getFullYear()}`;
+    $('calNote').textContent = availableDates.size ? S.available : S.none;
+    const grid = $('grid'); grid.innerHTML = '';
     S.days.forEach((d) => { const e = document.createElement('div'); e.className = 'text-mist text-[11px] font-medium py-1'; e.textContent = d; grid.appendChild(e); });
     const first = (new Date(view.getFullYear(), view.getMonth(), 1).getDay() + 6) % 7;
     for (let i = 0; i < first; i++) grid.appendChild(document.createElement('div'));
@@ -173,29 +259,36 @@ const services = SERVICES.map((s) => ({ key: s, title: t(`services.${s}.title`) 
         : has ? 'bg-accent-soft text-accent font-semibold hover:bg-accent hover:text-white'
         : 'text-ink-soft hover:bg-paper';
       btn.className = `h-9 rounded-lg text-sm transition-colors ${state}`;
-      if (!past) btn.onclick = () => { dateInput.value = k; renderCal(); updatePrimary(); };
+      if (!past) btn.onclick = () => { dateInput.value = k; renderCal(); updatePrimary(); refresh(); };
       grid.appendChild(btn);
     }
   }
-  document.getElementById('prev')!.onclick = () => { view.setMonth(view.getMonth() - 1); renderCal(); };
-  document.getElementById('next')!.onclick = () => { view.setMonth(view.getMonth() + 1); renderCal(); };
-
-  function fillRecap() {
-    const titles = selectedBtns().map((b) => b.dataset.title).join(', ');
-    document.getElementById('recap')!.textContent = `${titles} · ${dateInput.value ? fmtDate(dateInput.value) : '—'}`;
-  }
+  $('prev').onclick = () => { view.setMonth(view.getMonth() - 1); renderCal(); };
+  $('next').onclick = () => { view.setMonth(view.getMonth() + 1); renderCal(); };
 
   back.onclick = () => { if (step > 1) setStep(step - 1); };
   primary.onclick = async () => {
     if (step === 1) { setStep(2); return; }
-    if (step === 2) { if (!dateInput.value) return; setStep(3); fillRecap(); return; }
+    if (step === 2) { if (!dateInput.value || !timeInput.value) return; setStep(3); return; }
     await submit();
   };
 
   async function submit() {
-    const val = (id: string) => (document.getElementById(id) as HTMLInputElement).value.trim();
-    const payload = { name: val('f_name'), email: val('f_email'), phone: val('f_phone'), service: selectedBtns().map((b) => b.dataset.service).join(','), req_date: dateInput.value, message: val('f_message'), lang };
-    if (!payload.name || !payload.email) { formMsg.textContent = S.error; return; }
+    const val = (id: string) => ($(id) as HTMLInputElement).value.trim();
+    const sel = selected();
+    const address = composeAddress();
+    if (!val('f_name') || !val('f_email') || !address) { formMsg.textContent = S.error; return; }
+    const h = totalHours();
+    const note = val('f_message');
+    // Structured summary packed into `message` — keeps inserts valid on the
+    // current schema (single-value `service`, no time/address columns).
+    const message = [
+      `${S.services}: ${sel.map((b) => b.dataset.title).join(', ')}`,
+      timeInput.value ? `${S.time}: ${timeInput.value} (~${h} h, ${S.ends} ${endTime(timeInput.value, h)})` : `~${h} h`,
+      `${S.address}: ${address}`,
+      note ? `\n${note}` : '',
+    ].filter(Boolean).join('\n');
+    const payload = { name: val('f_name'), email: val('f_email'), phone: val('f_phone'), service: sel[0]?.dataset.service || 'clearance', req_date: dateInput.value, message, lang };
     formMsg.textContent = '';
     primary.disabled = true; primary.classList.add('opacity-40');
     let ok = true;
@@ -209,9 +302,9 @@ const services = SERVICES.map((s) => ({ key: s, title: t(`services.${s}.title`) 
     nav.classList.add('hidden');
     stepper.classList.add('hidden');
     donePanel.classList.remove('hidden'); animate(donePanel);
-    document.getElementById('doneTitle')!.textContent = S.thanks;
-    document.getElementById('doneMsg')!.textContent = S.success;
+    $('doneTitle').textContent = S.thanks;
+    $('doneMsg').textContent = S.success;
   }
 
-  setStep(1); loadSlots(); renderCal();
+  setStep(1); loadSlots(); renderCal(); refresh();
 </script>
