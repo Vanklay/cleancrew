@@ -16,10 +16,6 @@ export const LANG_KEYS = Object.keys(LANGUAGES) as Lang[];
 export const SERVICES = ['clearance', 'windows', 'surfaces'] as const;
 export type Service = (typeof SERVICES)[number];
 
-// Typical on-site duration per service, in hours — drives the booking estimate.
-// Garage clearance is the heavy one (4 h+); a window pass can be ~1 h.
-export const SERVICE_HOURS: Record<Service, number> = { clearance: 4, windows: 1, surfaces: 2 };
-
 export const SITE = {
   name: 'CleanCrew',
   domain: 'https://cleancrew.lu',
