@@ -14,8 +14,8 @@ const fr = {
   'nav.book': 'Réserver',
 
   'hero.kicker': 'Débarras & nettoyage · Luxembourg',
-  'hero.title': 'Débarras de garage, nettoyage de vitres et de façades.',
-  'hero.title2': 'Une seule équipe, partout au Luxembourg.',
+  'hero.title': 'Débarras de garage, vitres et façades.',
+  'hero.title2': 'Une équipe, partout au Luxembourg.',
   'hero.sub': 'Une équipe qui revient et connaît déjà votre propriété. Devis clair, intervention rapide, sans coûts cachés.',
   'hero.cta': 'Réserver une date',
   'hero.cta2': 'Voir les services',
@@ -137,8 +137,8 @@ const de: FullDict = {
   'nav.book': 'Buchen',
 
   'hero.kicker': 'Entrümpelung & Reinigung · Luxemburg',
-  'hero.title': 'Garagenentrümpelung, Fenster- und Fassadenreinigung.',
-  'hero.title2': 'Ein Team, in ganz Luxemburg.',
+  'hero.title': 'Garagenentrümpelung, Fenster und Fassaden.',
+  'hero.title2': 'Ein Team, ganz Luxemburg.',
   'hero.sub': 'Ein Team, das wiederkommt und Ihr Anwesen bereits kennt. Klares Angebot, schnelle Ausführung, ohne versteckte Kosten.',
   'hero.cta': 'Termin buchen',
   'hero.cta2': 'Leistungen ansehen',
@@ -253,8 +253,8 @@ const en: FullDict = {
   'nav.book': 'Book',
 
   'hero.kicker': 'Clearance & cleaning · Luxembourg',
-  'hero.title': 'Garage clearance, window and façade cleaning.',
-  'hero.title2': 'One team, anywhere in Luxembourg.',
+  'hero.title': 'Garage clearance, windows and façades.',
+  'hero.title2': 'One team, across Luxembourg.',
   'hero.sub': 'A crew that comes back and already knows your property. Clear quote, fast turnaround, no hidden costs.',
   'hero.cta': 'Book a date',
   'hero.cta2': 'See services',
@@ -372,7 +372,7 @@ const lu: PartialDict = {
   'nav.book': 'Buchen',
 
   'hero.kicker': 'Entrëmpelung & Botzen · Lëtzebuerg',
-  'hero.title': 'Garage entrëmpelen, Fënster- a Fassadebotzen.',
+  'hero.title': 'Garage entrëmpelen, Fënster a Fassaden.',
   'hero.title2': 'Ee Team, am ganze Land.',
   'hero.sub': 'En Team, dat erëmkënnt an Är Propriétéit scho kennt. Klore Devis, séier Ausféierung, ouni verstoppte Käschten.',
   'hero.cta': 'En Datum buchen',
@@ -488,8 +488,8 @@ const pt: PartialDict = {
   'nav.book': 'Reservar',
 
   'hero.kicker': 'Esvaziamento & limpeza · Luxemburgo',
-  'hero.title': 'Esvaziamento de garagens, limpeza de vidros e fachadas.',
-  'hero.title2': 'Uma só equipa, em todo o Luxemburgo.',
+  'hero.title': 'Esvaziamento de garagens, vidros e fachadas.',
+  'hero.title2': 'Uma equipa, em todo o Luxemburgo.',
   'hero.sub': 'Uma equipa que regressa e já conhece a sua propriedade. Orçamento claro, intervenção rápida, sem custos escondidos.',
   'hero.cta': 'Reservar uma data',
   'hero.cta2': 'Ver serviços',
@@ -604,8 +604,8 @@ const es: PartialDict = {
   'nav.book': 'Reservar',
 
   'hero.kicker': 'Vaciado & limpieza · Luxemburgo',
-  'hero.title': 'Vaciado de garajes, limpieza de cristales y fachadas.',
-  'hero.title2': 'Un solo equipo, en todo Luxemburgo.',
+  'hero.title': 'Vaciado de garajes, cristales y fachadas.',
+  'hero.title2': 'Un equipo, en todo Luxemburgo.',
   'hero.sub': 'Un equipo que vuelve y ya conoce tu propiedad. Presupuesto claro, intervención rápida, sin costes ocultos.',
   'hero.cta': 'Reservar una fecha',
   'hero.cta2': 'Ver servicios',
