@@ -10,7 +10,8 @@ const lang = Astro.params.lang as Lang;
 const t = useTranslations(lang);
 const p = (s: string) => localizedPath(lang, s);
 
-const services = SERVICES.map((key) => ({ key, href: p(`services/${key}`) }));
+const serviceImg: Record<string, string> = { clearance: '/hero.webp', windows: '/hero2.webp', surfaces: '/hero3.webp' };
+const services = SERVICES.map((key) => ({ key, href: p(`services/${key}`), img: serviceImg[key] }));
 const why = ['1', '2', '3', '4'];
 
 // AEO/LLM answer block — concise Q&A that LLMs and featured snippets lift
@@ -66,29 +67,33 @@ const meta = {
     </div>
   </section>
 
-  <!-- THREE SERVICES — equal peers, numbered editorial list (no card grid) -->
-  <section class="container-x section">
-    <h2 class="headline reveal text-4xl md:text-6xl max-w-2xl">{t('services.title')}</h2>
-    <p class="reveal mt-5 max-w-xl text-lg text-ink-soft leading-relaxed" style="--d:.06s">{t('home.services.lead')}</p>
+  <!-- THREE SERVICES — equal peers, each shown with its result image, alternating sides -->
+  <section id="services" class="container-x section scroll-mt-28">
+    <div class="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+      <h2 class="headline reveal text-4xl md:text-6xl max-w-2xl">{t('services.title')}</h2>
+      <p class="reveal max-w-sm text-lg text-ink-soft leading-relaxed md:text-right" style="--d:.06s">{t('home.services.lead')}</p>
+    </div>
 
-    <div class="mt-12 md:mt-16">
+    <div class="mt-14 space-y-16 md:mt-24 md:space-y-28">
       {services.map((s, i) => (
-        <a href={s.href} class="group reveal block border-t border-line py-9 md:py-12 transition-colors hover:bg-white" style={`--d:${i * 0.06}s`}>
-          <div class="grid gap-3 md:grid-cols-12 md:gap-8 md:items-baseline">
-            <div class="md:col-span-2 index-num text-5xl md:text-7xl text-accent">0{i + 1}</div>
-            <div class="md:col-span-7">
-              <h3 class="display text-2xl md:text-4xl">{t(`services.${s.key}.title`)}</h3>
-              <p class="mt-3 text-ink-soft leading-relaxed max-w-xl">{t(`services.${s.key}.desc`)}</p>
+        <a href={s.href} class="group reveal grid items-center gap-7 md:grid-cols-2 md:gap-16" style={`--d:${i * 0.05}s`}>
+          <div class={`overflow-hidden rounded-[1.75rem] ${i % 2 === 1 ? 'md:order-2' : ''}`} style="box-shadow: var(--shadow-soft);">
+            <img src={s.img} alt={t(`services.${s.key}.title`)} width="1290" height="672" loading="lazy"
+                 class="aspect-[4/3] w-full object-cover transition-transform duration-[800ms] ease-out group-hover:scale-[1.05]" />
+          </div>
+          <div class={i % 2 === 1 ? 'md:order-1' : ''}>
+            <div class="flex items-center gap-4">
+              <span class="index-num text-xl text-accent">0{i + 1}</span>
+              <span class="h-px w-12 bg-line transition-all duration-300 group-hover:w-20 group-hover:bg-accent"></span>
             </div>
-            <div class="md:col-span-3 self-center md:text-right">
-              <span class="inline-flex items-center gap-2 text-sm font-semibold text-ink transition-colors group-hover:text-accent">
-                {t('services.learn')} <span class="transition-transform group-hover:translate-x-1">→</span>
-              </span>
-            </div>
+            <h3 class="display mt-6 text-3xl md:text-5xl">{t(`services.${s.key}.title`)}</h3>
+            <p class="mt-4 max-w-md text-lg text-ink-soft leading-relaxed">{t(`services.${s.key}.desc`)}</p>
+            <span class="mt-7 inline-flex items-center gap-2 text-sm font-semibold text-ink transition-colors group-hover:text-accent">
+              {t('services.learn')} <span class="transition-transform group-hover:translate-x-1">→</span>
+            </span>
           </div>
         </a>
       ))}
-      <div class="border-t border-line"></div>
     </div>
   </section>
 
