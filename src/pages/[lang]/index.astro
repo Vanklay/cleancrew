@@ -19,12 +19,12 @@ const why = ['1', '2', '3', '4'];
 const faq = [1, 2, 3, 4, 5].map((n) => ({ q: t(`faq.${n}.q`), a: t(`faq.${n}.a`) }));
 
 const meta = {
-  fr: { title: 'CleanCrew · Débarras de garage & nettoyage au Luxembourg', desc: 'Débarras de garages, caves et greniers, nettoyage de vitres et de façades. Devis clair, équipe rapide qui revient, partout au Luxembourg.' },
-  de: { title: 'CleanCrew · Garagenentrümpelung & Reinigung in Luxemburg', desc: 'Entrümpelung von Garagen, Kellern und Dachböden, Fenster- und Fassadenreinigung. Klares Angebot, schnelles Team, in ganz Luxemburg.' },
-  en: { title: 'CleanCrew · Garage clearance & cleaning in Luxembourg', desc: 'Garage, cellar and attic clearance, plus window and façade cleaning. Clear quote, fast crew that comes back, anywhere in Luxembourg.' },
-  lu: { title: 'CleanCrew · Garagen entrëmpelen & botzen zu Lëtzebuerg', desc: 'Entrëmpelung vu Garagen, Kelleren a Späicheren, Fënster- a Fassadebotzen. Klore Devis, séiert Team, am ganze Land.' },
-  pt: { title: 'CleanCrew · Esvaziamento de garagens & limpeza no Luxemburgo', desc: 'Esvaziamento de garagens, caves e sótãos, limpeza de vidros e fachadas. Orçamento claro, equipa rápida que regressa, em todo o Luxemburgo.' },
-  es: { title: 'CleanCrew · Vaciado de garajes & limpieza en Luxemburgo', desc: 'Vaciado de garajes, sótanos y desvanes, limpieza de cristales y fachadas. Presupuesto claro, equipo rápido, en todo Luxemburgo.' },
+  fr: { title: 'CleanCrew · Débarras de garage & nettoyage au Luxembourg', desc: 'Débarras de garages, caves et greniers, nettoyage de vitres et d’allées. Devis clair, équipe rapide qui revient, partout au Luxembourg.' },
+  de: { title: 'CleanCrew · Garagenentrümpelung & Reinigung in Luxemburg', desc: 'Entrümpelung von Garagen, Kellern und Dachböden, Fenster- und Einfahrtreinigung. Klares Angebot, schnelles Team, in ganz Luxemburg.' },
+  en: { title: 'CleanCrew · Garage clearance & cleaning in Luxembourg', desc: 'Garage, cellar and attic clearance, plus window and driveway cleaning. Clear quote, fast crew that comes back, anywhere in Luxembourg.' },
+  lu: { title: 'CleanCrew · Garagen entrëmpelen & botzen zu Lëtzebuerg', desc: 'Entrëmpelung vu Garagen, Kelleren a Späicheren, Fënster- an Afahrtbotzen. Klore Devis, séiert Team, am ganze Land.' },
+  pt: { title: 'CleanCrew · Esvaziamento de garagens & limpeza no Luxemburgo', desc: 'Esvaziamento de garagens, caves e sótãos, limpeza de vidros e acessos. Orçamento claro, equipa rápida que regressa, em todo o Luxemburgo.' },
+  es: { title: 'CleanCrew · Vaciado de garajes & limpieza en Luxemburgo', desc: 'Vaciado de garajes, sótanos y desvanes, limpieza de cristales y accesos. Presupuesto claro, equipo rápido, en todo Luxemburgo.' },
 }[lang];
 ---
 <Layout lang={lang} title={meta.title} description={meta.desc} faq={faq} overlayNav>

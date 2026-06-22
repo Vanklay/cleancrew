@@ -1,13 +1,13 @@
 # CleanCrew
 
-> CleanCrew is a premium garage-clearance and exterior-cleaning company in Luxembourg. One team clears your garage and keeps the rest of the property impeccable — windows and façades/driveways — across the whole Grand Duchy. Clear up-front quote, fast turnaround, and the same crew comes back, so it already knows your place.
+> CleanCrew is a premium garage-clearance and exterior-cleaning company in Luxembourg. One team clears your garage and keeps the rest of the property impeccable — windows and driveways/patios — across the whole Grand Duchy. Clear up-front quote, fast turnaround, and the same crew comes back, so it already knows your place.
 
 CleanCrew (cleancrew.lu) is based in Strassen and serves all of Luxembourg. The site is available in French, English, German, Portuguese, Luxembourgish and Spanish (Portuguese is a first-class language, not a fallback). No hidden costs; no public price lists — pricing is given as a clear quote inside the booking flow.
 
 ## Services
 - [Garage clearance](https://cleancrew.lu/en/services/clearance): Garages, cellars and attics emptied in a single visit — sorting, removal and recycling handled. The high-need entry point into a whole-property relationship.
 - [Window cleaning](https://cleancrew.lu/en/services/windows): Windows, bays, verandas and glass roofs left streak-free, hand-finished. A speed ranked among the best in Luxembourg.
-- [Façade & driveway cleaning](https://cleancrew.lu/en/services/surfaces): Pressure washing of façades, driveways, terraces and paved areas — moss, grime and stains lifted in one pass.
+- [Driveway & patio cleaning](https://cleancrew.lu/en/services/surfaces): Pressure washing of driveways, alleys, patios and paved areas — moss, grime and stains lifted in one pass.
 
 ## Key facts
 - Area served: Luxembourg (Grand Duchy); based in Strassen.
