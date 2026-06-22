@@ -10,8 +10,9 @@ interface Props {
   type?: 'website' | 'article';
   faq?: { q: string; a: string }[];
   service?: { name: string; serviceType: string; description: string };
+  howto?: { name: string; steps: string[] };
 }
-const { lang, title, description, path = '', type = 'website', faq, service } = Astro.props;
+const { lang, title, description, path = '', type = 'website', faq, service, howto } = Astro.props;
 
 const clean = path.replace(/^\/+|\/+$/g, '');
 const sub = clean ? '/' + clean : '';
@@ -64,6 +65,14 @@ const serviceSchema = service ? {
   url: canonical,
 } : null;
 
+// HowTo — the service "how it works" steps (good for AEO/LLM answers).
+const howToSchema = howto && howto.steps.length ? {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: howto.name,
+  step: howto.steps.map((s, i) => ({ '@type': 'HowToStep', position: i + 1, text: s })),
+} : null;
+
 // BreadcrumbList for non-home pages. Names are localized; first segment maps to
 // a nav label, a service sub-page to its service title, and any leaf (e.g. a
 // blog post) falls back to the page title with the " · CleanCrew" suffix stripped.
@@ -112,4 +121,5 @@ const breadcrumbs = segments.length ? {
 <script type="application/ld+json" set:html={JSON.stringify(localBusiness)} />
 {faqSchema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />}
 {serviceSchema && <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />}
+{howToSchema && <script type="application/ld+json" set:html={JSON.stringify(howToSchema)} />}
 {breadcrumbs && <script type="application/ld+json" set:html={JSON.stringify(breadcrumbs)} />}

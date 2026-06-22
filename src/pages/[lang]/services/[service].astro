@@ -2,7 +2,7 @@
 import { langServiceStaticPaths } from '../../../lib/paths';
 import Layout from '../../../layouts/Layout.astro';
 import Faq from '../../../components/Faq.astro';
-import { localizedPath, type Lang, type Service } from '../../../i18n/config';
+import { SERVICES, localizedPath, type Lang, type Service } from '../../../i18n/config';
 import { useTranslations, useRaw } from '../../../i18n/ui';
 
 export const getStaticPaths = langServiceStaticPaths;
@@ -12,50 +12,98 @@ const t = useTranslations(lang);
 const r = useRaw(lang);
 const p = (s: string) => localizedPath(lang, s);
 
+const idx = SERVICES.indexOf(service);
 const title = t(`services.${service}.title`);
+const lead = t(`service.${service}.lead`);
 const points = r(`service.${service}.points`) as string[];
+const steps = r(`service.${service}.steps`) as string[];
 const faq = [
   { q: t(`service.${service}.faq.1.q`), a: t(`service.${service}.faq.1.a`) },
   { q: t(`service.${service}.faq.2.q`), a: t(`service.${service}.faq.2.a`) },
 ];
-const serviceSchema = {
-  name: title,
-  serviceType: title,
-  description: t(`services.${service}.desc`),
-};
+const others = SERVICES.filter((s) => s !== service);
+
+const serviceSchema = { name: title, serviceType: title, description: t(`services.${service}.desc`) };
+const howto = { name: `${title} — ${t('service.how')}`, steps };
+const metaTitle = `${title} ${t('geo.in')} · CleanCrew`;
 ---
 <Layout
   lang={lang}
   path={`services/${service}`}
-  title={`${title} · CleanCrew`}
-  description={t(`services.${service}.desc`)}
+  title={metaTitle}
+  description={lead}
   faq={faq}
   service={serviceSchema}
+  howto={howto}
 >
-  <section class="container-x pt-24 pb-16 md:pt-32 md:pb-20">
-    <p class="text-sm tracking-wider uppercase text-accent mb-6">{t('hero.kicker')}</p>
-    <h1 class="headline text-4xl md:text-7xl font-semibold max-w-3xl">{title}</h1>
-    <p class="mt-8 text-lg md:text-xl text-ink-soft max-w-2xl leading-relaxed">{t(`service.${service}.lead`)}</p>
-    <div class="mt-10"><a href={p('book')} class="btn">{t('hero.cta')}</a></div>
-  </section>
-
-  <section class="section">
-    <div class="container-x">
-      <h2 class="headline text-3xl md:text-4xl font-semibold mb-10">{t('service.included')}</h2>
-      <ul class="tile-grid md:grid-cols-3">
-        {points.map((point) => (
-          <li class="card text-ink-soft leading-relaxed">{point}</li>
-        ))}
-      </ul>
+  <!-- HERO — service as its own front door -->
+  <section class="container-x pt-16 pb-16 md:pt-24 md:pb-20">
+    <div class="grid gap-6 md:grid-cols-12 md:items-end">
+      <div class="md:col-span-9">
+        <p class="eyebrow reveal">{t('hero.kicker')}</p>
+        <h1 class="headline reveal mt-6 text-[clamp(2.5rem,7vw,5.75rem)]" style="--d:.06s">{title}</h1>
+      </div>
+      <div class="reveal index-num hidden md:block md:col-span-3 text-right text-[8rem] leading-none text-accent/12" style="--d:.1s">0{idx + 1}</div>
+    </div>
+    <p class="reveal mt-8 text-lg md:text-2xl text-ink-soft leading-relaxed max-w-2xl" style="--d:.14s">{lead}</p>
+    <div class="reveal mt-10 flex flex-wrap gap-4" style="--d:.2s">
+      <a href={p('book')} class="btn">{t('hero.cta')}</a>
+      <a href={p('contact')} class="btn-ghost">{t('nav.contact')}</a>
     </div>
   </section>
 
+  <!-- WHAT'S INCLUDED -->
+  <section class="container-x section">
+    <h2 class="headline reveal text-3xl md:text-5xl mb-12 md:mb-16 max-w-xl">{t('service.included')}</h2>
+    <div class="tile-grid md:grid-cols-3 reveal">
+      {points.map((point, i) => (
+        <div class="bg-paper p-8 md:p-10">
+          <div class="index-num text-2xl text-accent mb-5">0{i + 1}</div>
+          <p class="text-ink-soft leading-relaxed">{point}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS — numbered, editorial -->
+  <section class="container-x section">
+    <h2 class="headline reveal text-3xl md:text-5xl mb-12 md:mb-16 max-w-xl">{t('service.how')}</h2>
+    <ol>
+      {steps.map((step, i) => (
+        <li class="reveal grid gap-3 md:grid-cols-12 md:gap-8 border-t border-line py-8 md:py-10 md:items-baseline" style={`--d:${i * 0.06}s`}>
+          <div class="md:col-span-2 index-num text-4xl md:text-6xl text-accent">0{i + 1}</div>
+          <p class="md:col-span-10 text-xl md:text-2xl leading-snug max-w-3xl">{step}</p>
+        </li>
+      ))}
+      <div class="border-t border-line"></div>
+    </ol>
+  </section>
+
+  <!-- FAQ -->
   <Faq title={t('faq.title')} items={faq} />
 
-  <section class="section text-center">
-    <div class="container-x">
-      <h2 class="headline text-3xl md:text-5xl font-semibold mb-8">{t('book.title')}</h2>
-      <a href={p('book')} class="btn">{t('hero.cta')}</a>
+  <!-- CROSS-SELL — the bundle, expressed as benefit -->
+  <section class="container-x section">
+    <h2 class="headline reveal text-3xl md:text-5xl max-w-2xl">{t('service.also')}</h2>
+    <p class="reveal mt-5 mb-12 text-lg text-ink-soft max-w-xl">{t('service.alsoText')}</p>
+    <div class="tile-grid md:grid-cols-2 reveal">
+      {others.map((o) => (
+        <a href={p(`services/${o}`)} class="group bg-paper p-8 md:p-10 transition-colors hover:bg-white">
+          <h3 class="display text-2xl mb-2">{t(`services.${o}.title`)}</h3>
+          <p class="text-ink-soft leading-relaxed text-[15px]">{t(`services.${o}.desc`)}</p>
+          <span class="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-ink transition-colors group-hover:text-accent">
+            {t('services.learn')} <span class="transition-transform group-hover:translate-x-1">→</span>
+          </span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- CTA BAND -->
+  <section class="mt-24 md:mt-32 bg-ink text-white">
+    <div class="container-x py-24 md:py-32 text-center">
+      <h2 class="headline reveal text-3xl md:text-6xl text-white max-w-3xl mx-auto">{t('book.title')}</h2>
+      <a href={p('book')} class="btn reveal mt-10" style="--d:.08s">{t('hero.cta')}</a>
     </div>
   </section>
 </Layout>

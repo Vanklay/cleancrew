@@ -13,8 +13,9 @@ interface Props {
   type?: 'website' | 'article';
   faq?: { q: string; a: string }[];
   service?: { name: string; serviceType: string; description: string };
+  howto?: { name: string; steps: string[] };
 }
-const { lang, title, description, path, type, faq, service } = Astro.props;
+const { lang, title, description, path, type, faq, service, howto } = Astro.props;
 ---
 <!doctype html>
 <html lang={LANGUAGES[lang].locale} dir={LANGUAGES[lang].dir}>
@@ -26,7 +27,7 @@ const { lang, title, description, path, type, faq, service } = Astro.props;
     <link rel="preconnect" href="https://api.fontshare.com" />
     <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin />
     <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" />
-    <Seo lang={lang} title={title} description={description} path={path} type={type} faq={faq} service={service} />
+    <Seo lang={lang} title={title} description={description} path={path} type={type} faq={faq} service={service} howto={howto} />
   </head>
   <body>
     <Nav />
