@@ -6,44 +6,54 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const p = (s: string) => localizedPath(lang, s);
 const year = new Date().getFullYear();
+const tel = SITE.phone.replace(/\s+/g, '');
+const host = SITE.domain.replace(/^https?:\/\//, '');
 ---
-<footer class="mt-32 border-t border-line">
-  <div class="container-x py-16 md:py-20">
-    <!-- brand + CTA -->
-    <div class="flex flex-col gap-8 border-b border-line pb-12 md:flex-row md:items-end md:justify-between">
-      <div>
-        <Logo variant="full" class="h-11 w-auto" />
-        <p class="mt-4 max-w-xs text-sm text-mist">{t('footer.tagline')}</p>
+<footer class="mt-32 bg-ink text-white">
+  <div class="container-x py-16 md:py-24">
+    <div class="grid gap-12 md:grid-cols-12">
+      <!-- brand -->
+      <div class="md:col-span-5">
+        <Logo variant="full" class="h-11 w-auto brightness-0 invert" />
+        <p class="mt-5 max-w-xs text-sm leading-relaxed text-white/55">{t('footer.tagline')}</p>
+        <a href={p('book')} class="btn mt-7 inline-flex">{t('hero.cta')}</a>
       </div>
-      <a href={p('book')} class="btn self-start md:self-auto">{t('hero.cta')}</a>
+
+      <!-- nav columns -->
+      <div class="grid grid-cols-2 gap-10 sm:grid-cols-3 md:col-span-7">
+        <nav>
+          <h3 class="footer-head">{t('footer.services')}</h3>
+          <ul class="space-y-3">
+            {SERVICES.map((s) => (
+              <li><a href={p(`services/${s}`)} class="footer-link">{t(`services.${s}.title`)}</a></li>
+            ))}
+          </ul>
+        </nav>
+
+        <nav>
+          <h3 class="footer-head">{t('footer.company')}</h3>
+          <ul class="space-y-3">
+            <li><a href={p('about')} class="footer-link">{t('nav.about')}</a></li>
+            <li><a href={p('blog')} class="footer-link">{t('nav.blog')}</a></li>
+            <li><a href={p('contact')} class="footer-link">{t('nav.contact')}</a></li>
+          </ul>
+        </nav>
+
+        <div class="col-span-2 sm:col-span-1">
+          <h3 class="footer-head">{t('nav.contact')}</h3>
+          <ul class="space-y-3">
+            <li><a href={`mailto:${SITE.email}`} class="footer-link">{SITE.email}</a></li>
+            <li><a href={`tel:${tel}`} class="footer-link">{SITE.phone}</a></li>
+            <li class="text-sm text-white/55">{SITE.city}, Luxembourg</li>
+          </ul>
+        </div>
+      </div>
     </div>
 
-    <!-- columns -->
-    <div class="mt-12 grid gap-10 text-sm md:grid-cols-4">
-      <div class="md:col-span-2">
-        <a href={`mailto:${SITE.email}`} class="text-ink-soft transition-colors hover:text-accent">{SITE.email}</a>
-      </div>
-      <div>
-        <div class="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-mist">{t('footer.services')}</div>
-        <ul class="space-y-2.5 text-ink-soft">
-          {SERVICES.map((s) => (
-            <li><a href={p(`services/${s}`)} class="transition-colors hover:text-accent">{t(`services.${s}.title`)}</a></li>
-          ))}
-        </ul>
-      </div>
-      <div>
-        <div class="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-mist">{t('footer.company')}</div>
-        <ul class="space-y-2.5 text-ink-soft">
-          <li><a href={p('about')} class="transition-colors hover:text-accent">{t('nav.about')}</a></li>
-          <li><a href={p('blog')} class="transition-colors hover:text-accent">{t('nav.blog')}</a></li>
-          <li><a href={p('contact')} class="transition-colors hover:text-accent">{t('nav.contact')}</a></li>
-        </ul>
-      </div>
+    <!-- bottom bar -->
+    <div class="mt-16 flex flex-col gap-3 border-t border-white/10 pt-7 text-xs text-white/40 sm:flex-row sm:items-center sm:justify-between md:mt-20">
+      <span>© {year} {SITE.name}. {t('footer.rights')}</span>
+      <span>{host}</span>
     </div>
-  </div>
-
-  <div class="container-x flex flex-col gap-2 border-t border-line py-6 text-xs text-mist sm:flex-row sm:justify-between">
-    <span>© {year} {SITE.name}. {t('footer.rights')}</span>
-    <span>{SITE.city} · Luxembourg</span>
   </div>
 </footer>
