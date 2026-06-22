@@ -2,6 +2,8 @@
 import { LANGUAGES, LANG_KEYS, getLangFromUrl, localizedPath, type Lang } from '../i18n/config';
 import { useTranslations } from '../i18n/ui';
 import Logo from './Logo.astro';
+interface Props { overlay?: boolean }
+const { overlay = false } = Astro.props;
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const p = (s: string) => localizedPath(lang, s);
@@ -15,21 +17,21 @@ const links: [string, string][] = [
   ['services', 'nav.services'], ['about', 'nav.about'], ['blog', 'nav.blog'], ['contact', 'nav.contact'],
 ];
 ---
-<header class="sticky top-0 z-50 border-b border-line/70 bg-paper/75 backdrop-blur-xl">
+<header class={`site-nav sticky top-0 z-50 ${overlay ? 'at-top' : ''}`} data-overlay={overlay ? '' : undefined}>
   <nav class="container-x flex h-16 items-center justify-between">
     <a href={p('')} class="transition-opacity hover:opacity-70" aria-label="CleanCrew">
-      <Logo variant="full" class="h-9 w-auto" />
+      <Logo variant="full" class="nav-logo h-11 w-auto" />
     </a>
 
     <div class="hidden items-center gap-8 text-sm md:flex">
       {links.map(([path, key]) => (
-        <a href={p(path)} class={`transition-colors hover:text-ink ${current === path ? 'font-semibold text-ink' : 'text-ink-soft'}`}>{t(key)}</a>
+        <a href={p(path)} aria-current={current === path ? 'page' : undefined} class="nav-link">{t(key)}</a>
       ))}
     </div>
 
     <div class="flex items-center gap-2 sm:gap-3">
       <details class="group relative">
-        <summary class="flex cursor-pointer list-none select-none items-center gap-1.5 rounded-lg px-2 py-1.5 text-sm text-ink-soft transition-colors hover:text-ink">
+        <summary class="nav-ctrl flex cursor-pointer list-none select-none items-center gap-1.5 rounded-lg px-2 py-1.5 text-sm hover:opacity-80">
           <span>{LANGUAGES[lang].flag}</span><span class="font-medium">{lang.toUpperCase()}</span>
         </summary>
         <div class="absolute right-0 mt-2 w-44 rounded-xl border border-line bg-white p-1 shadow-soft">
@@ -41,11 +43,11 @@ const links: [string, string][] = [
         </div>
       </details>
 
-      <a href={p('book')} class="hidden rounded-full bg-ink px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-accent sm:inline-flex">{t('nav.book')}</a>
+      <a href={p('book')} class="nav-book hidden rounded-full px-5 py-2.5 text-sm font-semibold sm:inline-flex">{t('nav.book')}</a>
 
       <!-- mobile menu -->
       <details class="md:hidden">
-        <summary class="grid h-9 w-9 cursor-pointer list-none place-items-center rounded-lg text-ink transition-colors hover:bg-line/60">
+        <summary class="nav-ctrl grid h-9 w-9 cursor-pointer list-none place-items-center rounded-lg hover:opacity-80">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18" /></svg>
         </summary>
         <div class="absolute left-0 right-0 top-full border-b border-line bg-paper/95 backdrop-blur-xl">
@@ -60,3 +62,13 @@ const links: [string, string][] = [
     </div>
   </nav>
 </header>
+
+<script>
+  // Overlay nav (over a dark hero): transparent + white at the top, solid on scroll.
+  const nav = document.querySelector<HTMLElement>('.site-nav[data-overlay]');
+  if (nav) {
+    const onScroll = () => nav.classList.toggle('at-top', window.scrollY < 40);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+  }
+</script>

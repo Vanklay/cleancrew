@@ -45,6 +45,25 @@ body { background: var(--color-paper); color: var(--color-ink); font-family: var
 
 .tile-grid { @apply grid gap-px bg-line rounded-2xl overflow-hidden; }
 
+/* site nav — solid by default; transparent white "overlay" over a dark hero (JS-gated, so no-JS stays solid) */
+.site-nav { @apply border-b border-line bg-paper/80 backdrop-blur-xl; transition: background-color .35s ease, border-color .35s ease; }
+.nav-logo { transition: filter .35s ease; }
+.nav-link { @apply text-ink-soft transition-colors; }
+.nav-link:hover { @apply text-ink; }
+.nav-link[aria-current="page"] { @apply text-ink font-semibold; }
+.nav-ctrl { @apply text-ink-soft transition-colors; }
+.nav-book { @apply bg-ink text-white transition-colors; }
+.nav-book:hover { background: var(--color-accent); }
+
+html.js .site-nav.at-top { @apply border-transparent bg-transparent; backdrop-filter: none; }
+html.js .site-nav.at-top .nav-logo { filter: brightness(0) invert(1); }
+html.js .site-nav.at-top .nav-link { color: rgba(255, 255, 255, 0.82); }
+html.js .site-nav.at-top .nav-link:hover,
+html.js .site-nav.at-top .nav-link[aria-current="page"] { color: #fff; }
+html.js .site-nav.at-top .nav-ctrl { color: #fff; }
+html.js .site-nav.at-top .nav-book { @apply bg-white text-ink; }
+html.js .site-nav.at-top .nav-book:hover { @apply bg-white/90; }
+
 /* form inputs */
 .field { @apply mt-1.5 w-full rounded-xl border border-line bg-white px-3.5 py-3 text-ink transition-colors; }
 .field:focus { @apply border-accent; outline: none; }

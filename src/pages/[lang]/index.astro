@@ -26,7 +26,7 @@ const meta = {
   es: { title: 'CleanCrew · Vaciado de garajes & limpieza en Luxemburgo', desc: 'Vaciado de garajes, sótanos y desvanes, limpieza de cristales y fachadas. Presupuesto claro, equipo rápido, en todo Luxemburgo.' },
 }[lang];
 ---
-<Layout lang={lang} title={meta.title} description={meta.desc} faq={faq}>
+<Layout lang={lang} title={meta.title} description={meta.desc} faq={faq} overlayNav>
   <!-- HERO — immersive: the transformed result fills the frame, headline over a gradient -->
   <section data-hero-slider class="relative isolate -mt-16 overflow-hidden">
     <div class="absolute inset-0 -z-10">
@@ -39,18 +39,14 @@ const meta = {
     </div>
     <div class="absolute inset-0 -z-10 bg-gradient-to-t from-ink/95 via-ink/55 to-ink/20"></div>
     <div class="absolute inset-0 -z-10 bg-gradient-to-r from-ink/40 to-transparent"></div>
+    <div class="absolute inset-x-0 top-0 -z-10 h-32 bg-gradient-to-b from-ink/55 to-transparent"></div>
 
     <div class="container-x flex min-h-[90vh] flex-col justify-end pb-12 pt-40 md:min-h-[94vh] md:pb-14">
-      <h1 class="headline reveal max-w-[18ch] text-white text-[clamp(2.4rem,5.6vw,5.25rem)]" style="--d:.08s">
-        {t('hero.title')}
-        <span class="mt-3 block text-[0.44em] font-semibold tracking-tight text-white/55">{t('hero.title2')}</span>
+      <h1 class="reveal font-display font-medium tracking-tight leading-[1.08] text-white text-[clamp(2rem,4.4vw,4rem)] max-w-[24ch]" style="--d:.08s">
+        {t('hero.title')} <span class="text-white/55">{t('hero.title2')}</span>
       </h1>
 
-      <div class="reveal relative mt-10 h-px w-full bg-white/20 md:mt-16" style="--d:.2s">
-        <span class="absolute left-0 top-0 h-px w-16 bg-accent"></span>
-      </div>
-
-      <div class="reveal mt-7 flex flex-col gap-6 md:flex-row md:items-end md:justify-between" style="--d:.28s">
+      <div class="reveal mt-10 flex flex-col gap-6 md:flex-row md:items-end md:justify-between" style="--d:.22s">
         <div class="space-y-5">
           <p class="max-w-md text-base text-white/80 leading-relaxed md:text-lg">{t('hero.sub')}</p>
           <div class="flex gap-2">
