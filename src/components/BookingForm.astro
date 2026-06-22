@@ -14,7 +14,7 @@ const labels = {
   months: r('book.calendar.months') as string[], days: r('book.calendar.days') as string[],
   steps: [t('book.service'), t('book.date'), t('book.details')],
 };
-const services = SERVICES.map((s) => ({ key: s, title: t(`services.${s}.title`), desc: t(`services.${s}.desc`) }));
+const services = SERVICES.map((s) => ({ key: s, title: t(`services.${s}.title`) }));
 ---
 <div id="booking" data-lang={lang} class="mx-auto max-w-xl">
   <script type="application/json" id="bookingLabels" set:html={JSON.stringify(labels)} />
@@ -31,19 +31,16 @@ const services = SERVICES.map((s) => ({ key: s, title: t(`services.${s}.title`),
       </div>
     </div>
 
-    <!-- STEP 1: service -->
+    <!-- STEP 1: services — multi-select checklist -->
     <section data-step="1" class="step">
-      <div class="-mx-2.5">
+      <div class="divide-y divide-line overflow-hidden rounded-2xl border border-line">
         {services.map((s, i) => (
           <button type="button" data-service={s.key} data-title={s.title} aria-pressed={i === 0 ? 'true' : 'false'}
-            class="svc-card group flex w-full items-center gap-3.5 rounded-2xl px-2.5 py-3 text-left transition-colors hover:bg-paper aria-pressed:bg-accent-soft">
-            <span class="grid h-5 w-5 shrink-0 place-items-center rounded-full border-2 border-line transition-colors group-aria-pressed:border-accent">
-              <span class="h-2 w-2 rounded-full bg-accent opacity-0 transition-opacity group-aria-pressed:opacity-100"></span>
+            class="svc-card group flex w-full items-center gap-3.5 px-4 py-4 text-left font-semibold leading-tight transition-colors hover:bg-paper aria-pressed:bg-accent-soft aria-pressed:text-accent-ink">
+            <span class="grid h-5 w-5 shrink-0 place-items-center rounded-md border-2 border-line transition-colors group-aria-pressed:border-accent group-aria-pressed:bg-accent">
+              <svg class="h-3 w-3 text-white opacity-0 transition-opacity group-aria-pressed:opacity-100" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
             </span>
-            <span class="min-w-0">
-              <span class="block font-semibold leading-tight">{s.title}</span>
-              <span class="mt-0.5 block text-sm leading-snug text-ink-soft">{s.desc}</span>
-            </span>
+            {s.title}
           </button>
         ))}
       </div>
@@ -112,8 +109,7 @@ const services = SERVICES.map((s) => ({ key: s, title: t(`services.${s}.title`),
   const formMsg = document.getElementById('formMsg')!;
 
   const segBtns = Array.from(root.querySelectorAll<HTMLButtonElement>('.svc-card'));
-  let service = segBtns[0]?.dataset.service || 'clearance';
-  let serviceTitle = segBtns[0]?.dataset.title || '';
+  const selectedBtns = () => segBtns.filter((b) => b.getAttribute('aria-pressed') === 'true');
   const TOTAL = 3;
   let step = 1;
 
@@ -133,17 +129,15 @@ const services = SERVICES.map((s) => ({ key: s, title: t(`services.${s}.title`),
   }
 
   function updatePrimary() {
-    const ok = step === 2 ? !!dateInput.value : true;
+    const ok = step === 1 ? selectedBtns().length > 0 : step === 2 ? !!dateInput.value : true;
     primary.disabled = !ok;
     primary.classList.toggle('opacity-40', !ok);
     primary.classList.toggle('pointer-events-none', !ok);
   }
 
   segBtns.forEach((btn) => btn.addEventListener('click', () => {
-    segBtns.forEach((b) => b.setAttribute('aria-pressed', 'false'));
-    btn.setAttribute('aria-pressed', 'true');
-    service = btn.dataset.service!;
-    serviceTitle = btn.dataset.title || '';
+    btn.setAttribute('aria-pressed', btn.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
+    updatePrimary();
   }));
 
   // calendar
@@ -187,7 +181,8 @@ const services = SERVICES.map((s) => ({ key: s, title: t(`services.${s}.title`),
   document.getElementById('next')!.onclick = () => { view.setMonth(view.getMonth() + 1); renderCal(); };
 
   function fillRecap() {
-    document.getElementById('recap')!.textContent = `${serviceTitle} · ${dateInput.value ? fmtDate(dateInput.value) : '—'}`;
+    const titles = selectedBtns().map((b) => b.dataset.title).join(', ');
+    document.getElementById('recap')!.textContent = `${titles} · ${dateInput.value ? fmtDate(dateInput.value) : '—'}`;
   }
 
   back.onclick = () => { if (step > 1) setStep(step - 1); };
@@ -199,7 +194,7 @@ const services = SERVICES.map((s) => ({ key: s, title: t(`services.${s}.title`),
 
   async function submit() {
     const val = (id: string) => (document.getElementById(id) as HTMLInputElement).value.trim();
-    const payload = { name: val('f_name'), email: val('f_email'), phone: val('f_phone'), service, req_date: dateInput.value, message: val('f_message'), lang };
+    const payload = { name: val('f_name'), email: val('f_email'), phone: val('f_phone'), service: selectedBtns().map((b) => b.dataset.service).join(','), req_date: dateInput.value, message: val('f_message'), lang };
     if (!payload.name || !payload.email) { formMsg.textContent = S.error; return; }
     formMsg.textContent = '';
     primary.disabled = true; primary.classList.add('opacity-40');
