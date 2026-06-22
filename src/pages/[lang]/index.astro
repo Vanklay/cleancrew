@@ -9,8 +9,8 @@ const lang = Astro.params.lang as Lang;
 const t = useTranslations(lang);
 const p = (s: string) => localizedPath(lang, s);
 
-const services = SERVICES.map((key) => ({ key, href: `${p('services')}#${key}` }));
-const why = ['1','2','3','4'];
+const services = SERVICES.map((key) => ({ key, href: p(`services/${key}`) }));
+const why = ['1', '2', '3', '4'];
 
 // AEO/LLM answer block — concise Q&A that LLMs and featured snippets lift verbatim.
 // Copy lives in ui.ts (one source of truth, all six locales).
@@ -20,59 +20,83 @@ const faq = [
 ];
 
 const meta = {
-  fr: { title: 'CleanCrew · Débarras de garage & nettoyage au Luxembourg', desc: 'Débarras de garages, caves et greniers, puis nettoyage de vitres et parties communes. Devis clair, équipe rapide, partout au Luxembourg.' },
-  de: { title: 'CleanCrew · Garagenentrümpelung & Reinigung in Luxemburg', desc: 'Entrümpelung von Garagen, Kellern und Dachböden, dann Fenster- und Gemeinschaftsreinigung. Klares Angebot, schnelles Team, in ganz Luxemburg.' },
-  en: { title: 'CleanCrew · Garage clearance & cleaning in Luxembourg', desc: 'Garage, cellar and attic clearance, then window and common-area cleaning. Clear quote, fast crew, anywhere in Luxembourg.' },
-  lu: { title: 'CleanCrew · Garagen entrëmpelen & botzen zu Lëtzebuerg', desc: 'Entrëmpelung vu Garagen, Kelleren a Späicheren, duerno Fënster- a Gemeinschaftsbotzen. Klore Devis, séiert Team, am ganze Land.' },
-  pt: { title: 'CleanCrew · Esvaziamento de garagens & limpeza no Luxemburgo', desc: 'Esvaziamento de garagens, caves e sótãos, depois limpeza de vidros e zonas comuns. Orçamento claro, equipa rápida, em todo o Luxemburgo.' },
-  es: { title: 'CleanCrew · Vaciado de garajes & limpieza en Luxemburgo', desc: 'Vaciado de garajes, sótanos y desvanes, luego limpieza de cristales y zonas comunes. Presupuesto claro, equipo rápido, en todo Luxemburgo.' },
+  fr: { title: 'CleanCrew · Débarras de garage & nettoyage au Luxembourg', desc: 'Débarras de garages, caves et greniers, nettoyage de vitres et de façades. Devis clair, équipe rapide qui revient, partout au Luxembourg.' },
+  de: { title: 'CleanCrew · Garagenentrümpelung & Reinigung in Luxemburg', desc: 'Entrümpelung von Garagen, Kellern und Dachböden, Fenster- und Fassadenreinigung. Klares Angebot, schnelles Team, in ganz Luxemburg.' },
+  en: { title: 'CleanCrew · Garage clearance & cleaning in Luxembourg', desc: 'Garage, cellar and attic clearance, plus window and façade cleaning. Clear quote, fast crew that comes back, anywhere in Luxembourg.' },
+  lu: { title: 'CleanCrew · Garagen entrëmpelen & botzen zu Lëtzebuerg', desc: 'Entrëmpelung vu Garagen, Kelleren a Späicheren, Fënster- a Fassadebotzen. Klore Devis, séiert Team, am ganze Land.' },
+  pt: { title: 'CleanCrew · Esvaziamento de garagens & limpeza no Luxemburgo', desc: 'Esvaziamento de garagens, caves e sótãos, limpeza de vidros e fachadas. Orçamento claro, equipa rápida que regressa, em todo o Luxemburgo.' },
+  es: { title: 'CleanCrew · Vaciado de garajes & limpieza en Luxemburgo', desc: 'Vaciado de garajes, sótanos y desvanes, limpieza de cristales y fachadas. Presupuesto claro, equipo rápido, en todo Luxemburgo.' },
 }[lang];
 ---
 <Layout lang={lang} title={meta.title} description={meta.desc} faq={faq}>
-  <!-- HERO: clearance-led -->
-  <section class="container-x pt-24 pb-20 md:pt-36 md:pb-28">
-    <p class="fade-up text-sm tracking-wider uppercase text-accent mb-6">{t('hero.kicker')}</p>
-    <h1 class="fade-up headline text-5xl md:text-8xl font-semibold max-w-4xl">
-      {t('hero.title')}<br /><span class="text-mist">{t('hero.title2')}</span>
+  <!-- HERO — editorial, asymmetric, clearance is the hook into the whole property -->
+  <section class="container-x pt-16 pb-20 md:pt-24 md:pb-28">
+    <p class="eyebrow reveal" style="--d:.05s">{t('hero.kicker')}</p>
+
+    <h1 class="headline reveal mt-7 text-[clamp(2.7rem,8.5vw,7.5rem)] max-w-[15ch]" style="--d:.12s">
+      {t('hero.title')}<br />{t('hero.title2')}
     </h1>
-    <p class="fade-up mt-8 text-lg md:text-xl text-ink-soft max-w-2xl leading-relaxed">{t('hero.sub')}</p>
-    <div class="fade-up mt-10 flex flex-wrap gap-4">
-      <a href={p('book')} class="btn">{t('hero.cta')}</a>
-      <a href={p('services')} class="btn-ghost">{t('hero.cta2')}</a>
+
+    <div class="mt-10 md:mt-12 grid gap-8 md:grid-cols-12 md:items-end">
+      <p class="reveal md:col-span-6 text-lg md:text-xl text-ink-soft leading-relaxed max-w-xl" style="--d:.2s">
+        {t('hero.sub')}
+      </p>
+      <div class="reveal md:col-span-6 flex flex-wrap gap-4 md:justify-end" style="--d:.28s">
+        <a href={p('book')} class="btn">{t('hero.cta')}</a>
+        <a href={p('services')} class="btn-ghost">{t('hero.cta2')}</a>
+      </div>
+    </div>
+
+    <div class="reveal mt-14 md:mt-20 overflow-hidden rounded-3xl" style="--d:.36s; box-shadow: var(--shadow-hero);">
+      <img src="/hero.webp" alt={t('hero.title')} width="1290" height="640" fetchpriority="high"
+           class="w-full h-[clamp(15rem,42vw,34rem)] object-cover" />
     </div>
   </section>
 
-  <!-- SERVICES: three equal -->
-  <section class="container-x py-20 border-t border-line">
-    <h2 class="headline text-3xl md:text-5xl font-semibold mb-14 max-w-2xl">{t('services.title')}</h2>
-    <div class="tile-grid md:grid-cols-3">
-      {services.map((s) => (
-        <a href={s.href} class="group bg-paper p-8 md:p-10 hover:bg-white transition-colors">
-          <h3 class="text-xl font-semibold mb-3">{t(`services.${s.key}.title`)}</h3>
-          <p class="text-ink-soft leading-relaxed text-[15px]">{t(`services.${s.key}.desc`)}</p>
-          <span class="mt-6 inline-block text-sm text-accent group-hover:translate-x-1 transition-transform">{t('services.learn')} →</span>
+  <!-- THREE SERVICES — equal peers, numbered editorial list (no card grid) -->
+  <section class="container-x section">
+    <h2 class="headline reveal text-4xl md:text-6xl max-w-2xl">{t('services.title')}</h2>
+
+    <div class="mt-12 md:mt-16">
+      {services.map((s, i) => (
+        <a href={s.href} class="group reveal block border-t border-line py-9 md:py-12 transition-colors hover:bg-white" style={`--d:${i * 0.06}s`}>
+          <div class="grid gap-3 md:grid-cols-12 md:gap-8 md:items-baseline">
+            <div class="md:col-span-2 index-num text-5xl md:text-7xl text-accent">0{i + 1}</div>
+            <div class="md:col-span-7">
+              <h3 class="display text-2xl md:text-4xl">{t(`services.${s.key}.title`)}</h3>
+              <p class="mt-3 text-ink-soft leading-relaxed max-w-xl">{t(`services.${s.key}.desc`)}</p>
+            </div>
+            <div class="md:col-span-3 self-center md:text-right">
+              <span class="inline-flex items-center gap-2 text-sm font-semibold text-ink transition-colors group-hover:text-accent">
+                {t('services.learn')} <span class="transition-transform group-hover:translate-x-1">→</span>
+              </span>
+            </div>
+          </div>
         </a>
       ))}
+      <div class="border-t border-line"></div>
     </div>
   </section>
 
-  <!-- WHY -->
-  <section class="container-x py-20 border-t border-line">
-    <h2 class="headline text-3xl md:text-5xl font-semibold mb-14">{t('why.title')}</h2>
-    <div class="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
+  <!-- WHY — one team, the whole property -->
+  <section class="container-x section">
+    <h2 class="headline reveal text-4xl md:text-6xl max-w-xl mb-14 md:mb-20">{t('why.title')}</h2>
+    <div class="grid gap-x-10 gap-y-14 md:grid-cols-2 lg:grid-cols-4">
       {why.map((n) => (
-        <div>
-          <div class="text-accent text-sm font-mono mb-3">0{n}</div>
-          <h3 class="font-semibold mb-2">{t(`why.${n}.t`)}</h3>
-          <p class="text-ink-soft text-[15px] leading-relaxed">{t(`why.${n}.d`)}</p>
+        <div class="reveal" style={`--d:${(Number(n) - 1) * 0.06}s`}>
+          <div class="index-num text-4xl md:text-5xl text-accent">0{n}</div>
+          <h3 class="display text-xl mt-5 mb-2.5">{t(`why.${n}.t`)}</h3>
+          <p class="text-ink-soft leading-relaxed text-[15px]">{t(`why.${n}.d`)}</p>
         </div>
       ))}
     </div>
   </section>
 
-  <!-- CTA -->
-  <section class="container-x py-24 border-t border-line text-center">
-    <h2 class="headline text-4xl md:text-6xl font-semibold mb-8">{t('book.title')}</h2>
-    <a href={p('book')} class="btn">{t('hero.cta')}</a>
+  <!-- FINAL CTA — near-black band, the signature contrast moment -->
+  <section class="mt-24 md:mt-32 bg-ink text-white">
+    <div class="container-x py-24 md:py-36 text-center">
+      <h2 class="headline reveal text-4xl md:text-7xl text-white max-w-3xl mx-auto">{t('book.title')}</h2>
+      <a href={p('book')} class="btn reveal mt-12" style="--d:.08s">{t('hero.cta')}</a>
+    </div>
   </section>
 </Layout>

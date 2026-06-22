@@ -22,13 +22,27 @@ const { lang, title, description, path, type, faq, service } = Astro.props;
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="preconnect" href="https://rsms.me/" />
-    <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+    <script is:inline>document.documentElement.classList.add('js')</script>
+    <link rel="preconnect" href="https://api.fontshare.com" />
+    <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin />
+    <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" />
     <Seo lang={lang} title={title} description={description} path={path} type={type} faq={faq} service={service} />
   </head>
   <body>
     <Nav />
     <main><slot /></main>
     <Footer />
+    <script>
+      // Seamless scroll reveal — observe once, then disconnect. Tiny + fast.
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const e of entries) {
+            if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
+          }
+        },
+        { rootMargin: '0px 0px -8% 0px' },
+      );
+      for (const el of document.querySelectorAll('.reveal')) io.observe(el);
+    </script>
   </body>
 </html>
