@@ -8,81 +8,82 @@ const r = useRaw(lang);
 
 // Labels for the client island — built from ui.ts, never hardcoded in the script.
 const labels = {
-  success: t('book.success'),
-  error: t('book.error'),
-  available: t('book.calendar.available'),
-  none: t('book.calendar.none'),
-  months: r('book.calendar.months') as string[],
-  days: r('book.calendar.days') as string[],
+  success: t('book.success'), error: t('book.error'), thanks: t('book.thanks'),
+  available: t('book.calendar.available'), none: t('book.calendar.none'),
+  submit: t('book.submit'), next: t('book.next'), back: t('book.back'),
+  months: r('book.calendar.months') as string[], days: r('book.calendar.days') as string[],
 };
-const services = SERVICES.map((s) => ({ key: s, title: t(`services.${s}.title`) }));
+const services = SERVICES.map((s) => ({ key: s, title: t(`services.${s}.title`), desc: t(`services.${s}.desc`) }));
+const steps = [t('book.service'), t('book.date'), t('book.details')];
 ---
-<div id="booking" class="grid lg:grid-cols-5 gap-6 lg:gap-8" data-lang={lang}>
+<div id="booking" data-lang={lang} class="mx-auto max-w-2xl">
   <script type="application/json" id="bookingLabels" set:html={JSON.stringify(labels)} />
+  <div class="rounded-3xl border border-line bg-white p-6 shadow-soft sm:p-8">
 
-  <!-- live summary + trust -->
-  <aside class="lg:col-span-2 order-last lg:order-first">
-    <div class="rounded-2xl border border-line bg-white p-6 lg:sticky lg:top-24">
-      <h2 class="display text-lg">{t('book.summary')}</h2>
-      <dl class="mt-5 space-y-3.5 text-sm">
-        <div class="flex items-center justify-between gap-4">
-          <dt class="text-mist">{t('book.service')}</dt>
-          <dd id="sumService" class="font-semibold text-ink text-right">{services[0].title}</dd>
-        </div>
-        <div class="flex items-center justify-between gap-4">
-          <dt class="text-mist">{t('book.date')}</dt>
-          <dd id="sumDate" class="font-semibold text-ink text-right">—</dd>
-        </div>
-      </dl>
-      <div class="mt-6 pt-6 border-t border-line space-y-2.5 text-sm text-ink-soft">
-        <p class="flex gap-2.5"><span class="text-accent font-bold" aria-hidden="true">✓</span>{t('why.2.t')}</p>
-        <p class="flex gap-2.5"><span class="text-accent font-bold" aria-hidden="true">✓</span>{t('why.1.t')}</p>
-        <p class="flex gap-2.5"><span class="text-accent font-bold" aria-hidden="true">✓</span>{t('why.4.t')}</p>
-      </div>
-    </div>
-  </aside>
+    <!-- progress -->
+    <ol class="mb-8 flex items-center">
+      {steps.map((label, i) => (
+        <li class="flex items-center gap-2.5" data-pill={i + 1}>
+          <span class="dot grid h-7 w-7 shrink-0 place-items-center rounded-full border border-line text-xs font-bold text-mist transition-colors">{i + 1}</span>
+          <span class="plabel hidden text-sm font-semibold text-mist transition-colors sm:inline">{label}</span>
+          {i < 2 && <span class="mx-2.5 h-px w-4 bg-line sm:w-8"></span>}
+        </li>
+      ))}
+    </ol>
 
-  <!-- guided inputs -->
-  <div class="lg:col-span-3 space-y-6">
-    <fieldset>
-      <legend class="text-sm font-semibold mb-2.5">{t('book.service')}</legend>
-      <div id="serviceSeg" class="grid gap-2 sm:grid-cols-3">
+    <!-- STEP 1: service -->
+    <section data-step="1" class="step">
+      <div class="grid gap-3">
         {services.map((s, i) => (
-          <button type="button" data-service={s.key} aria-pressed={i === 0 ? 'true' : 'false'}
-            class="svc-opt rounded-xl border border-line px-3.5 py-2.5 text-left text-[13px] font-medium leading-tight text-ink-soft transition-colors hover:border-ink/30 aria-pressed:border-accent aria-pressed:bg-accent-soft aria-pressed:text-accent">
-            {s.title}
+          <button type="button" data-service={s.key} data-title={s.title} aria-pressed={i === 0 ? 'true' : 'false'}
+            class="svc-card group flex items-center justify-between gap-4 rounded-2xl border border-line p-5 text-left transition-colors hover:border-ink/25 aria-pressed:border-accent aria-pressed:bg-accent-soft">
+            <span class="min-w-0">
+              <span class="block font-semibold">{s.title}</span>
+              <span class="mt-1 block text-sm leading-snug text-ink-soft">{s.desc}</span>
+            </span>
+            <span class="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-accent text-xs text-white opacity-0 transition-opacity group-aria-pressed:opacity-100">✓</span>
           </button>
         ))}
       </div>
-    </fieldset>
+    </section>
 
-    <div>
-      <div class="text-sm font-semibold mb-2.5">{t('book.date')}</div>
-      <div id="cal" class="rounded-2xl border border-line bg-white p-4">
-        <div class="flex items-center justify-between mb-2">
+    <!-- STEP 2: date -->
+    <section data-step="2" class="step hidden">
+      <div id="cal" class="rounded-2xl border border-line p-4">
+        <div class="mb-2 flex items-center justify-between">
           <button id="prev" type="button" aria-label="–" class="grid h-8 w-8 place-items-center rounded-lg text-ink-soft transition-colors hover:bg-accent-soft hover:text-accent">←</button>
           <div id="monthLabel" class="text-sm font-semibold"></div>
           <button id="next" type="button" aria-label="+" class="grid h-8 w-8 place-items-center rounded-lg text-ink-soft transition-colors hover:bg-accent-soft hover:text-accent">→</button>
         </div>
-        <div id="grid" class="grid grid-cols-7 gap-1 text-center text-sm min-h-60"></div>
+        <div id="grid" class="grid min-h-60 grid-cols-7 gap-1 text-center text-sm"></div>
         <p id="calNote" class="mt-3 text-xs text-mist"></p>
       </div>
       <input id="f_date" type="hidden" />
-    </div>
+    </section>
 
-    <div>
-      <div class="text-sm font-semibold mb-2.5">{t('book.details')}</div>
+    <!-- STEP 3: details -->
+    <section data-step="3" class="step hidden">
+      <div id="recap" class="mb-6 flex items-center gap-2 rounded-xl bg-paper px-4 py-3 text-sm font-semibold text-ink"></div>
       <div class="grid gap-3 sm:grid-cols-2">
         <label class="text-sm">{t('book.name')}<input id="f_name" class="field" required /></label>
         <label class="text-sm">{t('book.email')}<input id="f_email" type="email" class="field" required /></label>
         <label class="text-sm">{t('book.phone')}<input id="f_phone" class="field" /></label>
         <label class="text-sm sm:col-span-2">{t('book.message')}<textarea id="f_message" rows="2" class="field"></textarea></label>
       </div>
-    </div>
+      <p id="formMsg" class="mt-4 text-sm text-red-600" role="status" aria-live="polite"></p>
+    </section>
 
-    <div class="flex flex-wrap items-center gap-4 pt-1">
-      <button id="submitBtn" type="button" class="btn w-full sm:w-auto">{t('book.submit')}</button>
-      <p id="formMsg" class="text-sm" role="status" aria-live="polite"></p>
+    <!-- SUCCESS -->
+    <section data-step="done" class="hidden py-10 text-center">
+      <div class="mx-auto grid h-14 w-14 place-items-center rounded-full bg-accent text-2xl text-white">✓</div>
+      <h2 id="doneTitle" class="display mt-5 text-2xl"></h2>
+      <p id="doneMsg" class="mx-auto mt-2 max-w-sm text-ink-soft"></p>
+    </section>
+
+    <!-- nav -->
+    <div id="nav" class="mt-8 flex items-center justify-between gap-4">
+      <button id="back" type="button" class="btn-ghost invisible">{t('book.back')}</button>
+      <button id="primary" type="button" class="btn">{t('book.next')}</button>
     </div>
   </div>
 </div>
@@ -92,26 +93,61 @@ const services = SERVICES.map((s) => ({ key: s, title: t(`services.${s}.title`) 
   const root = document.getElementById('booking')!;
   const lang = root.dataset.lang || 'fr';
   const S = JSON.parse(document.getElementById('bookingLabels')!.textContent || '{}') as {
-    success: string; error: string; available: string; none: string; months: string[]; days: string[];
+    success: string; error: string; thanks: string; available: string; none: string;
+    submit: string; next: string; back: string; months: string[]; days: string[];
   };
 
-  // service segmented control
-  const segBtns = Array.from(root.querySelectorAll<HTMLButtonElement>('.svc-opt'));
-  const sumService = document.getElementById('sumService')!;
+  const panels = Array.from(root.querySelectorAll<HTMLElement>('.step'));
+  const donePanel = root.querySelector<HTMLElement>('[data-step="done"]')!;
+  const pills = Array.from(root.querySelectorAll<HTMLElement>('[data-pill]'));
+  const nav = document.getElementById('nav')!;
+  const back = document.getElementById('back') as HTMLButtonElement;
+  const primary = document.getElementById('primary') as HTMLButtonElement;
+  const dateInput = document.getElementById('f_date') as HTMLInputElement;
+  const formMsg = document.getElementById('formMsg')!;
+
+  const segBtns = Array.from(root.querySelectorAll<HTMLButtonElement>('.svc-card'));
   let service = segBtns[0]?.dataset.service || 'clearance';
+  let serviceTitle = segBtns[0]?.dataset.title || '';
+  let step = 1;
+
+  function animate(el: HTMLElement) { el.classList.remove('step-anim'); void el.offsetWidth; el.classList.add('step-anim'); }
+
+  function setStep(n: number) {
+    step = n;
+    panels.forEach((p) => p.classList.toggle('hidden', p.dataset.step !== String(step)));
+    const active = panels.find((p) => p.dataset.step === String(step));
+    if (active) animate(active);
+    pills.forEach((pill, i) => {
+      const idx = i + 1, isActive = idx === step, isDone = idx < step;
+      const dot = pill.querySelector('.dot') as HTMLElement;
+      const label = pill.querySelector('.plabel') as HTMLElement;
+      dot.className = `dot grid h-7 w-7 shrink-0 place-items-center rounded-full text-xs font-bold transition-colors ${isActive || isDone ? 'border border-accent bg-accent text-white' : 'border border-line text-mist'}`;
+      dot.textContent = isDone ? '✓' : String(idx);
+      label.className = `plabel hidden sm:inline text-sm font-semibold transition-colors ${isActive ? 'text-ink' : isDone ? 'text-ink-soft' : 'text-mist'}`;
+    });
+    back.classList.toggle('invisible', step === 1);
+    primary.textContent = step === 3 ? S.submit : S.next;
+    updatePrimary();
+  }
+
+  function updatePrimary() {
+    const ok = step === 2 ? !!dateInput.value : true;
+    primary.disabled = !ok;
+    primary.classList.toggle('opacity-40', !ok);
+    primary.classList.toggle('pointer-events-none', !ok);
+  }
+
   segBtns.forEach((btn) => btn.addEventListener('click', () => {
     segBtns.forEach((b) => b.setAttribute('aria-pressed', 'false'));
     btn.setAttribute('aria-pressed', 'true');
     service = btn.dataset.service!;
-    sumService.textContent = btn.textContent!.trim();
+    serviceTitle = btn.dataset.title || '';
   }));
 
   // calendar
-  const sumDate = document.getElementById('sumDate')!;
-  const dateInput = document.getElementById('f_date') as HTMLInputElement;
   let view = new Date(); view.setDate(1);
   let availableDates = new Set<string>();
-
   function iso(d: Date) { return d.toISOString().slice(0, 10); }
   function fmtDate(k: string) { const [y, m, d] = k.split('-').map(Number); return `${d} ${S.months[m - 1]} ${y}`; }
 
@@ -119,10 +155,10 @@ const services = SERVICES.map((s) => ({ key: s, title: t(`services.${s}.title`) 
     if (!supabase) return;
     const { data } = await supabase.from('available_slots').select('slot_date');
     if (data) availableDates = new Set(data.map((r: any) => r.slot_date));
-    render();
+    renderCal();
   }
 
-  function render() {
+  function renderCal() {
     document.getElementById('monthLabel')!.textContent = `${S.months[view.getMonth()]} ${view.getFullYear()}`;
     document.getElementById('calNote')!.textContent = availableDates.size ? S.available : S.none;
     const grid = document.getElementById('grid')!; grid.innerHTML = '';
@@ -142,31 +178,48 @@ const services = SERVICES.map((s) => ({ key: s, title: t(`services.${s}.title`) 
         : has ? 'bg-accent-soft text-accent font-semibold hover:bg-accent hover:text-white'
         : 'text-ink-soft hover:bg-paper';
       btn.className = `h-9 rounded-lg text-sm transition-colors ${state}`;
-      if (!past) btn.onclick = () => { dateInput.value = k; sumDate.textContent = fmtDate(k); render(); };
+      if (!past) btn.onclick = () => { dateInput.value = k; renderCal(); updatePrimary(); };
       grid.appendChild(btn);
     }
   }
+  document.getElementById('prev')!.onclick = () => { view.setMonth(view.getMonth() - 1); renderCal(); };
+  document.getElementById('next')!.onclick = () => { view.setMonth(view.getMonth() + 1); renderCal(); };
 
-  document.getElementById('prev')!.onclick = () => { view.setMonth(view.getMonth() - 1); render(); };
-  document.getElementById('next')!.onclick = () => { view.setMonth(view.getMonth() + 1); render(); };
+  function fillRecap() {
+    document.getElementById('recap')!.textContent = `${serviceTitle} · ${dateInput.value ? fmtDate(dateInput.value) : '—'}`;
+  }
 
-  document.getElementById('submitBtn')!.addEventListener('click', async () => {
-    const msg = document.getElementById('formMsg')!;
-    const payload = {
-      name: (document.getElementById('f_name') as HTMLInputElement).value.trim(),
-      email: (document.getElementById('f_email') as HTMLInputElement).value.trim(),
-      phone: (document.getElementById('f_phone') as HTMLInputElement).value.trim(),
-      service,
-      req_date: dateInput.value,
-      message: (document.getElementById('f_message') as HTMLTextAreaElement).value.trim(),
-      lang,
-    };
-    if (!payload.name || !payload.email || !payload.req_date) { msg.className = 'text-sm text-red-600'; msg.textContent = S.error; return; }
-    if (!supabase) { msg.className = 'text-sm text-accent'; msg.textContent = S.success; return; }
-    const { error } = await supabase.from('bookings').insert(payload);
-    msg.className = `text-sm ${error ? 'text-red-600' : 'text-accent'}`;
-    msg.textContent = error ? S.error : S.success;
-  });
+  back.onclick = () => { if (step > 1) setStep(step - 1); };
+  primary.onclick = async () => {
+    if (step === 1) { setStep(2); return; }
+    if (step === 2) { if (!dateInput.value) return; setStep(3); fillRecap(); return; }
+    await submit();
+  };
 
-  loadSlots(); render();
+  async function submit() {
+    const val = (id: string) => (document.getElementById(id) as HTMLInputElement).value.trim();
+    const payload = { name: val('f_name'), email: val('f_email'), phone: val('f_phone'), service, req_date: dateInput.value, message: val('f_message'), lang };
+    if (!payload.name || !payload.email) { formMsg.textContent = S.error; return; }
+    formMsg.textContent = '';
+    primary.disabled = true; primary.classList.add('opacity-40');
+    let ok = true;
+    if (supabase) { const { error } = await supabase.from('bookings').insert(payload); ok = !error; }
+    if (ok) { showDone(); }
+    else { primary.disabled = false; primary.classList.remove('opacity-40'); formMsg.textContent = S.error; }
+  }
+
+  function showDone() {
+    panels.forEach((p) => p.classList.add('hidden'));
+    nav.classList.add('hidden');
+    donePanel.classList.remove('hidden'); animate(donePanel);
+    document.getElementById('doneTitle')!.textContent = S.thanks;
+    document.getElementById('doneMsg')!.textContent = S.success;
+    pills.forEach((pill) => {
+      const dot = pill.querySelector('.dot') as HTMLElement;
+      dot.className = 'dot grid h-7 w-7 shrink-0 place-items-center rounded-full border border-accent bg-accent text-xs font-bold text-white';
+      dot.textContent = '✓';
+    });
+  }
+
+  setStep(1); loadSlots(); renderCal();
 </script>

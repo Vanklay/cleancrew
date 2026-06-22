@@ -57,6 +57,11 @@ body { background: var(--color-paper); color: var(--color-ink); font-family: var
 .prose-cc h2 { @apply text-ink text-2xl font-bold mt-10 mb-3; font-family: var(--font-display); letter-spacing: -0.02em; }
 .prose-cc a { @apply text-accent underline underline-offset-4; }
 
+/* booking wizard step transition */
+@keyframes stepIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+.step-anim { animation: stepIn .38s cubic-bezier(.2,.7,.2,1); }
+@media (prefers-reduced-motion: reduce) { .step-anim { animation: none; } }
+
 /* subtle, seamless reveal — enhancement only; content is visible without JS */
 .reveal { transition: opacity .85s cubic-bezier(.2,.7,.2,1), transform .85s cubic-bezier(.2,.7,.2,1); transition-delay: var(--d, 0s); }
 html.js .reveal { opacity: 0; transform: translateY(18px); }
