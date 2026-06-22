@@ -27,27 +27,23 @@ const meta = {
 }[lang];
 ---
 <Layout lang={lang} title={meta.title} description={meta.desc} faq={faq}>
-  <!-- HERO — editorial, asymmetric, clearance is the hook into the whole property -->
-  <section class="container-x pt-16 pb-20 md:pt-24 md:pb-28">
-    <p class="eyebrow reveal" style="--d:.05s">{t('hero.kicker')}</p>
+  <!-- HERO — immersive: the transformed result fills the frame, headline over a gradient -->
+  <section class="relative isolate -mt-16 overflow-hidden">
+    <img src="/hero.webp" alt={t('hero.title')} width="1290" height="640" fetchpriority="high"
+         class="absolute inset-0 -z-10 h-full w-full object-cover object-center" />
+    <div class="absolute inset-0 -z-10 bg-gradient-to-t from-ink/95 via-ink/55 to-ink/20"></div>
+    <div class="absolute inset-0 -z-10 bg-gradient-to-r from-ink/40 to-transparent"></div>
 
-    <h1 class="headline reveal mt-7 text-[clamp(2.7rem,8.5vw,7.5rem)] max-w-[15ch]" style="--d:.12s">
-      {t('hero.title')}<br />{t('hero.title2')}
-    </h1>
-
-    <div class="mt-10 md:mt-12 grid gap-8 md:grid-cols-12 md:items-end">
-      <p class="reveal md:col-span-6 text-lg md:text-xl text-ink-soft leading-relaxed max-w-xl" style="--d:.2s">
-        {t('hero.sub')}
-      </p>
-      <div class="reveal md:col-span-6 flex flex-wrap gap-4 md:justify-end" style="--d:.28s">
+    <div class="container-x flex min-h-[88vh] flex-col justify-end pb-16 pt-40 md:min-h-[92vh] md:pb-24">
+      <p class="eyebrow reveal" style="--d:.05s">{t('hero.kicker')}</p>
+      <h1 class="headline reveal mt-6 max-w-[16ch] text-white text-[clamp(2.7rem,8vw,7rem)]" style="--d:.12s">
+        {t('hero.title')}<br />{t('hero.title2')}
+      </h1>
+      <p class="reveal mt-7 max-w-xl text-lg md:text-xl text-white/85 leading-relaxed" style="--d:.2s">{t('hero.sub')}</p>
+      <div class="reveal mt-9 flex flex-wrap gap-4" style="--d:.28s">
         <a href={p('book')} class="btn">{t('hero.cta')}</a>
-        <a href={p('services')} class="btn-ghost">{t('hero.cta2')}</a>
+        <a href={p('services')} class="inline-flex items-center justify-center rounded-full border border-white/35 px-8 py-3.5 text-base font-semibold text-white transition-colors hover:bg-white hover:text-ink">{t('hero.cta2')}</a>
       </div>
-    </div>
-
-    <div class="reveal mt-14 md:mt-20 overflow-hidden rounded-3xl" style="--d:.36s; box-shadow: var(--shadow-hero);">
-      <img src="/hero.webp" alt={t('hero.title')} width="1290" height="640" fetchpriority="high"
-           class="w-full h-[clamp(15rem,42vw,34rem)] object-cover" />
     </div>
   </section>
 
