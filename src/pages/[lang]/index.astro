@@ -136,13 +136,13 @@ const meta = {
   <!-- FAQ — now rendered visibly (was schema-only); the AEO answer block -->
   <Faq title={t('faq.title')} items={faq} />
 
-  <!-- FINAL CTA — near-black band with the booking wizard floating on it -->
-  <section class="mt-24 md:mt-32 bg-ink text-white">
-    <div class="container-x py-24 md:py-32">
-      <div class="mx-auto max-w-2xl text-center">
+  <!-- BOOK — light, calm: heading + the booking wizard -->
+  <section class="section">
+    <div class="container-x">
+      <div class="mx-auto max-w-xl text-center">
         <p class="eyebrow reveal">{t('hero.kicker')}</p>
-        <h2 class="headline reveal mt-6 text-4xl md:text-6xl text-white">{t('book.title')}</h2>
-        <p class="reveal mt-5 text-lg text-white/70 leading-relaxed" style="--d:.06s">{t('book.sub')}</p>
+        <h2 class="headline reveal mt-6 text-4xl md:text-6xl" style="--d:.04s">{t('book.title')}</h2>
+        <p class="reveal mt-5 text-lg text-ink-soft leading-relaxed" style="--d:.08s">{t('book.sub')}</p>
       </div>
       <div class="reveal mt-12 md:mt-14" style="--d:.12s"><BookingForm lang={lang} /></div>
     </div>
