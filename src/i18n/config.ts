@@ -19,11 +19,11 @@ export type Service = (typeof SERVICES)[number];
 export const SITE = {
   name: 'CleanCrew',
   domain: 'https://cleancrew.lu',
-  email: 'hello@cleancrew.lu',
-  phone: '+352 661 000 000',
-  city: 'Strassen',
+  email: 'contact@cleancrew.lu',
+  phone: '+352 621 526 847',
+  city: 'Luxembourg',
   country: 'LU',
-  geo: { lat: 49.6217, lng: 6.0750 },
+  geo: { lat: 49.6116, lng: 6.1319 },
 };
 
 export function getLangFromUrl(url: URL): Lang {
