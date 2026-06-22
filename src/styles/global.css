@@ -22,7 +22,7 @@ body { background: var(--color-paper); color: var(--color-ink); font-family: var
 ::selection { background: var(--color-accent); color: #fff; }
 :focus-visible { outline: 2px solid var(--color-accent); outline-offset: 3px; border-radius: 3px; }
 
-.container-x { width: 100%; max-width: 1200px; margin-inline: auto; padding-inline: 1.5rem; }
+.container-x { width: 100%; max-width: 1280px; margin-inline: auto; padding-inline: 1.5rem; }
 
 /* display type — Satoshi at its heaviest, tight and packed */
 .headline { font-family: var(--font-display); font-weight: 900; letter-spacing: -0.035em; line-height: 0.94; }
