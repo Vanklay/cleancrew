@@ -1,6 +1,7 @@
 ---
 import { langStaticPaths } from '../../lib/paths';
 import Layout from '../../layouts/Layout.astro';
+import Faq from '../../components/Faq.astro';
 import { SERVICES, localizedPath, type Lang } from '../../i18n/config';
 import { useTranslations } from '../../i18n/ui';
 
@@ -12,12 +13,9 @@ const p = (s: string) => localizedPath(lang, s);
 const services = SERVICES.map((key) => ({ key, href: p(`services/${key}`) }));
 const why = ['1', '2', '3', '4'];
 
-// AEO/LLM answer block — concise Q&A that LLMs and featured snippets lift verbatim.
-// Copy lives in ui.ts (one source of truth, all six locales).
-const faq = [
-  { q: t('faq.1.q'), a: t('faq.1.a') },
-  { q: t('faq.2.q'), a: t('faq.2.a') },
-];
+// AEO/LLM answer block — concise Q&A that LLMs and featured snippets lift
+// verbatim. Rendered visibly below AND emitted as FAQPage schema. One source.
+const faq = [1, 2, 3, 4, 5].map((n) => ({ q: t(`faq.${n}.q`), a: t(`faq.${n}.a`) }));
 
 const meta = {
   fr: { title: 'CleanCrew · Débarras de garage & nettoyage au Luxembourg', desc: 'Débarras de garages, caves et greniers, nettoyage de vitres et de façades. Devis clair, équipe rapide qui revient, partout au Luxembourg.' },
@@ -56,6 +54,7 @@ const meta = {
   <!-- THREE SERVICES — equal peers, numbered editorial list (no card grid) -->
   <section class="container-x section">
     <h2 class="headline reveal text-4xl md:text-6xl max-w-2xl">{t('services.title')}</h2>
+    <p class="reveal mt-5 max-w-xl text-lg text-ink-soft leading-relaxed" style="--d:.06s">{t('home.services.lead')}</p>
 
     <div class="mt-12 md:mt-16">
       {services.map((s, i) => (
@@ -78,7 +77,25 @@ const meta = {
     </div>
   </section>
 
-  <!-- WHY — one team, the whole property -->
+  <!-- ONE TEAM, WHOLE PROPERTY — the positioning, the bundle as benefit -->
+  <section class="container-x section">
+    <div class="grid gap-10 md:grid-cols-12 md:items-start">
+      <div class="md:col-span-7">
+        <p class="eyebrow reveal">{t('service.also')}</p>
+        <h2 class="headline reveal mt-5 text-3xl md:text-5xl" style="--d:.06s">{t('home.together.title')}</h2>
+      </div>
+      <div class="md:col-span-5 md:pt-2">
+        <p class="reveal text-lg md:text-xl text-ink-soft leading-relaxed" style="--d:.12s">{t('home.together.text')}</p>
+        <div class="reveal mt-7 flex flex-wrap gap-x-6 gap-y-2 text-sm" style="--d:.18s">
+          {services.map((s) => (
+            <a href={s.href} class="font-semibold text-ink transition-colors hover:text-accent">{t(`services.${s.key}.title`)}</a>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY -->
   <section class="container-x section">
     <h2 class="headline reveal text-4xl md:text-6xl max-w-xl mb-14 md:mb-20">{t('why.title')}</h2>
     <div class="grid gap-x-10 gap-y-14 md:grid-cols-2 lg:grid-cols-4">
@@ -91,6 +108,9 @@ const meta = {
       ))}
     </div>
   </section>
+
+  <!-- FAQ — now rendered visibly (was schema-only); the AEO answer block -->
+  <Faq title={t('faq.title')} items={faq} />
 
   <!-- FINAL CTA — near-black band, the signature contrast moment -->
   <section class="mt-24 md:mt-32 bg-ink text-white">
