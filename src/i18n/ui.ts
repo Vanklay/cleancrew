@@ -14,9 +14,9 @@ const fr = {
   'nav.book': 'Réserver',
 
   'hero.kicker': 'Débarras & nettoyage · Luxembourg',
-  'hero.title': 'On vide votre garage.',
-  'hero.title2': 'Et on garde votre maison impeccable.',
-  'hero.sub': 'Débarras de garages, caves et greniers. Nettoyage de vitres et de façades. Une seule équipe, qui revient. Devis clair, intervention rapide, partout au Luxembourg.',
+  'hero.title': 'Débarras de garage, nettoyage de vitres et de façades.',
+  'hero.title2': 'Une seule équipe, partout au Luxembourg.',
+  'hero.sub': 'Une équipe qui revient et connaît déjà votre propriété. Devis clair, intervention rapide, sans coûts cachés.',
   'hero.cta': 'Réserver une date',
   'hero.cta2': 'Voir les services',
 
@@ -137,9 +137,9 @@ const de: FullDict = {
   'nav.book': 'Buchen',
 
   'hero.kicker': 'Entrümpelung & Reinigung · Luxemburg',
-  'hero.title': 'Wir räumen Ihre Garage.',
-  'hero.title2': 'Und halten Ihr Zuhause makellos.',
-  'hero.sub': 'Entrümpelung von Garagen, Kellern und Dachböden. Reinigung von Fenstern und Fassaden. Ein Team, das wiederkommt. Klares Angebot, schnelle Ausführung, in ganz Luxemburg.',
+  'hero.title': 'Garagenentrümpelung, Fenster- und Fassadenreinigung.',
+  'hero.title2': 'Ein Team, in ganz Luxemburg.',
+  'hero.sub': 'Ein Team, das wiederkommt und Ihr Anwesen bereits kennt. Klares Angebot, schnelle Ausführung, ohne versteckte Kosten.',
   'hero.cta': 'Termin buchen',
   'hero.cta2': 'Leistungen ansehen',
 
@@ -253,9 +253,9 @@ const en: FullDict = {
   'nav.book': 'Book',
 
   'hero.kicker': 'Clearance & cleaning · Luxembourg',
-  'hero.title': 'We empty your garage.',
-  'hero.title2': 'And keep your home spotless.',
-  'hero.sub': 'Garage, cellar and attic clearance. Window and façade cleaning. One crew, that comes back. Clear quote, fast turnaround, anywhere in Luxembourg.',
+  'hero.title': 'Garage clearance, window and façade cleaning.',
+  'hero.title2': 'One team, anywhere in Luxembourg.',
+  'hero.sub': 'A crew that comes back and already knows your property. Clear quote, fast turnaround, no hidden costs.',
   'hero.cta': 'Book a date',
   'hero.cta2': 'See services',
 
@@ -372,9 +372,9 @@ const lu: PartialDict = {
   'nav.book': 'Buchen',
 
   'hero.kicker': 'Entrëmpelung & Botzen · Lëtzebuerg',
-  'hero.title': 'Mir eidelen Är Garage.',
-  'hero.title2': 'A halen Äert Haus propper.',
-  'hero.sub': 'Entrëmpelung vu Garagen, Kelleren a Späicheren. Botzen vu Fënsteren a Fassaden. Ee Team, dat erëmkënnt. Klore Devis, séier Ausféierung, am ganze Land.',
+  'hero.title': 'Garage entrëmpelen, Fënster- a Fassadebotzen.',
+  'hero.title2': 'Ee Team, am ganze Land.',
+  'hero.sub': 'En Team, dat erëmkënnt an Är Propriétéit scho kennt. Klore Devis, séier Ausféierung, ouni verstoppte Käschten.',
   'hero.cta': 'En Datum buchen',
   'hero.cta2': 'Servicer kucken',
 
@@ -488,9 +488,9 @@ const pt: PartialDict = {
   'nav.book': 'Reservar',
 
   'hero.kicker': 'Esvaziamento & limpeza · Luxemburgo',
-  'hero.title': 'Esvaziamos a sua garagem.',
-  'hero.title2': 'E mantemos a sua casa impecável.',
-  'hero.sub': 'Esvaziamento de garagens, caves e sótãos. Limpeza de vidros e fachadas. Uma só equipa, que regressa. Orçamento claro, intervenção rápida, em todo o Luxemburgo.',
+  'hero.title': 'Esvaziamento de garagens, limpeza de vidros e fachadas.',
+  'hero.title2': 'Uma só equipa, em todo o Luxemburgo.',
+  'hero.sub': 'Uma equipa que regressa e já conhece a sua propriedade. Orçamento claro, intervenção rápida, sem custos escondidos.',
   'hero.cta': 'Reservar uma data',
   'hero.cta2': 'Ver serviços',
 
@@ -604,9 +604,9 @@ const es: PartialDict = {
   'nav.book': 'Reservar',
 
   'hero.kicker': 'Vaciado & limpieza · Luxemburgo',
-  'hero.title': 'Vaciamos tu garaje.',
-  'hero.title2': 'Y mantenemos tu casa impecable.',
-  'hero.sub': 'Vaciado de garajes, sótanos y desvanes. Limpieza de cristales y fachadas. Un solo equipo, que vuelve. Presupuesto claro, intervención rápida, en todo Luxemburgo.',
+  'hero.title': 'Vaciado de garajes, limpieza de cristales y fachadas.',
+  'hero.title2': 'Un solo equipo, en todo Luxemburgo.',
+  'hero.sub': 'Un equipo que vuelve y ya conoce tu propiedad. Presupuesto claro, intervención rápida, sin costes ocultos.',
   'hero.cta': 'Reservar una fecha',
   'hero.cta2': 'Ver servicios',
 
