@@ -6,6 +6,7 @@
   --color-mist: #8b949d;
   --color-line: #e6e9ec;
   --color-paper: #f8f9fb;
+  --color-haze: #eef0f4;       /* subtle grey panel — lifts white cards off the page */
   --color-accent: #0e7c96;     /* premium teal-blue — blue with a green touch */
   --color-accent-ink: #0a6072; /* darker, for hovers */
   --color-accent-soft: #e3f1f4;
@@ -23,6 +24,9 @@ body { background: var(--color-paper); color: var(--color-ink); font-family: var
 :focus-visible { outline: 2px solid var(--color-accent); outline-offset: 3px; border-radius: 3px; }
 
 .container-x { width: 100%; max-width: 1280px; margin-inline: auto; padding-inline: 1.5rem; }
+
+/* hero — angled bottom edge that slices into the section below */
+.hero-angle { clip-path: polygon(0 0, 100% 0, 100% calc(100% - clamp(2.5rem, 6vw, 5.5rem)), 0 100%); }
 
 /* display type — Satoshi at its heaviest, tight and packed */
 .headline { font-family: var(--font-display); font-weight: 900; letter-spacing: -0.035em; line-height: 0.94; }

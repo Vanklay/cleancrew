@@ -30,7 +30,7 @@ const meta = {
 ---
 <Layout lang={lang} title={meta.title} description={meta.desc} faq={faq} overlayNav>
   <!-- HERO — immersive: the transformed result fills the frame, headline over a gradient -->
-  <section data-hero-slider class="relative isolate -mt-24 overflow-hidden">
+  <section data-hero-slider class="hero-angle relative isolate -mt-24 overflow-hidden">
     <div class="absolute inset-0 -z-10">
       <img src="/hero.webp" alt={t('hero.title')} width="1290" height="640" fetchpriority="high"
            class="hero-slide absolute inset-0 h-full w-full object-cover object-center opacity-100 transition-opacity duration-[1200ms] ease-out" />
@@ -58,7 +58,7 @@ const meta = {
     </div>
 
     <!-- slide indicators -->
-    <div class="absolute inset-x-0 bottom-7 z-10">
+    <div class="absolute inset-x-0 bottom-12 z-10">
       <div class="container-x flex justify-center">
         <div class="flex gap-2">
           <button type="button" class="hero-dot h-1 w-9 rounded-full bg-white transition-colors" data-go="0" aria-label="1"></button>
@@ -137,7 +137,7 @@ const meta = {
   <Faq title={t('faq.title')} items={faq} />
 
   <!-- BOOK — light, calm: heading + the booking wizard -->
-  <section class="section">
+  <section class="section bg-haze">
     <div class="container-x">
       <div class="mx-auto max-w-xl text-center">
         <p class="eyebrow reveal">{t('hero.kicker')}</p>
