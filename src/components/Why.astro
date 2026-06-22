@@ -1,0 +1,25 @@
+---
+// "Why CleanCrew" — open editorial grid anchored by oversized accent numerals.
+// Shared by the homepage and the about page.
+import { type Lang } from '../i18n/config';
+import { useTranslations } from '../i18n/ui';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const why = ['1', '2', '3', '4'];
+---
+<section class="container-x py-28 md:py-36">
+  <div class="mb-16 flex flex-col gap-5 md:mb-24 md:flex-row md:items-end md:justify-between">
+    <h2 class="headline reveal text-4xl md:text-6xl max-w-xl">{t('why.title')}</h2>
+    <p class="reveal max-w-sm text-lg text-ink-soft leading-relaxed md:text-right" style="--d:.06s">{t('why.lead')}</p>
+  </div>
+  <div class="grid gap-x-12 gap-y-14 md:grid-cols-2 lg:grid-cols-4">
+    {why.map((n) => (
+      <div class="reveal" style={`--d:${(Number(n) - 1) * 0.06}s`}>
+        <div class="index-num text-6xl md:text-7xl leading-none text-accent">0{n}</div>
+        <h3 class="display text-xl mt-6 mb-2.5">{t(`why.${n}.t`)}</h3>
+        <p class="text-ink-soft leading-relaxed text-[15px]">{t(`why.${n}.d`)}</p>
+      </div>
+    ))}
+  </div>
+</section>

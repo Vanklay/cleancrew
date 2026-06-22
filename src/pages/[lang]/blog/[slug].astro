@@ -1,5 +1,6 @@
 ---
 import Layout from '../../../layouts/Layout.astro';
+import Cta from '../../../components/Cta.astro';
 import { getCollection, render } from 'astro:content';
 import { localizedPath, type Lang } from '../../../i18n/config';
 import { useTranslations } from '../../../i18n/ui';
@@ -18,15 +19,14 @@ const slug = post.id.replace(/^[a-z]{2}-/, '');
 const { Content } = await render(post);
 ---
 <Layout lang={lang} path={`blog/${slug}`} type="article" title={`${post.data.title} · CleanCrew`} description={post.data.description}>
-  <article class="container-x pt-16 pb-20 md:pt-24 md:pb-28 max-w-2xl">
+  <article class="container-x pt-20 pb-20 md:pt-28 md:pb-28 max-w-2xl">
     <a href={p('blog')} class="reveal inline-flex items-center gap-2 text-sm font-semibold text-accent">← {t('nav.blog')}</a>
     <time class="reveal mt-8 block text-sm font-medium uppercase tracking-wider text-mist" style="--d:.04s">{post.data.pubDate.toLocaleDateString(lang)}</time>
     <h1 class="headline reveal text-3xl md:text-5xl mt-3 mb-10" style="--d:.08s">{post.data.title}</h1>
     <div class="prose-cc reveal" style="--d:.12s">
       <Content />
     </div>
-    <div class="mt-14 pt-10 border-t border-line">
-      <a href={p('book')} class="btn">{t('hero.cta')}</a>
-    </div>
   </article>
+
+  <Cta lang={lang} />
 </Layout>

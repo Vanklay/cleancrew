@@ -1,0 +1,16 @@
+---
+// Shared closing CTA — a calm grey band that steps into the dark footer.
+import { localizedPath, type Lang } from '../i18n/config';
+import { useTranslations } from '../i18n/ui';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const p = (s: string) => localizedPath(lang, s);
+---
+<section class="bg-haze">
+  <div class="container-x py-24 text-center md:py-32">
+    <h2 class="headline reveal mx-auto max-w-3xl text-4xl md:text-6xl">{t('book.title')}</h2>
+    <p class="reveal mx-auto mt-5 max-w-lg text-lg leading-relaxed text-ink-soft" style="--d:.06s">{t('book.sub')}</p>
+    <a href={p('book')} class="btn reveal mt-9" style="--d:.12s">{t('hero.cta')}</a>
+  </div>
+</section>

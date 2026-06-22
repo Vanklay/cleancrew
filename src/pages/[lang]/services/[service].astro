@@ -2,6 +2,7 @@
 import { langServiceStaticPaths } from '../../../lib/paths';
 import Layout from '../../../layouts/Layout.astro';
 import Faq from '../../../components/Faq.astro';
+import Cta from '../../../components/Cta.astro';
 import { SERVICES, localizedPath, type Lang, type Service } from '../../../i18n/config';
 import { useTranslations, useRaw } from '../../../i18n/ui';
 
@@ -99,11 +100,6 @@ const metaTitle = `${title} ${t('geo.in')} · CleanCrew`;
     </div>
   </section>
 
-  <!-- CTA BAND -->
-  <section class="mt-24 md:mt-32 bg-ink text-white">
-    <div class="container-x py-24 md:py-32 text-center">
-      <h2 class="headline reveal text-3xl md:text-6xl text-white max-w-3xl mx-auto">{t('book.title')}</h2>
-      <a href={p('book')} class="btn reveal mt-10" style="--d:.08s">{t('hero.cta')}</a>
-    </div>
-  </section>
+  <!-- CTA -->
+  <Cta lang={lang} />
 </Layout>

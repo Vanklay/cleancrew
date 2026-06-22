@@ -9,10 +9,14 @@ const lang = Astro.params.lang as Lang;
 const t = useTranslations(lang);
 ---
 <Layout lang={lang} path="book" title={`${t('book.title')} ${t('geo.in')} · CleanCrew`} description={t('book.sub')}>
-  <section class="container-x pt-16 pb-24 md:pt-24 md:pb-32">
-    <p class="eyebrow reveal">{t('hero.kicker')}</p>
-    <h1 class="headline reveal text-4xl md:text-6xl mt-6 mb-5" style="--d:.06s">{t('book.title')}</h1>
-    <p class="reveal text-lg md:text-xl text-ink-soft mb-12 md:mb-16 max-w-xl" style="--d:.12s">{t('book.sub')}</p>
-    <div class="reveal" style="--d:.18s"><BookingForm lang={lang} /></div>
+  <section class="bg-haze pt-24 pb-24 md:pt-32 md:pb-32">
+    <div class="container-x">
+      <div class="mx-auto max-w-xl text-center">
+        <p class="eyebrow reveal">{t('hero.kicker')}</p>
+        <h1 class="headline reveal mt-6 text-4xl md:text-6xl" style="--d:.04s">{t('book.title')}</h1>
+        <p class="reveal mt-5 text-lg leading-relaxed text-ink-soft" style="--d:.08s">{t('book.sub')}</p>
+      </div>
+      <div class="reveal mt-12 md:mt-14" style="--d:.12s"><BookingForm lang={lang} /></div>
+    </div>
   </section>
 </Layout>

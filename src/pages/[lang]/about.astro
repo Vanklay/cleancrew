@@ -1,38 +1,22 @@
 ---
 import { langStaticPaths } from '../../lib/paths';
 import Layout from '../../layouts/Layout.astro';
-import { localizedPath, type Lang } from '../../i18n/config';
+import Why from '../../components/Why.astro';
+import Cta from '../../components/Cta.astro';
+import { type Lang } from '../../i18n/config';
 import { useTranslations } from '../../i18n/ui';
 export const getStaticPaths = langStaticPaths;
 const lang = Astro.params.lang as Lang;
 const t = useTranslations(lang);
-const p = (s: string) => localizedPath(lang, s);
-const why = ['1', '2', '3', '4'];
 ---
 <Layout lang={lang} path="about" title={`${t('about.title')} ${t('geo.in')} · CleanCrew`} description={t('about.body')}>
-  <section class="container-x pt-16 pb-16 md:pt-24 md:pb-20">
+  <section class="container-x pt-20 pb-8 md:pt-28 md:pb-12">
     <p class="eyebrow reveal">{t('hero.kicker')}</p>
-    <h1 class="headline reveal mt-6 text-4xl md:text-7xl max-w-4xl" style="--d:.06s">{t('about.title')}</h1>
-    <p class="reveal mt-8 max-w-3xl text-xl md:text-2xl text-ink-soft leading-relaxed" style="--d:.12s">{t('about.body')}</p>
+    <h1 class="headline reveal mt-6 max-w-4xl text-4xl md:text-7xl" style="--d:.06s">{t('about.title')}</h1>
+    <p class="reveal mt-8 max-w-3xl text-xl leading-relaxed text-ink-soft md:text-2xl" style="--d:.12s">{t('about.body')}</p>
   </section>
 
-  <section class="container-x section">
-    <h2 class="headline reveal text-3xl md:text-5xl max-w-xl mb-14 md:mb-20">{t('why.title')}</h2>
-    <div class="grid gap-x-10 gap-y-14 md:grid-cols-2 lg:grid-cols-4">
-      {why.map((n, i) => (
-        <div class="reveal" style={`--d:${i * 0.06}s`}>
-          <div class="index-num text-4xl md:text-5xl text-accent">0{n}</div>
-          <h3 class="display text-xl mt-5 mb-2.5">{t(`why.${n}.t`)}</h3>
-          <p class="text-ink-soft leading-relaxed text-[15px]">{t(`why.${n}.d`)}</p>
-        </div>
-      ))}
-    </div>
-  </section>
+  <Why lang={lang} />
 
-  <section class="mt-24 md:mt-32 bg-ink text-white">
-    <div class="container-x py-24 md:py-32 text-center">
-      <h2 class="headline reveal text-3xl md:text-6xl text-white max-w-3xl mx-auto">{t('book.title')}</h2>
-      <a href={p('book')} class="btn reveal mt-10" style="--d:.08s">{t('hero.cta')}</a>
-    </div>
-  </section>
+  <Cta lang={lang} />
 </Layout>

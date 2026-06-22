@@ -3,6 +3,7 @@ import { langStaticPaths } from '../../lib/paths';
 import Layout from '../../layouts/Layout.astro';
 import Faq from '../../components/Faq.astro';
 import BookingForm from '../../components/BookingForm.astro';
+import Why from '../../components/Why.astro';
 import { SERVICES, localizedPath, type Lang } from '../../i18n/config';
 import { useTranslations } from '../../i18n/ui';
 
@@ -13,7 +14,6 @@ const p = (s: string) => localizedPath(lang, s);
 
 const serviceImg: Record<string, string> = { clearance: '/hero.webp', windows: '/hero2.webp', surfaces: '/hero3.webp' };
 const services = SERVICES.map((key) => ({ key, href: p(`services/${key}`), img: serviceImg[key] }));
-const why = ['1', '2', '3', '4'];
 
 // AEO/LLM answer block — concise Q&A that LLMs and featured snippets lift
 // verbatim. Rendered visibly below AND emitted as FAQPage schema. One source.
@@ -106,22 +106,8 @@ const meta = {
     </div>
   </section>
 
-  <!-- WHY — open on the page, oversized accent numerals anchor each reason -->
-  <section class="container-x py-28 md:py-36">
-    <div class="mb-16 flex flex-col gap-5 md:mb-24 md:flex-row md:items-end md:justify-between">
-      <h2 class="headline reveal text-4xl md:text-6xl max-w-xl">{t('why.title')}</h2>
-      <p class="reveal max-w-sm text-lg text-ink-soft leading-relaxed md:text-right" style="--d:.06s">{t('why.lead')}</p>
-    </div>
-    <div class="grid gap-x-12 gap-y-14 md:grid-cols-2 lg:grid-cols-4">
-      {why.map((n) => (
-        <div class="reveal" style={`--d:${(Number(n) - 1) * 0.06}s`}>
-          <div class="index-num text-6xl md:text-7xl leading-none text-accent">0{n}</div>
-          <h3 class="display text-xl mt-6 mb-2.5">{t(`why.${n}.t`)}</h3>
-          <p class="text-ink-soft leading-relaxed text-[15px]">{t(`why.${n}.d`)}</p>
-        </div>
-      ))}
-    </div>
-  </section>
+  <!-- WHY -->
+  <Why lang={lang} />
 
   <!-- FAQ — now rendered visibly (was schema-only); the AEO answer block -->
   <Faq title={t('faq.title')} items={faq} />

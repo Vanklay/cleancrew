@@ -1,34 +1,35 @@
 ---
 import { langStaticPaths } from '../../lib/paths';
 import Layout from '../../layouts/Layout.astro';
-import { SITE, localizedPath, type Lang } from '../../i18n/config';
+import Cta from '../../components/Cta.astro';
+import { SITE, type Lang } from '../../i18n/config';
 import { useTranslations } from '../../i18n/ui';
 export const getStaticPaths = langStaticPaths;
 const lang = Astro.params.lang as Lang;
 const t = useTranslations(lang);
-const p = (s: string) => localizedPath(lang, s);
+const tel = SITE.phone.replace(/\s+/g, '');
 ---
 <Layout lang={lang} path="contact" title={`${t('contact.title')} · CleanCrew`} description={t('contact.sub')}>
-  <section class="container-x pt-16 pb-24 md:pt-24 md:pb-32">
+  <section class="container-x pt-20 pb-24 md:pt-28 md:pb-32">
     <p class="eyebrow reveal">{t('hero.kicker')}</p>
-    <h1 class="headline reveal mt-6 text-4xl md:text-7xl max-w-3xl" style="--d:.06s">{t('contact.title')}</h1>
-    <p class="reveal mt-8 max-w-2xl text-lg md:text-2xl text-ink-soft leading-relaxed" style="--d:.12s">{t('contact.sub')}</p>
+    <h1 class="headline reveal mt-6 max-w-3xl text-4xl md:text-7xl" style="--d:.06s">{t('contact.title')}</h1>
+    <p class="reveal mt-8 max-w-2xl text-lg leading-relaxed text-ink-soft md:text-2xl" style="--d:.12s">{t('contact.sub')}</p>
 
-    <div class="reveal mt-12 grid gap-3 sm:grid-cols-3" style="--d:.18s">
-      <a href={`mailto:${SITE.email}`} class="group rounded-2xl border border-line bg-paper p-6 transition-colors hover:bg-white">
-        <div class="text-sm text-mist mb-1.5">{t('book.email')}</div>
-        <div class="font-semibold break-words transition-colors group-hover:text-accent">{SITE.email}</div>
+    <div class="reveal mt-14 grid gap-4 sm:grid-cols-3" style="--d:.18s">
+      <a href={`mailto:${SITE.email}`} class="group rounded-2xl border border-line bg-white p-7 transition-colors hover:border-accent">
+        <div class="text-xs font-medium uppercase tracking-wider text-mist">{t('book.email')}</div>
+        <div class="mt-2 break-words text-lg font-semibold transition-colors group-hover:text-accent">{SITE.email}</div>
       </a>
-      <a href={`tel:${SITE.phone.replace(/\s/g, '')}`} class="group rounded-2xl border border-line bg-paper p-6 transition-colors hover:bg-white">
-        <div class="text-sm text-mist mb-1.5">{t('book.phone')}</div>
-        <div class="font-semibold transition-colors group-hover:text-accent">{SITE.phone}</div>
+      <a href={`tel:${tel}`} class="group rounded-2xl border border-line bg-white p-7 transition-colors hover:border-accent">
+        <div class="text-xs font-medium uppercase tracking-wider text-mist">{t('book.phone')}</div>
+        <div class="mt-2 text-lg font-semibold transition-colors group-hover:text-accent">{SITE.phone}</div>
       </a>
-      <div class="rounded-2xl border border-line bg-paper p-6">
-        <div class="text-sm text-mist mb-1.5">Luxembourg</div>
-        <div class="font-semibold">{SITE.city}</div>
+      <div class="rounded-2xl border border-line bg-white p-7">
+        <div class="text-xs font-medium uppercase tracking-wider text-mist">{t('book.address')}</div>
+        <div class="mt-2 text-lg font-semibold">{SITE.city}</div>
       </div>
     </div>
-
-    <a href={p('book')} class="btn reveal mt-10" style="--d:.24s">{t('hero.cta')}</a>
   </section>
+
+  <Cta lang={lang} />
 </Layout>
