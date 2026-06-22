@@ -23,42 +23,49 @@ const links: [string, string][] = [
       <Logo variant="full" class="nav-logo h-12 w-auto md:h-[3.25rem]" />
     </a>
 
-    <div class="hidden items-center gap-9 text-lg md:flex">
-      {links.map(([path, key]) => (
-        <a href={p(path)} aria-current={current === path ? 'page' : undefined} class="nav-link">{t(key)}</a>
-      ))}
-    </div>
+    <!-- everything else, grouped on the right -->
+    <div class="flex items-center gap-6 lg:gap-9">
+      <div class="hidden items-center gap-8 text-lg md:flex">
+        {links.map(([path, key]) => (
+          <a href={p(path)} aria-current={current === path ? 'page' : undefined} class="nav-link">{t(key)}</a>
+        ))}
+      </div>
 
-    <div class="flex items-center gap-2 sm:gap-3">
-      <details class="group relative">
-        <summary class="nav-ctrl flex cursor-pointer list-none select-none items-center gap-1.5 rounded-lg px-2 py-1.5 text-sm hover:opacity-80">
-          <span>{LANGUAGES[lang].flag}</span><span class="font-medium">{lang.toUpperCase()}</span>
-        </summary>
-        <div class="absolute right-0 mt-2 w-44 rounded-xl border border-line bg-white p-1 shadow-soft">
-          {LANG_KEYS.map((l) => (
-            <a href={`/${l}${rest ? '/' + rest : ''}`} class={`flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition-colors hover:bg-accent-soft ${l === lang ? 'font-semibold text-accent' : 'text-ink-soft'}`}>
-              <span>{LANGUAGES[l].flag}</span>{LANGUAGES[l].label}
-            </a>
-          ))}
-        </div>
-      </details>
-
-      <a href={p('book')} class="nav-book hidden rounded-full px-6 py-2.5 text-[15px] font-semibold sm:inline-flex">{t('nav.book')}</a>
-
-      <!-- mobile menu -->
-      <details class="md:hidden">
-        <summary class="nav-ctrl grid h-9 w-9 cursor-pointer list-none place-items-center rounded-lg hover:opacity-80">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18" /></svg>
-        </summary>
-        <div class="absolute left-0 right-0 top-full border-b border-line bg-paper/95 backdrop-blur-xl">
-          <div class="container-x flex flex-col gap-1 py-4">
-            {links.map(([path, key]) => (
-              <a href={p(path)} class={`rounded-lg px-3 py-2.5 text-base transition-colors hover:bg-accent-soft ${current === path ? 'font-semibold text-ink' : 'text-ink-soft'}`}>{t(key)}</a>
+      <div class="flex items-center gap-2.5 sm:gap-4">
+        <details class="group relative">
+          <summary class="nav-ctrl flex cursor-pointer list-none select-none items-center gap-1 rounded-lg px-1.5 py-1.5 text-[15px] font-medium hover:opacity-80">
+            {lang.toUpperCase()}
+            <svg class="h-3.5 w-3.5 transition-transform duration-200 group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6" /></svg>
+          </summary>
+          <div class="absolute right-0 mt-3 w-48 overflow-hidden rounded-2xl border border-line bg-white p-1.5 shadow-soft">
+            {LANG_KEYS.map((l) => (
+              <a href={`/${l}${rest ? '/' + rest : ''}`} class={`block rounded-xl px-3.5 py-2.5 text-sm transition-colors hover:bg-accent-soft ${l === lang ? 'font-semibold text-accent' : 'text-ink-soft'}`}>
+                {LANGUAGES[l].label}
+              </a>
             ))}
-            <a href={p('book')} class="mt-2 rounded-full bg-ink px-5 py-3 text-center text-base font-semibold text-white transition-colors hover:bg-accent">{t('nav.book')}</a>
           </div>
-        </div>
-      </details>
+        </details>
+
+        <a href={p('book')} class="nav-book group hidden items-center gap-2 rounded-full py-2.5 pl-6 pr-5 text-[15px] font-semibold sm:inline-flex">
+          {t('nav.book')}
+          <svg class="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+        </a>
+
+        <!-- mobile menu -->
+        <details class="md:hidden">
+          <summary class="nav-ctrl grid h-10 w-10 cursor-pointer list-none place-items-center rounded-lg hover:opacity-80">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18" /></svg>
+          </summary>
+          <div class="absolute left-0 right-0 top-full border-b border-line bg-paper/95 backdrop-blur-xl">
+            <div class="container-x flex flex-col gap-1 py-4">
+              {links.map(([path, key]) => (
+                <a href={p(path)} class={`rounded-lg px-3 py-2.5 text-base transition-colors hover:bg-accent-soft ${current === path ? 'font-semibold text-ink' : 'text-ink-soft'}`}>{t(key)}</a>
+              ))}
+              <a href={p('book')} class="mt-2 rounded-full bg-accent px-5 py-3 text-center text-base font-semibold text-white transition-colors hover:bg-accent-ink">{t('nav.book')}</a>
+            </div>
+          </div>
+        </details>
+      </div>
     </div>
   </nav>
 </header>

@@ -52,8 +52,8 @@ body { background: var(--color-paper); color: var(--color-ink); font-family: var
 .nav-link:hover { @apply text-ink; }
 .nav-link[aria-current="page"] { @apply text-ink font-semibold; }
 .nav-ctrl { @apply text-ink-soft transition-colors; }
-.nav-book { @apply bg-ink text-white transition-colors; }
-.nav-book:hover { background: var(--color-accent); }
+.nav-book { @apply bg-accent text-white transition-colors; }
+.nav-book:hover { background: var(--color-accent-ink); }
 
 html.js .site-nav.at-top { @apply border-transparent bg-transparent; backdrop-filter: none; }
 html.js .site-nav.at-top .nav-logo { filter: brightness(0) invert(1); }
