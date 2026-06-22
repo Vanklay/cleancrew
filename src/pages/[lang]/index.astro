@@ -41,23 +41,26 @@ const meta = {
     <div class="absolute inset-0 -z-10 bg-gradient-to-r from-ink/40 to-transparent"></div>
     <div class="absolute inset-x-0 top-0 -z-10 h-32 bg-gradient-to-b from-ink/55 to-transparent"></div>
 
-    <div class="container-x flex min-h-[90vh] flex-col justify-end pb-12 pt-40 md:min-h-[94vh] md:pb-14">
-      <h1 class="reveal font-display font-medium tracking-tight leading-[1.08] text-white text-[clamp(2rem,4.4vw,4rem)] max-w-[24ch]" style="--d:.08s">
-        {t('hero.title')} <span class="text-white/55">{t('hero.title2')}</span>
-      </h1>
-
-      <div class="reveal mt-10 flex flex-col gap-6 md:flex-row md:items-end md:justify-between" style="--d:.22s">
-        <div class="space-y-5">
-          <p class="max-w-md text-base text-white/80 leading-relaxed md:text-lg">{t('hero.sub')}</p>
-          <div class="flex gap-2">
-            <button type="button" class="hero-dot h-1 w-9 rounded-full bg-white transition-colors" data-go="0" aria-label="1"></button>
-            <button type="button" class="hero-dot h-1 w-9 rounded-full bg-white/35 transition-colors" data-go="1" aria-label="2"></button>
-            <button type="button" class="hero-dot h-1 w-9 rounded-full bg-white/35 transition-colors" data-go="2" aria-label="3"></button>
-          </div>
-        </div>
-        <div class="flex shrink-0 flex-wrap gap-3">
+    <div class="container-x flex min-h-[88vh] flex-col justify-end pb-24 pt-40 md:min-h-[92vh] md:pb-32">
+      <div class="max-w-3xl">
+        <h1 class="reveal font-display font-medium tracking-tight leading-[1.08] text-white text-[clamp(2rem,4.4vw,4rem)]" style="--d:.08s">
+          {t('hero.title')} <span class="text-white/55">{t('hero.title2')}</span>
+        </h1>
+        <p class="reveal mt-6 max-w-xl text-base text-white/80 leading-relaxed md:text-lg" style="--d:.16s">{t('hero.sub')}</p>
+        <div class="reveal mt-9 flex flex-wrap items-center gap-4" style="--d:.24s">
           <a href={p('book')} class="btn">{t('hero.cta')}</a>
           <a href={p('services')} class="inline-flex items-center justify-center rounded-full border border-white/40 px-7 py-3.5 text-base font-semibold text-white transition-colors hover:bg-white hover:text-ink">{t('hero.cta2')}</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- slide indicators -->
+    <div class="absolute inset-x-0 bottom-7 z-10">
+      <div class="container-x flex justify-end">
+        <div class="flex gap-2">
+          <button type="button" class="hero-dot h-1 w-9 rounded-full bg-white transition-colors" data-go="0" aria-label="1"></button>
+          <button type="button" class="hero-dot h-1 w-9 rounded-full bg-white/35 transition-colors" data-go="1" aria-label="2"></button>
+          <button type="button" class="hero-dot h-1 w-9 rounded-full bg-white/35 transition-colors" data-go="2" aria-label="3"></button>
         </div>
       </div>
     </div>
