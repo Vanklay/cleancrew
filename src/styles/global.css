@@ -64,6 +64,20 @@ html.js .site-nav.at-top .nav-ctrl { color: #fff; }
 html.js .site-nav.at-top .nav-book { @apply bg-white text-ink; }
 html.js .site-nav.at-top .nav-book:hover { @apply bg-white/90; }
 
+/* FAQ — native collapsible accordion (no JS; exclusive via [name]) */
+.faq-item { @apply border-b border-line; }
+.faq-item:first-child { @apply border-t border-line; }
+.faq-q { @apply flex cursor-pointer list-none items-start justify-between gap-6 py-6 text-lg font-semibold text-ink transition-colors duration-200; }
+.faq-q::-webkit-details-marker { display: none; }
+.faq-q:hover { color: var(--color-accent); }
+.faq-item[open] .faq-q { color: var(--color-accent); }
+.faq-icon { @apply mt-1 h-5 w-5 shrink-0 transition-all duration-300; color: var(--color-mist); }
+.faq-item[open] .faq-icon { @apply rotate-180; color: var(--color-accent); }
+.faq-a { @apply max-w-2xl pb-7 text-ink-soft leading-relaxed; }
+.faq-item[open] .faq-a { animation: faqIn .3s cubic-bezier(.2,.7,.2,1); }
+@keyframes faqIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .faq-item[open] .faq-a { animation: none; } }
+
 /* form inputs */
 .field { @apply mt-1.5 w-full rounded-xl border border-line bg-white px-3.5 py-3 text-ink transition-colors; }
 .field:focus { @apply border-accent; outline: none; }

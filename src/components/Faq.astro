@@ -7,14 +7,17 @@ const { title, items } = Astro.props;
 ---
 <section class="section">
   <div class="container-x max-w-3xl">
-    <h2 class="headline text-3xl md:text-4xl font-semibold mb-10">{title}</h2>
-    <dl class="divide-y divide-line">
-      {items.map((f) => (
-        <div class="py-6">
-          <dt class="font-semibold text-lg mb-2">{f.q}</dt>
-          <dd class="text-ink-soft leading-relaxed">{f.a}</dd>
-        </div>
+    <h2 class="headline reveal text-3xl md:text-5xl font-semibold mb-10 md:mb-12">{title}</h2>
+    <div>
+      {items.map((f, i) => (
+        <details name="faq" open={i === 0} class="faq-item reveal" style={`--d:${i * 0.05}s`}>
+          <summary class="faq-q">
+            {f.q}
+            <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6" /></svg>
+          </summary>
+          <p class="faq-a">{f.a}</p>
+        </details>
       ))}
-    </dl>
+    </div>
   </div>
 </section>
