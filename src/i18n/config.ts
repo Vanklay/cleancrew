@@ -13,7 +13,7 @@ export const LANG_KEYS = Object.keys(LANGUAGES) as Lang[];
 
 // The three services, in display order. Single source of truth for routing,
 // nav, footer and JSON-LD — never re-list these inline.
-export const SERVICES = ['clearance', 'windows', 'entrances'] as const;
+export const SERVICES = ['clearance', 'windows', 'surfaces'] as const;
 export type Service = (typeof SERVICES)[number];
 
 export const SITE = {

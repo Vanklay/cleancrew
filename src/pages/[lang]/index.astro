@@ -1,7 +1,7 @@
 ---
 import { langStaticPaths } from '../../lib/paths';
 import Layout from '../../layouts/Layout.astro';
-import { localizedPath, type Lang } from '../../i18n/config';
+import { SERVICES, localizedPath, type Lang } from '../../i18n/config';
 import { useTranslations } from '../../i18n/ui';
 
 export const getStaticPaths = langStaticPaths;
@@ -9,11 +9,7 @@ const lang = Astro.params.lang as Lang;
 const t = useTranslations(lang);
 const p = (s: string) => localizedPath(lang, s);
 
-const services = [
-  { key: 'clearance', href: p('services') + '#clearance' },
-  { key: 'windows',   href: p('services') + '#windows' },
-  { key: 'entrances', href: p('services') + '#entrances' },
-];
+const services = SERVICES.map((key) => ({ key, href: `${p('services')}#${key}` }));
 const why = ['1','2','3','4'];
 
 // AEO/LLM answer block — concise Q&A that LLMs and featured snippets lift verbatim.

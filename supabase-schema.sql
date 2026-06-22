@@ -8,7 +8,7 @@ create table if not exists public.slots (
   slot_date   date    not null,
   start_time  time    not null,
   end_time    time    not null,
-  service     text    not null check (service in ('clearance','windows','entrances','any')),
+  service     text    not null check (service in ('clearance','windows','surfaces','any')),
   capacity    int     not null default 1,
   is_open     boolean not null default true,
   created_at  timestamptz default now(),
@@ -19,7 +19,7 @@ create table if not exists public.slots (
 create table if not exists public.bookings (
   id          uuid primary key default gen_random_uuid(),
   slot_id     uuid references public.slots(id) on delete set null,
-  service     text not null check (service in ('clearance','windows','entrances')),
+  service     text not null check (service in ('clearance','windows','surfaces')),
   req_date    date not null,
   name        text not null,
   email       text not null,

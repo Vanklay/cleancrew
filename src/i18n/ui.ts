@@ -25,8 +25,8 @@ const fr = {
   'services.clearance.desc': 'Garages, caves, greniers vidés en une intervention. Tri, évacuation, recyclage. Vous récupérez l’espace, on s’occupe du reste.',
   'services.windows.title': 'Nettoyage de vitres',
   'services.windows.desc': 'Vitres, baies et vérandas sans traces. Une rapidité reconnue parmi les meilleures du Luxembourg, en ponctuel ou en abonnement.',
-  'services.entrances.title': 'Nettoyage de parties communes',
-  'services.entrances.desc': 'Halls, entrées et cages d’escalier d’immeubles, entretenus régulièrement. Propreté constante pour copropriétés et résidences.',
+  'services.surfaces.title': 'Nettoyage d’allées & terrasses',
+  'services.surfaces.desc': 'Nettoyage haute pression d’allées, terrasses, cours et surfaces pavées. Des années de saleté effacées en un passage, idéal à ajouter à une intervention garage ou vitres.',
   'services.learn': 'En savoir plus',
 
   'why.title': 'Pourquoi CleanCrew',
@@ -90,12 +90,12 @@ const fr = {
   'service.windows.faq.1.a': 'Oui. Nous utilisons des perches télescopiques et le matériel d’accès adapté pour atteindre les vitres en hauteur et les vérandas en toute sécurité.',
   'service.windows.faq.2.q': 'L’abonnement est-il moins cher que le ponctuel ?',
   'service.windows.faq.2.a': 'Par passage, oui. Un rythme régulier évite que le verre ne s’encrasse, donc chaque nettoyage est plus rapide et moins cher.',
-  'service.entrances.lead': 'Halls, entrées et cages d’escalier d’immeubles entretenus selon un planning fixe — propreté constante pour copropriétés et résidences.',
-  'service.entrances.points': ['Sols, escaliers et rampes nettoyés à chaque passage', 'Vitres d’entrée et portes d’ascenseur essuyées', 'Planning fixe, même équipe à chaque fois'],
-  'service.entrances.faq.1.q': 'À quelle fréquence nettoyez-vous les parties communes ?',
-  'service.entrances.faq.1.a': 'Selon un rythme adapté à l’immeuble — l’hebdomadaire est le plus courant, mais nous fixons la cadence avec la copropriété.',
-  'service.entrances.faq.2.q': 'Intervenez-vous dans les grandes résidences ?',
-  'service.entrances.faq.2.a': 'Oui. D’une entrée unique aux résidences multi-blocs, la même équipe maintient un niveau constant.',
+  'service.surfaces.lead': 'Allées, terrasses, cours et surfaces pavées nettoyées à haute pression — mousse, algues et saletés incrustées effacées en un seul passage.',
+  'service.surfaces.points': ['Allées, accès et surfaces pavées partagées', 'Terrasses et cours retrouvées, pas seulement rincées', 'Idéal en complément d’une intervention garage ou vitres, sans déplacement supplémentaire'],
+  'service.surfaces.faq.1.q': 'Peut-on l’ajouter à une autre réservation ?',
+  'service.surfaces.faq.1.a': 'Oui, c’est la formule idéale. Le nettoyage haute pression se greffe sur un débarras de garage ou un passage vitres à la même adresse, sans second déplacement.',
+  'service.surfaces.faq.2.q': 'Est-ce efficace contre la mousse et les algues tenaces ?',
+  'service.surfaces.faq.2.a': 'Oui. La haute pression décolle la mousse, les algues et la saleté incrustées qu’un simple rinçage ne retire pas, et restaure la surface d’origine.',
 } satisfies Record<string, Value>;
 
 /** Every translation key on the site, derived from the canonical `fr` dictionary. */
@@ -124,8 +124,8 @@ const de: FullDict = {
   'services.clearance.desc': 'Garagen, Keller und Dachböden in einem Durchgang geräumt. Sortieren, Abtransport, Recycling. Sie gewinnen Platz, wir erledigen den Rest.',
   'services.windows.title': 'Fensterreinigung',
   'services.windows.desc': 'Fenster, Fronten und Wintergärten streifenfrei. Eine Geschwindigkeit, die zu den besten Luxemburgs zählt – einmalig oder im Abo.',
-  'services.entrances.title': 'Reinigung von Gemeinschaftsflächen',
-  'services.entrances.desc': 'Eingänge, Flure und Treppenhäuser regelmäßig gepflegt. Konstante Sauberkeit für Eigentümergemeinschaften und Residenzen.',
+  'services.surfaces.title': 'Einfahrt- & Flächenreinigung',
+  'services.surfaces.desc': 'Hochdruckreinigung von Einfahrten, Terrassen, Höfen und Pflasterflächen. Jahre von Schmutz in einem Durchgang entfernt, ideal als Ergänzung zum Garagen- oder Fenstertermin.',
   'services.learn': 'Mehr erfahren',
 
   'why.title': 'Warum CleanCrew',
@@ -189,12 +189,12 @@ const de: FullDict = {
   'service.windows.faq.1.a': 'Ja. Mit Teleskopstangen und passender Zugangstechnik erreichen wir Fenster in der Höhe und Wintergärten sicher.',
   'service.windows.faq.2.q': 'Ist ein Abo günstiger als Einzelreinigungen?',
   'service.windows.faq.2.a': 'Pro Termin ja. Ein regelmäßiger Rhythmus verhindert starke Verschmutzung, sodass jede Reinigung schneller und günstiger ist.',
-  'service.entrances.lead': 'Eingänge, Flure und Treppenhäuser nach festem Plan gepflegt — konstante Sauberkeit für Eigentümergemeinschaften und Residenzen.',
-  'service.entrances.points': ['Böden, Treppen und Handläufe bei jedem Termin gereinigt', 'Eingangsglas und Aufzugstüren abgewischt', 'Fester Plan, immer dasselbe Team'],
-  'service.entrances.faq.1.q': 'Wie oft reinigen Sie die Gemeinschaftsflächen?',
-  'service.entrances.faq.1.a': 'Nach einem zum Gebäude passenden Rhythmus — wöchentlich ist am häufigsten, doch wir legen den Takt mit der Eigentümergemeinschaft fest.',
-  'service.entrances.faq.2.q': 'Betreuen Sie auch größere Residenzen?',
-  'service.entrances.faq.2.a': 'Ja. Vom einzelnen Eingang bis zur Mehrblock-Residenz hält dasselbe Team den Standard konstant.',
+  'service.surfaces.lead': 'Einfahrten, Terrassen, Höfe und Pflasterflächen mit Hochdruck gereinigt — Moos, Algen und eingetretener Schmutz in einem Durchgang entfernt.',
+  'service.surfaces.points': ['Einfahrten, Zufahrten und gemeinsame Pflasterflächen', 'Terrassen und Höfe wiederhergestellt, nicht nur abgespült', 'Am besten zum Garagen- oder Fenstertermin dazu, ohne Extraanfahrt'],
+  'service.surfaces.faq.1.q': 'Kann man es zu einem anderen Termin dazubuchen?',
+  'service.surfaces.faq.1.a': 'Ja, das ist die ideale Variante. Die Hochdruckreinigung lässt sich an eine Garagenentrümpelung oder einen Fenstertermin an derselben Adresse anhängen, ohne zweite Anfahrt.',
+  'service.surfaces.faq.2.q': 'Wirkt es gegen hartnäckiges Moos und Algen?',
+  'service.surfaces.faq.2.a': 'Ja. Der Hochdruck löst festsitzendes Moos, Algen und eingetretenen Schmutz, den bloßes Abspülen nicht entfernt, und stellt die ursprüngliche Oberfläche wieder her.',
 };
 
 const en: FullDict = {
@@ -216,8 +216,8 @@ const en: FullDict = {
   'services.clearance.desc': 'Garages, cellars and attics emptied in a single visit. Sorting, removal, recycling. You get the space back, we handle the rest.',
   'services.windows.title': 'Window cleaning',
   'services.windows.desc': 'Windows, fronts and conservatories, streak-free. A speed ranked among the best in Luxembourg — one-off or on subscription.',
-  'services.entrances.title': 'Common-area cleaning',
-  'services.entrances.desc': 'Building entrances, halls and stairwells kept up on a schedule. Consistent cleanliness for co-ownerships and residences.',
+  'services.surfaces.title': 'Driveway & surface cleaning',
+  'services.surfaces.desc': 'Pressure washing for driveways, terraces, courtyards and paved areas. Years of grime lifted in one pass, and easy to add to a garage or window visit.',
   'services.learn': 'Learn more',
 
   'why.title': 'Why CleanCrew',
@@ -281,12 +281,12 @@ const en: FullDict = {
   'service.windows.faq.1.a': 'Yes. We use pole-fed systems and the right access gear to reach upper-floor and conservatory glass safely.',
   'service.windows.faq.2.q': 'Is a subscription cheaper than one-off cleans?',
   'service.windows.faq.2.a': 'Per visit, yes. A regular schedule keeps glass from getting bad, so each clean is faster and costs less.',
-  'service.entrances.lead': 'Building entrances, halls and stairwells kept up on a fixed schedule — consistent cleanliness for co-ownerships and residences.',
-  'service.entrances.points': ['Floors, stairs and handrails cleaned each visit', 'Entrance glass and lift doors wiped down', 'Fixed schedule, same crew every time'],
-  'service.entrances.faq.1.q': 'How often do you clean common areas?',
-  'service.entrances.faq.1.a': 'On a schedule that fits the building — weekly is most common, but we set the rhythm with the co-ownership.',
-  'service.entrances.faq.2.q': 'Do you cover larger residences?',
-  'service.entrances.faq.2.a': 'Yes. From a single entrance to multi-block residences, the same crew keeps the standard consistent.',
+  'service.surfaces.lead': 'Driveways, terraces, courtyards and paved areas pressure-washed back to clean — years of moss, algae and grime lifted in a single pass.',
+  'service.surfaces.points': ['Driveways, alleys and shared paved areas', 'Terraces and courtyards restored, not just rinsed', 'Best added onto a garage or window visit — no extra trip'],
+  'service.surfaces.faq.1.q': 'Can you add it to another booking?',
+  'service.surfaces.faq.1.a': 'Yes — that’s the ideal way. Pressure washing pairs onto a garage clearance or window visit at the same address, with no second call-out.',
+  'service.surfaces.faq.2.q': 'Does it work on stubborn moss and algae?',
+  'service.surfaces.faq.2.a': 'Yes. Pressure washing lifts embedded moss, algae and ground-in dirt that a rinse can’t, restoring the original surface.',
 };
 
 // Full native dictionaries. lu/pt/es currently translate every fr key, but are
@@ -311,8 +311,8 @@ const lu: PartialDict = {
   'services.clearance.desc': 'Garagen, Kelleren a Späicheren an engem eenzegen Asaz eidelgemaach. Zortéieren, ewechféieren, recycléieren. Dir kritt de Raum zréck, mir këmmeren eis ëm de Rescht.',
   'services.windows.title': 'Fënsterbotzen',
   'services.windows.desc': 'Fënsteren, Façaden a Wantergäert ouni Spueren. Eng Geschwindegkeet, déi zu de beschten zu Lëtzebuerg zielt — eemoleg oder am Abo.',
-  'services.entrances.title': 'Botzen vu Gemeinschaftsraim',
-  'services.entrances.desc': 'Agäng, Couloiren an Trapenhaiser, regelméisseg gepflegt. Konstant Proppertéit fir Matbesëtzergemeinschaften a Residenzen.',
+  'services.surfaces.title': 'Afahrt- & Flächebotzen',
+  'services.surfaces.desc': 'Héichdrockbotzen vun Afahrten, Terrassen, Häff a Pavéesflächen. Joren u Schmotz an engem Duerchgang ewech, ideal als Ergänzung zu engem Garagen- oder Fënstertermin.',
   'services.learn': 'Méi gewuer ginn',
 
   'why.title': 'Firwat CleanCrew',
@@ -376,12 +376,12 @@ const lu: PartialDict = {
   'service.windows.faq.1.a': 'Jo. Mat Teleskopstaangen an der passender Zougangstechnik erreeche mir Fënsteren an der Héicht a Wantergäert sécher.',
   'service.windows.faq.2.q': 'Ass en Abo méi bëlleg wéi eenzel Botzungen?',
   'service.windows.faq.2.a': 'Pro Asaz jo. E regelméissege Rhythmus verhënnert staark Verschmotzung, sou datt all Botzung méi séier a méi bëlleg ass.',
-  'service.entrances.lead': 'Agäng, Couloiren an Trapenhaiser no engem feste Plang gepflegt — konstant Proppertéit fir Matbesëtzergemeinschaften a Residenzen.',
-  'service.entrances.points': ['Bidem, Trapen a Handleeschten bei all Asaz gebotzt', 'Agangsglas a Liftdieren ofgewëscht', 'Feste Plang, ëmmer dat selwecht Team'],
-  'service.entrances.faq.1.q': 'Wéi dacks botzt Dir d’Gemeinschaftsraim?',
-  'service.entrances.faq.1.a': 'No engem Rhythmus deen zum Gebai passt — wöchentlech ass am heefegsten, mä mir leeën den Takt mat der Matbesëtzergemeinschaft fest.',
-  'service.entrances.faq.2.q': 'Schafft Dir och a grousse Residenzen?',
-  'service.entrances.faq.2.a': 'Jo. Vun engem eenzegen Agang bis zu Residenze mat méi Bléck hält dat selwecht Team den Niveau konstant.',
+  'service.surfaces.lead': 'Afahrten, Terrassen, Häff a Pavéesflächen mat Héichdrock gebotzt — Moss, Algen an agetruede Schmotz an engem eenzegen Duerchgang ewech.',
+  'service.surfaces.points': ['Afahrten, Zoufaarten a gemeinsam Pavéesflächen', 'Terrassen an Häff erëmhiergestallt, net just ofgespullt', 'Am beschten zesumme mat engem Garagen- oder Fënstertermin, ouni Extra-Untrëtt'],
+  'service.surfaces.faq.1.q': 'Kann een et zu engem anere Rendez-vous dobäibuchen?',
+  'service.surfaces.faq.1.a': 'Jo, dat ass déi ideal Variant. D’Héichdrockbotzen léisst sech un eng Garagenentrëmpelung oder e Fënstertermin op der selwechter Adress uhänken, ouni zweeten Untrëtt.',
+  'service.surfaces.faq.2.q': 'Wierkt et géint haartnäckege Moss an Algen?',
+  'service.surfaces.faq.2.a': 'Jo. Den Héichdrock léist festsëtzende Moss, Algen an agetruede Schmotz, deen e blousst Ofspullen net ewechkritt, a stellt déi originell Uewerfläch erëm hier.',
 };
 
 const pt: PartialDict = {
@@ -403,8 +403,8 @@ const pt: PartialDict = {
   'services.clearance.desc': 'Garagens, caves e sótãos esvaziados numa só intervenção. Triagem, remoção, reciclagem. Recupera o espaço, nós tratamos do resto.',
   'services.windows.title': 'Limpeza de vidros',
   'services.windows.desc': 'Vidros, janelas e marquises sem marcas. Uma rapidez entre as melhores do Luxemburgo, pontual ou por subscrição.',
-  'services.entrances.title': 'Limpeza de zonas comuns',
-  'services.entrances.desc': 'Halls, entradas e escadas de prédios, mantidos com regularidade. Limpeza constante para condomínios e residências.',
+  'services.surfaces.title': 'Limpeza de acessos & terraços',
+  'services.surfaces.desc': 'Lavagem a alta pressão de acessos, terraços, pátios e pavimentos. Anos de sujidade removidos numa passagem, ideal para juntar a uma intervenção de garagem ou vidros.',
   'services.learn': 'Saber mais',
 
   'why.title': 'Porquê a CleanCrew',
@@ -468,12 +468,12 @@ const pt: PartialDict = {
   'service.windows.faq.1.a': 'Sim. Usamos sistemas de vara telescópica e o equipamento de acesso adequado para chegar com segurança a vidros altos e marquises.',
   'service.windows.faq.2.q': 'A subscrição fica mais barata do que limpezas pontuais?',
   'service.windows.faq.2.a': 'Por visita, sim. Um ritmo regular evita que o vidro se suje muito, por isso cada limpeza é mais rápida e mais barata.',
-  'service.entrances.lead': 'Halls, entradas e escadas de prédios mantidos com um plano fixo — limpeza constante para condomínios e residências.',
-  'service.entrances.points': ['Pisos, escadas e corrimãos limpos em cada visita', 'Vidros da entrada e portas do elevador limpos', 'Plano fixo, sempre a mesma equipa'],
-  'service.entrances.faq.1.q': 'Com que frequência limpam as zonas comuns?',
-  'service.entrances.faq.1.a': 'Num ritmo adequado ao prédio — semanal é o mais comum, mas definimos a cadência com o condomínio.',
-  'service.entrances.faq.2.q': 'Trabalham em residências maiores?',
-  'service.entrances.faq.2.a': 'Sim. De uma única entrada a residências de vários blocos, a mesma equipa mantém o nível constante.',
+  'service.surfaces.lead': 'Acessos, terraços, pátios e pavimentos lavados a alta pressão — musgo, algas e sujidade entranhada removidos numa só passagem.',
+  'service.surfaces.points': ['Acessos, entradas e pavimentos partilhados', 'Terraços e pátios recuperados, não só enxaguados', 'Ideal para juntar a uma visita de garagem ou vidros, sem deslocação extra'],
+  'service.surfaces.faq.1.q': 'Pode juntar-se a outra reserva?',
+  'service.surfaces.faq.1.a': 'Sim, é a forma ideal. A lavagem a alta pressão junta-se a um esvaziamento de garagem ou a uma visita de vidros na mesma morada, sem segunda deslocação.',
+  'service.surfaces.faq.2.q': 'Resulta com musgo e algas difíceis?',
+  'service.surfaces.faq.2.a': 'Sim. A alta pressão remove o musgo, as algas e a sujidade entranhada que um simples enxágue não tira, recuperando a superfície original.',
 };
 
 const es: PartialDict = {
@@ -495,8 +495,8 @@ const es: PartialDict = {
   'services.clearance.desc': 'Garajes, sótanos y desvanes vaciados en una sola intervención. Clasificación, retirada, reciclaje. Tú recuperas el espacio, nosotros nos ocupamos del resto.',
   'services.windows.title': 'Limpieza de cristales',
   'services.windows.desc': 'Cristales, ventanales y galerías sin marcas. Una rapidez entre las mejores de Luxemburgo, puntual o por suscripción.',
-  'services.entrances.title': 'Limpieza de zonas comunes',
-  'services.entrances.desc': 'Portales, entradas y escaleras de edificios, mantenidos con regularidad. Limpieza constante para comunidades y residencias.',
+  'services.surfaces.title': 'Limpieza de accesos & terrazas',
+  'services.surfaces.desc': 'Limpieza a alta presión de accesos, terrazas, patios y pavimentos. Años de suciedad eliminados en una pasada, ideal para añadir a una intervención de garaje o cristales.',
   'services.learn': 'Saber más',
 
   'why.title': 'Por qué CleanCrew',
@@ -560,12 +560,12 @@ const es: PartialDict = {
   'service.windows.faq.1.a': 'Sí. Usamos sistemas de pértiga telescópica y el equipo de acceso adecuado para llegar con seguridad a cristales en altura y galerías.',
   'service.windows.faq.2.q': '¿Sale más barata la suscripción que las limpiezas puntuales?',
   'service.windows.faq.2.a': 'Por visita, sí. Un ritmo regular evita que el cristal se ensucie mucho, así cada limpieza es más rápida y más barata.',
-  'service.entrances.lead': 'Portales, entradas y escaleras de edificios mantenidos con un plan fijo — limpieza constante para comunidades y residencias.',
-  'service.entrances.points': ['Suelos, escaleras y barandillas limpios en cada visita', 'Cristales del portal y puertas del ascensor repasados', 'Plan fijo, siempre el mismo equipo'],
-  'service.entrances.faq.1.q': '¿Con qué frecuencia limpiáis las zonas comunes?',
-  'service.entrances.faq.1.a': 'Con un ritmo adaptado al edificio — lo más común es semanal, pero fijamos la cadencia con la comunidad.',
-  'service.entrances.faq.2.q': '¿Trabajáis en residencias grandes?',
-  'service.entrances.faq.2.a': 'Sí. De un solo portal a residencias de varios bloques, el mismo equipo mantiene el nivel constante.',
+  'service.surfaces.lead': 'Accesos, terrazas, patios y pavimentos limpiados a alta presión — musgo, algas y suciedad incrustada eliminados en una sola pasada.',
+  'service.surfaces.points': ['Accesos, entradas y pavimentos compartidos', 'Terrazas y patios recuperados, no solo enjuagados', 'Ideal para añadir a una visita de garaje o cristales, sin desplazamiento extra'],
+  'service.surfaces.faq.1.q': '¿Se puede añadir a otra reserva?',
+  'service.surfaces.faq.1.a': 'Sí, es la forma ideal. La limpieza a alta presión se suma a un vaciado de garaje o a una visita de cristales en la misma dirección, sin un segundo desplazamiento.',
+  'service.surfaces.faq.2.q': '¿Funciona con musgo y algas difíciles?',
+  'service.surfaces.faq.2.a': 'Sí. La alta presión elimina el musgo, las algas y la suciedad incrustada que un simple enjuague no quita, recuperando la superficie original.',
 };
 
 export const ui: Record<Lang, PartialDict> = { fr, de, en, lu, pt, es };
