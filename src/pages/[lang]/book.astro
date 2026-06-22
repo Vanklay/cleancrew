@@ -8,10 +8,11 @@ export const getStaticPaths = langStaticPaths;
 const lang = Astro.params.lang as Lang;
 const t = useTranslations(lang);
 ---
-<Layout lang={lang} path="book" title={`${t('book.title')} · CleanCrew`} description={t('book.sub')}>
-  <section class="container-x py-20 md:py-28">
-    <h1 class="headline text-4xl md:text-6xl font-semibold mb-4">{t('book.title')}</h1>
-    <p class="text-lg text-ink-soft mb-12 max-w-xl">{t('book.sub')}</p>
-    <BookingForm lang={lang} />
+<Layout lang={lang} path="book" title={`${t('book.title')} ${t('geo.in')} · CleanCrew`} description={t('book.sub')}>
+  <section class="container-x pt-16 pb-24 md:pt-24 md:pb-32">
+    <p class="eyebrow reveal">{t('hero.kicker')}</p>
+    <h1 class="headline reveal text-4xl md:text-6xl mt-6 mb-5" style="--d:.06s">{t('book.title')}</h1>
+    <p class="reveal text-lg md:text-xl text-ink-soft mb-12 md:mb-16 max-w-xl" style="--d:.12s">{t('book.sub')}</p>
+    <div class="reveal" style="--d:.18s"><BookingForm lang={lang} /></div>
   </section>
 </Layout>

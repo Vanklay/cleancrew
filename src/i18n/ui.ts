@@ -46,6 +46,8 @@ const fr = {
 
   'book.title': 'Réservez votre intervention',
   'book.sub': 'Choisissez un créneau. On confirme par email sous 24 h.',
+  'book.summary': 'Votre réservation',
+  'book.details': 'Vos coordonnées',
   'book.name': 'Nom',
   'book.email': 'Email',
   'book.phone': 'Téléphone',
@@ -152,6 +154,8 @@ const de: FullDict = {
 
   'book.title': 'Buchen Sie Ihren Termin',
   'book.sub': 'Wählen Sie einen Termin. Bestätigung per E-Mail innerhalb von 24 Std.',
+  'book.summary': 'Ihre Buchung',
+  'book.details': 'Ihre Kontaktdaten',
   'book.name': 'Name',
   'book.email': 'E-Mail',
   'book.phone': 'Telefon',
@@ -251,6 +255,8 @@ const en: FullDict = {
 
   'book.title': 'Book your visit',
   'book.sub': 'Pick a slot. We confirm by email within 24 h.',
+  'book.summary': 'Your booking',
+  'book.details': 'Your details',
   'book.name': 'Name',
   'book.email': 'Email',
   'book.phone': 'Phone',
@@ -353,6 +359,8 @@ const lu: PartialDict = {
 
   'book.title': 'Buchen Ären Asaz',
   'book.sub': 'Wielt en Termin. Mir confirméieren per Email bannent 24 Stonnen.',
+  'book.summary': 'Är Reservatioun',
+  'book.details': 'Är Kontaktdaten',
   'book.name': 'Numm',
   'book.email': 'Email',
   'book.phone': 'Telefon',
@@ -452,6 +460,8 @@ const pt: PartialDict = {
 
   'book.title': 'Reserve a sua intervenção',
   'book.sub': 'Escolha um horário. Confirmamos por email em 24 h.',
+  'book.summary': 'A sua reserva',
+  'book.details': 'Os seus dados',
   'book.name': 'Nome',
   'book.email': 'Email',
   'book.phone': 'Telefone',
@@ -551,6 +561,8 @@ const es: PartialDict = {
 
   'book.title': 'Reserva tu intervención',
   'book.sub': 'Elige una franja. Confirmamos por email en 24 h.',
+  'book.summary': 'Tu reserva',
+  'book.details': 'Tus datos',
   'book.name': 'Nombre',
   'book.email': 'Email',
   'book.phone': 'Teléfono',

@@ -1,5 +1,5 @@
 ---
-import { type Lang } from '../i18n/config';
+import { SERVICES, type Lang } from '../i18n/config';
 import { useTranslations, useRaw } from '../i18n/ui';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
@@ -15,37 +15,75 @@ const labels = {
   months: r('book.calendar.months') as string[],
   days: r('book.calendar.days') as string[],
 };
+const services = SERVICES.map((s) => ({ key: s, title: t(`services.${s}.title`) }));
 ---
-<div id="booking" class="max-w-2xl mx-auto" data-lang={lang}>
+<div id="booking" class="grid lg:grid-cols-12 gap-8 lg:gap-12" data-lang={lang}>
   <script type="application/json" id="bookingLabels" set:html={JSON.stringify(labels)} />
-  <div class="grid gap-5">
-    <div id="cal" class="rounded-2xl border border-line bg-white p-6">
-      <div class="flex items-center justify-between mb-4">
-        <button id="prev" class="px-3 py-1 rounded-lg hover:bg-accent-soft text-ink-soft">←</button>
-        <div id="monthLabel" class="font-semibold"></div>
-        <button id="next" class="px-3 py-1 rounded-lg hover:bg-accent-soft text-ink-soft">→</button>
+
+  <!-- live summary + trust -->
+  <aside class="lg:col-span-4 order-last lg:order-first">
+    <div class="rounded-2xl border border-line bg-white p-7 lg:sticky lg:top-24">
+      <h2 class="display text-xl">{t('book.summary')}</h2>
+      <dl class="mt-6 space-y-4 text-sm">
+        <div class="flex items-center justify-between gap-4">
+          <dt class="text-mist">{t('book.service')}</dt>
+          <dd id="sumService" class="font-semibold text-ink text-right">{services[0].title}</dd>
+        </div>
+        <div class="flex items-center justify-between gap-4">
+          <dt class="text-mist">{t('book.date')}</dt>
+          <dd id="sumDate" class="font-semibold text-ink text-right">—</dd>
+        </div>
+      </dl>
+      <div class="mt-7 pt-7 border-t border-line space-y-3 text-sm text-ink-soft">
+        <p class="flex gap-3"><span class="text-accent font-bold" aria-hidden="true">✓</span>{t('why.2.t')}</p>
+        <p class="flex gap-3"><span class="text-accent font-bold" aria-hidden="true">✓</span>{t('why.1.t')}</p>
+        <p class="flex gap-3"><span class="text-accent font-bold" aria-hidden="true">✓</span>{t('why.4.t')}</p>
       </div>
-      <!-- min-h reserves the calendar's height so the client-rendered grid doesn't shift layout (CLS) -->
-      <div id="grid" class="grid grid-cols-7 gap-1 text-center text-sm min-h-72"></div>
-      <p id="calNote" class="mt-4 text-xs text-mist"></p>
+    </div>
+  </aside>
+
+  <!-- guided inputs -->
+  <div class="lg:col-span-8 space-y-10">
+    <fieldset>
+      <legend class="text-sm font-semibold mb-3">{t('book.service')}</legend>
+      <div id="serviceSeg" class="grid gap-2.5 sm:grid-cols-3">
+        {services.map((s, i) => (
+          <button type="button" data-service={s.key} aria-pressed={i === 0 ? 'true' : 'false'}
+            class="svc-opt rounded-xl border border-line px-4 py-3.5 text-left text-sm font-medium text-ink-soft transition-colors hover:border-ink/30 aria-pressed:border-accent aria-pressed:bg-accent-soft aria-pressed:text-accent">
+            {s.title}
+          </button>
+        ))}
+      </div>
+    </fieldset>
+
+    <div>
+      <div class="text-sm font-semibold mb-3">{t('book.date')}</div>
+      <div id="cal" class="rounded-2xl border border-line bg-white p-5 sm:p-6">
+        <div class="flex items-center justify-between mb-4">
+          <button id="prev" type="button" aria-label="–" class="grid h-9 w-9 place-items-center rounded-lg text-ink-soft transition-colors hover:bg-accent-soft hover:text-accent">←</button>
+          <div id="monthLabel" class="font-semibold"></div>
+          <button id="next" type="button" aria-label="+" class="grid h-9 w-9 place-items-center rounded-lg text-ink-soft transition-colors hover:bg-accent-soft hover:text-accent">→</button>
+        </div>
+        <div id="grid" class="grid grid-cols-7 gap-1 text-center text-sm min-h-72"></div>
+        <p id="calNote" class="mt-4 text-xs text-mist"></p>
+      </div>
+      <input id="f_date" type="hidden" />
     </div>
 
-    <div class="grid sm:grid-cols-2 gap-4">
-      <label class="text-sm">{t('book.name')}<input id="f_name" class="mt-1 w-full rounded-lg border border-line px-3 py-2.5" required /></label>
-      <label class="text-sm">{t('book.email')}<input id="f_email" type="email" class="mt-1 w-full rounded-lg border border-line px-3 py-2.5" required /></label>
-      <label class="text-sm">{t('book.phone')}<input id="f_phone" class="mt-1 w-full rounded-lg border border-line px-3 py-2.5" /></label>
-      <label class="text-sm">{t('book.service')}
-        <select id="f_service" class="mt-1 w-full rounded-lg border border-line px-3 py-2.5 bg-white">
-          <option value="clearance">{t('services.clearance.title')}</option>
-          <option value="windows">{t('services.windows.title')}</option>
-          <option value="surfaces">{t('services.surfaces.title')}</option>
-        </select>
-      </label>
+    <div>
+      <div class="text-sm font-semibold mb-3">{t('book.details')}</div>
+      <div class="grid gap-4 sm:grid-cols-2">
+        <label class="text-sm">{t('book.name')}<input id="f_name" class="field" required /></label>
+        <label class="text-sm">{t('book.email')}<input id="f_email" type="email" class="field" required /></label>
+        <label class="text-sm">{t('book.phone')}<input id="f_phone" class="field" /></label>
+        <label class="text-sm sm:col-span-2">{t('book.message')}<textarea id="f_message" rows="3" class="field"></textarea></label>
+      </div>
     </div>
-    <label class="text-sm">{t('book.date')}<input id="f_date" type="date" class="mt-1 w-full rounded-lg border border-line px-3 py-2.5" required /></label>
-    <label class="text-sm">{t('book.message')}<textarea id="f_message" rows="3" class="mt-1 w-full rounded-lg border border-line px-3 py-2.5"></textarea></label>
-    <button id="submitBtn" class="btn">{t('book.submit')}</button>
-    <p id="formMsg" class="text-sm"></p>
+
+    <div class="flex flex-wrap items-center gap-4">
+      <button id="submitBtn" type="button" class="btn w-full sm:w-auto">{t('book.submit')}</button>
+      <p id="formMsg" class="text-sm" role="status" aria-live="polite"></p>
+    </div>
   </div>
 </div>
 
@@ -54,57 +92,80 @@ const labels = {
   const root = document.getElementById('booking')!;
   const lang = root.dataset.lang || 'fr';
   const S = JSON.parse(document.getElementById('bookingLabels')!.textContent || '{}') as {
-    success:string; error:string; available:string; none:string; months:string[]; days:string[];
+    success: string; error: string; available: string; none: string; months: string[]; days: string[];
   };
 
+  // service segmented control
+  const segBtns = Array.from(root.querySelectorAll<HTMLButtonElement>('.svc-opt'));
+  const sumService = document.getElementById('sumService')!;
+  let service = segBtns[0]?.dataset.service || 'clearance';
+  segBtns.forEach((btn) => btn.addEventListener('click', () => {
+    segBtns.forEach((b) => b.setAttribute('aria-pressed', 'false'));
+    btn.setAttribute('aria-pressed', 'true');
+    service = btn.dataset.service!;
+    sumService.textContent = btn.textContent!.trim();
+  }));
+
+  // calendar
+  const sumDate = document.getElementById('sumDate')!;
+  const dateInput = document.getElementById('f_date') as HTMLInputElement;
   let view = new Date(); view.setDate(1);
   let availableDates = new Set<string>();
+
+  function iso(d: Date) { return d.toISOString().slice(0, 10); }
+  function fmtDate(k: string) { const [y, m, d] = k.split('-').map(Number); return `${d} ${S.months[m - 1]} ${y}`; }
 
   async function loadSlots() {
     if (!supabase) return;
     const { data } = await supabase.from('available_slots').select('slot_date');
-    if (data) availableDates = new Set(data.map((r:any)=>r.slot_date));
+    if (data) availableDates = new Set(data.map((r: any) => r.slot_date));
     render();
   }
-  function iso(d:Date){ return d.toISOString().slice(0,10); }
+
   function render() {
     document.getElementById('monthLabel')!.textContent = `${S.months[view.getMonth()]} ${view.getFullYear()}`;
     document.getElementById('calNote')!.textContent = availableDates.size ? S.available : S.none;
-    const grid = document.getElementById('grid')!; grid.innerHTML='';
-    S.days.forEach(d=>{ const e=document.createElement('div'); e.className='text-mist text-xs py-1'; e.textContent=d; grid.appendChild(e); });
-    const first=(new Date(view.getFullYear(),view.getMonth(),1).getDay()+6)%7;
-    for(let i=0;i<first;i++) grid.appendChild(document.createElement('div'));
-    const days=new Date(view.getFullYear(),view.getMonth()+1,0).getDate();
-    const today=iso(new Date());
-    for(let d=1;d<=days;d++){
-      const date=new Date(view.getFullYear(),view.getMonth(),d); const k=iso(date);
-      const btn=document.createElement('button');
-      const has=availableDates.has(k); const past=k<today;
-      btn.textContent=String(d);
-      btn.className=`py-2 rounded-lg text-sm ${past?'text-line cursor-not-allowed':has?'bg-accent-soft text-accent font-medium hover:bg-accent hover:text-white':'text-ink-soft hover:bg-paper'}`;
-      if(!past) btn.onclick=()=>{ (document.getElementById('f_date') as HTMLInputElement).value=k; document.querySelectorAll('#grid button').forEach(b=>b.classList.remove('ring-2','ring-accent')); btn.classList.add('ring-2','ring-accent'); };
+    const grid = document.getElementById('grid')!; grid.innerHTML = '';
+    S.days.forEach((d) => { const e = document.createElement('div'); e.className = 'text-mist text-xs py-1.5'; e.textContent = d; grid.appendChild(e); });
+    const first = (new Date(view.getFullYear(), view.getMonth(), 1).getDay() + 6) % 7;
+    for (let i = 0; i < first; i++) grid.appendChild(document.createElement('div'));
+    const days = new Date(view.getFullYear(), view.getMonth() + 1, 0).getDate();
+    const today = iso(new Date());
+    const chosen = dateInput.value;
+    for (let d = 1; d <= days; d++) {
+      const date = new Date(view.getFullYear(), view.getMonth(), d); const k = iso(date);
+      const has = availableDates.has(k); const past = k < today;
+      const btn = document.createElement('button');
+      btn.type = 'button'; btn.textContent = String(d);
+      btn.className = `aspect-square rounded-lg text-sm transition-colors ${past ? 'text-line cursor-not-allowed' : has ? 'bg-accent-soft text-accent font-semibold hover:bg-accent hover:text-white' : 'text-ink-soft hover:bg-paper'} ${k === chosen ? 'ring-2 ring-accent ring-offset-1' : ''}`;
+      if (!past) btn.onclick = () => {
+        dateInput.value = k;
+        sumDate.textContent = fmtDate(k);
+        render();
+      };
       grid.appendChild(btn);
     }
   }
-  document.getElementById('prev')!.onclick=()=>{ view.setMonth(view.getMonth()-1); render(); };
-  document.getElementById('next')!.onclick=()=>{ view.setMonth(view.getMonth()+1); render(); };
 
-  document.getElementById('submitBtn')!.addEventListener('click', async ()=>{
-    const msg=document.getElementById('formMsg')!;
-    const payload={
-      name:(document.getElementById('f_name') as HTMLInputElement).value.trim(),
-      email:(document.getElementById('f_email') as HTMLInputElement).value.trim(),
-      phone:(document.getElementById('f_phone') as HTMLInputElement).value.trim(),
-      service:(document.getElementById('f_service') as HTMLSelectElement).value,
-      req_date:(document.getElementById('f_date') as HTMLInputElement).value,
-      message:(document.getElementById('f_message') as HTMLTextAreaElement).value.trim(),
+  document.getElementById('prev')!.onclick = () => { view.setMonth(view.getMonth() - 1); render(); };
+  document.getElementById('next')!.onclick = () => { view.setMonth(view.getMonth() + 1); render(); };
+
+  document.getElementById('submitBtn')!.addEventListener('click', async () => {
+    const msg = document.getElementById('formMsg')!;
+    const payload = {
+      name: (document.getElementById('f_name') as HTMLInputElement).value.trim(),
+      email: (document.getElementById('f_email') as HTMLInputElement).value.trim(),
+      phone: (document.getElementById('f_phone') as HTMLInputElement).value.trim(),
+      service,
+      req_date: dateInput.value,
+      message: (document.getElementById('f_message') as HTMLTextAreaElement).value.trim(),
       lang,
     };
-    if(!payload.name||!payload.email||!payload.req_date){ msg.className='text-sm text-red-600'; msg.textContent=S.error; return; }
-    if(!supabase){ msg.className='text-sm text-accent'; msg.textContent=S.success; return; }
-    const { error }=await supabase.from('bookings').insert(payload);
-    msg.className=`text-sm ${error?'text-red-600':'text-accent'}`;
-    msg.textContent=error?S.error:S.success;
+    if (!payload.name || !payload.email || !payload.req_date) { msg.className = 'text-sm text-red-600'; msg.textContent = S.error; return; }
+    if (!supabase) { msg.className = 'text-sm text-accent'; msg.textContent = S.success; return; }
+    const { error } = await supabase.from('bookings').insert(payload);
+    msg.className = `text-sm ${error ? 'text-red-600' : 'text-accent'}`;
+    msg.textContent = error ? S.error : S.success;
   });
 
   loadSlots(); render();
