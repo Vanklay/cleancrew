@@ -28,9 +28,15 @@ const meta = {
 ---
 <Layout lang={lang} title={meta.title} description={meta.desc} faq={faq}>
   <!-- HERO — immersive: the transformed result fills the frame, headline over a gradient -->
-  <section class="relative isolate -mt-16 overflow-hidden">
-    <img src="/hero.webp" alt={t('hero.title')} width="1290" height="640" fetchpriority="high"
-         class="absolute inset-0 -z-10 h-full w-full object-cover object-center" />
+  <section data-hero-slider class="relative isolate -mt-16 overflow-hidden">
+    <div class="absolute inset-0 -z-10">
+      <img src="/hero.webp" alt={t('hero.title')} width="1290" height="640" fetchpriority="high"
+           class="hero-slide absolute inset-0 h-full w-full object-cover object-center opacity-100 transition-opacity duration-[1200ms] ease-out" />
+      <img src="/hero2.webp" alt="" width="1290" height="672" loading="lazy"
+           class="hero-slide absolute inset-0 h-full w-full object-cover object-center opacity-0 transition-opacity duration-[1200ms] ease-out" />
+      <img src="/hero3.webp" alt="" width="1290" height="672" loading="lazy"
+           class="hero-slide absolute inset-0 h-full w-full object-cover object-center opacity-0 transition-opacity duration-[1200ms] ease-out" />
+    </div>
     <div class="absolute inset-0 -z-10 bg-gradient-to-t from-ink/95 via-ink/55 to-ink/20"></div>
     <div class="absolute inset-0 -z-10 bg-gradient-to-r from-ink/40 to-transparent"></div>
 
@@ -45,7 +51,14 @@ const meta = {
       </div>
 
       <div class="reveal mt-7 flex flex-col gap-6 md:flex-row md:items-end md:justify-between" style="--d:.28s">
-        <p class="max-w-md text-base text-white/80 leading-relaxed md:text-lg">{t('hero.sub')}</p>
+        <div class="space-y-5">
+          <p class="max-w-md text-base text-white/80 leading-relaxed md:text-lg">{t('hero.sub')}</p>
+          <div class="flex gap-2">
+            <button type="button" class="hero-dot h-1 w-9 rounded-full bg-white transition-colors" data-go="0" aria-label="1"></button>
+            <button type="button" class="hero-dot h-1 w-9 rounded-full bg-white/35 transition-colors" data-go="1" aria-label="2"></button>
+            <button type="button" class="hero-dot h-1 w-9 rounded-full bg-white/35 transition-colors" data-go="2" aria-label="3"></button>
+          </div>
+        </div>
         <div class="flex shrink-0 flex-wrap gap-3">
           <a href={p('book')} class="btn">{t('hero.cta')}</a>
           <a href={p('services')} class="inline-flex items-center justify-center rounded-full border border-white/40 px-7 py-3.5 text-base font-semibold text-white transition-colors hover:bg-white hover:text-ink">{t('hero.cta2')}</a>
@@ -123,3 +136,29 @@ const meta = {
     </div>
   </section>
 </Layout>
+
+<script>
+  // Hero slider — crossfade, auto-advance, pause on hover, reduced-motion aware.
+  const hero = document.querySelector<HTMLElement>('[data-hero-slider]');
+  if (hero) {
+    const slides = Array.from(hero.querySelectorAll<HTMLElement>('.hero-slide'));
+    const dots = Array.from(hero.querySelectorAll<HTMLButtonElement>('.hero-dot'));
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let i = 0;
+    let timer: number | undefined;
+    const go = (n: number) => {
+      i = (n + slides.length) % slides.length;
+      slides.forEach((s, k) => (s.style.opacity = k === i ? '1' : '0'));
+      dots.forEach((d, k) => {
+        d.classList.toggle('bg-white', k === i);
+        d.classList.toggle('bg-white/35', k !== i);
+      });
+    };
+    const start = () => { if (!reduce && slides.length > 1) timer = window.setInterval(() => go(i + 1), 5500); };
+    const stop = () => { if (timer) { clearInterval(timer); timer = undefined; } };
+    dots.forEach((d, k) => d.addEventListener('click', () => { go(k); stop(); start(); }));
+    hero.addEventListener('mouseenter', stop);
+    hero.addEventListener('mouseleave', start);
+    go(0); start();
+  }
+</script>
