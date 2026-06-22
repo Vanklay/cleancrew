@@ -6,35 +6,57 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const p = (s: string) => localizedPath(lang, s);
 
-// build current path without lang prefix for the switcher
+// path after the locale prefix, for the language switcher + active state
 const seg = Astro.url.pathname.split('/').filter(Boolean);
 const rest = LANG_KEYS.includes(seg[0] as Lang) ? seg.slice(1).join('/') : seg.join('/');
+const current = rest.split('/')[0] || '';
+
+const links: [string, string][] = [
+  ['services', 'nav.services'], ['about', 'nav.about'], ['blog', 'nav.blog'], ['contact', 'nav.contact'],
+];
 ---
-<header class="sticky top-0 z-50 border-b border-line/70 bg-paper/80 backdrop-blur-xl">
-  <nav class="container-x flex items-center justify-between h-16">
+<header class="sticky top-0 z-50 border-b border-line/70 bg-paper/75 backdrop-blur-xl">
+  <nav class="container-x flex h-16 items-center justify-between">
     <a href={p('')} class="transition-opacity hover:opacity-70" aria-label="CleanCrew">
       <Logo variant="full" class="h-9 w-auto" />
     </a>
-    <div class="hidden md:flex items-center gap-8 text-sm text-ink-soft">
-      <a href={p('services')} class="hover:text-ink transition">{t('nav.services')}</a>
-      <a href={p('about')} class="hover:text-ink transition">{t('nav.about')}</a>
-      <a href={p('blog')} class="hover:text-ink transition">{t('nav.blog')}</a>
-      <a href={p('contact')} class="hover:text-ink transition">{t('nav.contact')}</a>
+
+    <div class="hidden items-center gap-8 text-sm md:flex">
+      {links.map(([path, key]) => (
+        <a href={p(path)} class={`transition-colors hover:text-ink ${current === path ? 'font-semibold text-ink' : 'text-ink-soft'}`}>{t(key)}</a>
+      ))}
     </div>
-    <div class="flex items-center gap-3">
-      <details class="relative group">
-        <summary class="list-none cursor-pointer text-sm text-ink-soft hover:text-ink select-none">
-          {LANGUAGES[lang].flag} {lang.toUpperCase()}
+
+    <div class="flex items-center gap-2 sm:gap-3">
+      <details class="group relative">
+        <summary class="flex cursor-pointer list-none select-none items-center gap-1.5 rounded-lg px-2 py-1.5 text-sm text-ink-soft transition-colors hover:text-ink">
+          <span>{LANGUAGES[lang].flag}</span><span class="font-medium">{lang.toUpperCase()}</span>
         </summary>
-        <div class="absolute right-0 mt-2 w-44 rounded-xl border border-line bg-white shadow-soft p-1">
+        <div class="absolute right-0 mt-2 w-44 rounded-xl border border-line bg-white p-1 shadow-soft">
           {LANG_KEYS.map((l) => (
-            <a href={`/${l}${rest ? '/' + rest : ''}`} class={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm hover:bg-accent-soft ${l===lang?'text-accent font-medium':'text-ink-soft'}`}>
+            <a href={`/${l}${rest ? '/' + rest : ''}`} class={`flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition-colors hover:bg-accent-soft ${l === lang ? 'font-semibold text-accent' : 'text-ink-soft'}`}>
               <span>{LANGUAGES[l].flag}</span>{LANGUAGES[l].label}
             </a>
           ))}
         </div>
       </details>
-      <a href={p('book')} class="rounded-full bg-ink text-white text-sm px-5 py-2 hover:bg-accent transition-colors">{t('nav.book')}</a>
+
+      <a href={p('book')} class="hidden rounded-full bg-ink px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-accent sm:inline-flex">{t('nav.book')}</a>
+
+      <!-- mobile menu -->
+      <details class="md:hidden">
+        <summary class="grid h-9 w-9 cursor-pointer list-none place-items-center rounded-lg text-ink transition-colors hover:bg-line/60">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18" /></svg>
+        </summary>
+        <div class="absolute left-0 right-0 top-full border-b border-line bg-paper/95 backdrop-blur-xl">
+          <div class="container-x flex flex-col gap-1 py-4">
+            {links.map(([path, key]) => (
+              <a href={p(path)} class={`rounded-lg px-3 py-2.5 text-base transition-colors hover:bg-accent-soft ${current === path ? 'font-semibold text-ink' : 'text-ink-soft'}`}>{t(key)}</a>
+            ))}
+            <a href={p('book')} class="mt-2 rounded-full bg-ink px-5 py-3 text-center text-base font-semibold text-white transition-colors hover:bg-accent">{t('nav.book')}</a>
+          </div>
+        </div>
+      </details>
     </div>
   </nav>
 </header>

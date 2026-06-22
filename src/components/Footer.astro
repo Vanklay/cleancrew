@@ -7,32 +7,43 @@ const t = useTranslations(lang);
 const p = (s: string) => localizedPath(lang, s);
 const year = new Date().getFullYear();
 ---
-<footer class="border-t border-line mt-32">
-  <div class="container-x py-16 grid gap-10 md:grid-cols-4">
-    <div class="md:col-span-2">
-      <Logo variant="full" class="h-11 w-auto" />
-      <p class="mt-3 text-sm text-mist max-w-xs">{t('footer.tagline')}</p>
-      <p class="mt-4 text-sm text-ink-soft">{SITE.email}</p>
+<footer class="mt-32 border-t border-line">
+  <div class="container-x py-16 md:py-20">
+    <!-- brand + CTA -->
+    <div class="flex flex-col gap-8 border-b border-line pb-12 md:flex-row md:items-end md:justify-between">
+      <div>
+        <Logo variant="full" class="h-11 w-auto" />
+        <p class="mt-4 max-w-xs text-sm text-mist">{t('footer.tagline')}</p>
+      </div>
+      <a href={p('book')} class="btn self-start md:self-auto">{t('hero.cta')}</a>
     </div>
-    <div>
-      <div class="text-xs uppercase tracking-wider text-mist mb-3">{t('footer.services')}</div>
-      <ul class="space-y-2 text-sm text-ink-soft">
-        {SERVICES.map((s) => (
-          <li><a href={p(`services/${s}`)} class="hover:text-ink">{t(`services.${s}.title`)}</a></li>
-        ))}
-      </ul>
-    </div>
-    <div>
-      <div class="text-xs uppercase tracking-wider text-mist mb-3">{t('footer.company')}</div>
-      <ul class="space-y-2 text-sm text-ink-soft">
-        <li><a href={p('about')} class="hover:text-ink">{t('nav.about')}</a></li>
-        <li><a href={p('blog')} class="hover:text-ink">{t('nav.blog')}</a></li>
-        <li><a href={p('contact')} class="hover:text-ink">{t('nav.contact')}</a></li>
-      </ul>
+
+    <!-- columns -->
+    <div class="mt-12 grid gap-10 text-sm md:grid-cols-4">
+      <div class="md:col-span-2">
+        <a href={`mailto:${SITE.email}`} class="text-ink-soft transition-colors hover:text-accent">{SITE.email}</a>
+      </div>
+      <div>
+        <div class="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-mist">{t('footer.services')}</div>
+        <ul class="space-y-2.5 text-ink-soft">
+          {SERVICES.map((s) => (
+            <li><a href={p(`services/${s}`)} class="transition-colors hover:text-accent">{t(`services.${s}.title`)}</a></li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <div class="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-mist">{t('footer.company')}</div>
+        <ul class="space-y-2.5 text-ink-soft">
+          <li><a href={p('about')} class="transition-colors hover:text-accent">{t('nav.about')}</a></li>
+          <li><a href={p('blog')} class="transition-colors hover:text-accent">{t('nav.blog')}</a></li>
+          <li><a href={p('contact')} class="transition-colors hover:text-accent">{t('nav.contact')}</a></li>
+        </ul>
+      </div>
     </div>
   </div>
-  <div class="container-x py-6 border-t border-line text-xs text-mist flex justify-between">
+
+  <div class="container-x flex flex-col gap-2 border-t border-line py-6 text-xs text-mist sm:flex-row sm:justify-between">
     <span>© {year} {SITE.name}. {t('footer.rights')}</span>
-    <span>Strassen · Luxembourg</span>
+    <span>{SITE.city} · Luxembourg</span>
   </div>
 </footer>

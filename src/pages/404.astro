@@ -1,0 +1,43 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { DEFAULT_LANG, LANG_KEYS, localizedPath } from '../i18n/config';
+import { useTranslations } from '../i18n/ui';
+const lang = DEFAULT_LANG;
+const t = useTranslations(lang);
+const p = (s: string) => localizedPath(lang, s);
+
+// Static 404 is one file; render the default locale, then swap client-side to
+// whichever locale the visitor was browsing.
+const i18n = Object.fromEntries(
+  LANG_KEYS.filter((l) => l !== DEFAULT_LANG).map((l) => {
+    const tt = useTranslations(l);
+    return [l, { title: tt('notfound.title'), text: tt('notfound.text'), home: tt('notfound.home'), book: tt('hero.cta') }];
+  }),
+);
+---
+<Layout lang={lang} title={`${t('notfound.title')} · CleanCrew`} description={t('notfound.text')}>
+  <section class="container-x flex min-h-[62vh] flex-col items-start justify-center py-24">
+    <p class="index-num reveal text-7xl text-accent/20 md:text-9xl">404</p>
+    <h1 id="nfTitle" class="headline reveal mt-4 text-4xl md:text-6xl" style="--d:.06s">{t('notfound.title')}</h1>
+    <p id="nfText" class="reveal mt-6 max-w-md text-lg text-ink-soft" style="--d:.12s">{t('notfound.text')}</p>
+    <div class="reveal mt-10 flex flex-wrap gap-4" style="--d:.18s">
+      <a id="nfHome" href={p('')} class="btn">{t('notfound.home')}</a>
+      <a id="nfBook" href={p('book')} class="btn-ghost">{t('hero.cta')}</a>
+    </div>
+  </section>
+</Layout>
+<script type="application/json" id="nfData" set:html={JSON.stringify(i18n)} />
+<script is:inline>
+  (() => {
+    const m = location.pathname.match(/^\/(de|en|lu|pt|es)(\/|$)/);
+    if (!m) return;
+    const d = JSON.parse(document.getElementById('nfData').textContent || '{}')[m[1]];
+    if (!d) return;
+    const l = m[1];
+    document.title = d.title + ' · CleanCrew';
+    document.getElementById('nfTitle').textContent = d.title;
+    document.getElementById('nfText').textContent = d.text;
+    const home = document.getElementById('nfHome'); home.textContent = d.home; home.setAttribute('href', '/' + l);
+    const book = document.getElementById('nfBook'); book.textContent = d.book; book.setAttribute('href', '/' + l + '/book');
+  })();
+</script>
