@@ -4,7 +4,7 @@ import Layout from '../../layouts/Layout.astro';
 import Faq from '../../components/Faq.astro';
 import BookingForm from '../../components/BookingForm.astro';
 import Why from '../../components/Why.astro';
-import { SERVICES, localizedPath, type Lang } from '../../i18n/config';
+import { SERVICES, SERVICE_IMAGE, localizedPath, type Lang } from '../../i18n/config';
 import { useTranslations } from '../../i18n/ui';
 
 export const getStaticPaths = langStaticPaths;
@@ -12,8 +12,7 @@ const lang = Astro.params.lang as Lang;
 const t = useTranslations(lang);
 const p = (s: string) => localizedPath(lang, s);
 
-const serviceImg: Record<string, string> = { clearance: '/hero.webp', windows: '/hero2.webp', surfaces: '/hero3.webp' };
-const services = SERVICES.map((key) => ({ key, href: p(`services/${key}`), img: serviceImg[key] }));
+const services = SERVICES.map((key) => ({ key, href: p(`services/${key}`), img: SERVICE_IMAGE[key] }));
 
 // AEO/LLM answer block — concise Q&A that LLMs and featured snippets lift
 // verbatim. Rendered visibly below AND emitted as FAQPage schema. One source.

@@ -16,6 +16,14 @@ export const LANG_KEYS = Object.keys(LANGUAGES) as Lang[];
 export const SERVICES = ['clearance', 'windows', 'surfaces'] as const;
 export type Service = (typeof SERVICES)[number];
 
+// Hero/result image per service — single source for the homepage rows and the
+// immersive service-page heroes.
+export const SERVICE_IMAGE: Record<Service, string> = {
+  clearance: '/hero.webp',
+  windows: '/hero2.webp',
+  surfaces: '/hero3.webp',
+};
+
 export const SITE = {
   name: 'CleanCrew',
   domain: 'https://cleancrew.lu',
