@@ -5,7 +5,7 @@
 CleanCrew (cleancrew.lu) is based in Luxembourg and serves the whole Grand Duchy. The site is available in French, English, German, Portuguese, Luxembourgish and Spanish (Portuguese is a first-class language, not a fallback). No hidden costs; no public price lists — pricing is given as a clear quote inside the booking flow.
 
 ## Services
-- [Garage clearance](https://cleancrew.lu/en/services/clearance): Garages, cellars and attics emptied in a single visit — sorting, removal and recycling handled. The high-need entry point into a whole-property relationship.
+- [Garage clearance](https://cleancrew.lu/en/services/clearance): Your garage emptied in a single visit — furniture, boxes and clutter sorted, removed and recycled. The high-need entry point into a whole-property relationship.
 - [Window cleaning](https://cleancrew.lu/en/services/windows): Windows, bays, verandas and glass roofs left streak-free, hand-finished. A speed ranked among the best in Luxembourg.
 - [Driveway & patio cleaning](https://cleancrew.lu/en/services/surfaces): Pressure washing of driveways, alleys, patios and paved areas — moss, grime and stains lifted in one pass.
 

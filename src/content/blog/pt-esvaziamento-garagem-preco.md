@@ -8,7 +8,7 @@ pubDate: 2026-06-16
 Uma garagem cheia esvazia-se mais depressa do que se pensa. Na CleanCrew, o trabalho resume-se a três etapas claras: triagem, remoção e reciclagem. Recupera o espaço, nós tratamos do resto.
 
 ## O que influencia o preço
-O volume, o acesso e o andar determinam a maior parte do orçamento. Uma garagem ao nível da rua trata-se mais depressa do que uma cave em subsolo, e um acesso direto à rua reduz o tempo de carga. Por isso apresentamos sempre um orçamento claro antes da intervenção, sem custos escondidos.
+O volume, o acesso e o andar determinam a maior parte do orçamento. Uma garagem ao nível da rua trata-se mais depressa do que uma box em subsolo com acesso por escadas, e um acesso direto à rua reduz o tempo de carga. Por isso apresentamos sempre um orçamento claro antes da intervenção, sem custos escondidos.
 
 ## Triagem antes de deitar fora
 Nem tudo o que sai da garagem é lixo. Separamos o que pode ser doado, reciclado ou vendido daquilo que segue para o ecocentro. É melhor para o ambiente e, muitas vezes, para o orçamento.
