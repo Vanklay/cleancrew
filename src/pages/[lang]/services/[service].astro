@@ -2,7 +2,7 @@
 import { langServiceStaticPaths } from '../../../lib/paths';
 import Layout from '../../../layouts/Layout.astro';
 import Faq from '../../../components/Faq.astro';
-import Cta from '../../../components/Cta.astro';
+import BookCta from '../../../components/BookCta.astro';
 import { SERVICES, SERVICE_IMAGE, localizedPath, type Lang, type Service } from '../../../i18n/config';
 import { useTranslations, useRaw } from '../../../i18n/ui';
 
@@ -16,12 +16,14 @@ const p = (s: string) => localizedPath(lang, s);
 const idx = SERVICES.indexOf(service);
 const title = t(`services.${service}.title`);
 const lead = t(`service.${service}.lead`);
+const intro = t(`service.${service}.intro`);
 const img = SERVICE_IMAGE[service];
 const points = r(`service.${service}.points`) as string[];
 const steps = r(`service.${service}.steps`) as string[];
 const faq = [
   { q: t(`service.${service}.faq.1.q`), a: t(`service.${service}.faq.1.a`) },
   { q: t(`service.${service}.faq.2.q`), a: t(`service.${service}.faq.2.a`) },
+  { q: t(`service.${service}.faq.3.q`), a: t(`service.${service}.faq.3.a`) },
 ];
 const others = SERVICES.filter((s) => s !== service);
 
@@ -64,8 +66,16 @@ const metaTitle = `${title} ${t('geo.in')} · CleanCrew`;
     </div>
   </section>
 
-  <!-- WHAT'S INCLUDED — first section after the angled hero, no top divider -->
+  <!-- OVERVIEW — answer-first H2 (service + location) for SEO/AEO/GEO -->
   <section class="container-x py-28 md:py-36">
+    <div class="grid gap-8 md:grid-cols-12 md:gap-16">
+      <h2 class="headline reveal text-3xl md:text-5xl md:col-span-5">{title} {t('geo.in')}</h2>
+      <p class="reveal text-lg md:text-xl text-ink-soft leading-relaxed md:col-span-7" style="--d:.06s">{intro}</p>
+    </div>
+  </section>
+
+  <!-- WHAT'S INCLUDED -->
+  <section class="container-x section">
     <h2 class="headline reveal text-3xl md:text-5xl mb-12 md:mb-16 max-w-xl">{t('service.included')}</h2>
     <div class="tile-grid md:grid-cols-3 reveal">
       {points.map((point, i) => (
@@ -111,6 +121,6 @@ const metaTitle = `${title} ${t('geo.in')} · CleanCrew`;
     </div>
   </section>
 
-  <!-- CTA -->
-  <Cta lang={lang} />
+  <!-- CTA — with the live booking wizard -->
+  <BookCta lang={lang} />
 </Layout>
