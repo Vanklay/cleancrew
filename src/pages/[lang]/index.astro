@@ -3,6 +3,7 @@ import { langStaticPaths } from '../../lib/paths';
 import Layout from '../../layouts/Layout.astro';
 import Faq from '../../components/Faq.astro';
 import BookCta from '../../components/BookCta.astro';
+import QuoteEstimator from '../../components/QuoteEstimator.astro';
 import Why from '../../components/Why.astro';
 import { SERVICES, SERVICE_IMAGE, localizedPath, type Lang } from '../../i18n/config';
 import { useTranslations } from '../../i18n/ui';
@@ -121,6 +122,9 @@ const meta = {
 
   <!-- FAQ — now rendered visibly (was schema-only); the AEO answer block -->
   <Faq title={t('faq.title')} items={faq} />
+
+  <!-- ESTIMATOR — instant "from" price, flows into the booking form -->
+  <QuoteEstimator lang={lang} />
 
   <!-- BOOK — the booking wizard in a calm grey band -->
   <BookCta lang={lang} />

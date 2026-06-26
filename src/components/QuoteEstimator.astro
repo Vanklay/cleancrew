@@ -1,0 +1,140 @@
+---
+// Instant "from" price estimator — 3 tabs, live recompute, flows into booking.
+// Prices come only from lib/pricing.ts; labels come only from ui.ts.
+import { localizedPath, type Lang } from '../i18n/config';
+import { useTranslations } from '../i18n/ui';
+import { PRICING, BOOKING_SERVICE } from '../lib/pricing';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const bookPath = localizedPath(lang, 'book');
+
+const tabs = [
+  { id: 'clearance', label: t('services.clearance.title') },
+  { id: 'windows', label: t('services.windows.title') },
+  { id: 'pressure', label: t('services.surfaces.title') },
+];
+const sizes = Object.keys(PRICING.clearance.size);
+const fulls = Object.keys(PRICING.clearance.fullness);
+const accesses = Object.keys(PRICING.clearance.access);
+const properties = Object.keys(PRICING.windows.property);
+const surfaces = Object.keys(PRICING.pressure.surface);
+const cfg = { lang, bookPath, service: BOOKING_SERVICE };
+---
+<section class="container-x section">
+  <div class="mx-auto max-w-3xl">
+    <div class="text-center">
+      <h2 class="headline reveal text-3xl md:text-5xl">{t('est.title')}</h2>
+      <p class="reveal mx-auto mt-4 max-w-xl text-lg leading-relaxed text-ink-soft" style="--d:.06s">{t('est.sub')}</p>
+    </div>
+
+    <div id="est" data-lang={lang} data-book={bookPath} class="reveal mt-10 rounded-[1.75rem] border border-line bg-white p-6 sm:p-8" style="box-shadow: var(--shadow-soft); --d:.12s">
+      <script type="application/json" id="estConfig" set:html={JSON.stringify(cfg)} />
+
+      <!-- tabs -->
+      <div class="flex flex-wrap gap-2">
+        {tabs.map((tb, i) => (
+          <button type="button" data-tab={tb.id} aria-pressed={i === 0 ? 'true' : 'false'}
+            class={`est-tab rounded-full border px-4 py-2 text-sm font-semibold transition-colors ${i === 0 ? 'border-ink bg-ink text-white' : 'border-line text-ink-soft'}`}>{tb.label}</button>
+        ))}
+      </div>
+
+      <div class="mt-7 grid gap-6 md:grid-cols-2 md:gap-8">
+        <!-- inputs -->
+        <div>
+          <div class="est-panel space-y-4" data-panel="clearance">
+            <label class="block text-sm font-medium text-ink-soft">{t('est.clearance.size')}
+              <select class="field" data-f="size">{sizes.map((k) => <option value={k}>{t(`clearance.size.${k}`)}</option>)}</select>
+            </label>
+            <label class="block text-sm font-medium text-ink-soft">{t('est.clearance.full')}
+              <select class="field" data-f="full">{fulls.map((k) => <option value={k}>{t(`clearance.full.${k}`)}</option>)}</select>
+            </label>
+            <label class="block text-sm font-medium text-ink-soft">{t('est.clearance.access')}
+              <select class="field" data-f="access">{accesses.map((k) => <option value={k}>{t(`clearance.access.${k}`)}</option>)}</select>
+            </label>
+          </div>
+
+          <div class="est-panel hidden space-y-4" data-panel="windows">
+            <label class="block text-sm font-medium text-ink-soft">{t('est.windows.property')}
+              <select class="field" data-f="property">{properties.map((k) => <option value={k}>{t(`windows.prop.${k}`)}</option>)}</select>
+            </label>
+            <p class="text-sm font-medium text-accent-ink">✓ {t('est.windows.incl')}</p>
+            <label class="flex items-center gap-3 text-sm text-ink"><input type="checkbox" class="h-4 w-4 accent-accent" data-f="chassis" /> {t('est.windows.chassis')}</label>
+            <label class="flex items-center gap-3 text-sm text-ink"><input type="checkbox" class="h-4 w-4 accent-accent" data-f="waccess" /> {t('est.windows.access')}</label>
+            <label class="flex items-center gap-3 text-sm text-ink"><input type="checkbox" class="h-4 w-4 accent-accent" data-f="veranda" /> {t('est.windows.veranda')}</label>
+            <p class="text-xs text-mist">{t('est.windows.tva')}</p>
+          </div>
+
+          <div class="est-panel hidden space-y-4" data-panel="pressure">
+            <label class="block text-sm font-medium text-ink-soft">{t('est.pressure.area')}
+              <input type="number" min="1" value="30" class="field" data-f="area" />
+            </label>
+            <label class="block text-sm font-medium text-ink-soft">{t('est.pressure.surface')}
+              <select class="field" data-f="surface">{surfaces.map((k) => <option value={k}>{t(`pressure.surface.${k}`)}</option>)}</select>
+            </label>
+          </div>
+        </div>
+
+        <!-- result -->
+        <div class="flex flex-col justify-between rounded-2xl bg-haze p-6">
+          <div>
+            <div class="text-xs font-semibold uppercase tracking-wider text-mist">{t('est.result')}</div>
+            <div class="mt-2 flex items-baseline gap-2">
+              <span class="text-ink-soft">{t('est.from')}</span>
+              <span id="estValue" class="index-num text-4xl text-ink md:text-5xl">—</span>
+            </div>
+            <p class="mt-3 text-xs leading-relaxed text-ink-soft">{t('est.firmnote')}</p>
+          </div>
+          <a id="estBook" href={bookPath} class="btn mt-6 w-full">{t('est.book')}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { estimateClearance, estimateWindows, estimatePressure, BOOKING_SERVICE } from '../lib/pricing';
+  const root = document.getElementById('est');
+  if (root) {
+    const lang = root.dataset.lang || 'fr';
+    const bookPath = root.dataset.book || '/book';
+    const tabs = Array.from(root.querySelectorAll<HTMLButtonElement>('.est-tab'));
+    const panels = Array.from(root.querySelectorAll<HTMLElement>('.est-panel'));
+    const valueEl = document.getElementById('estValue')!;
+    const bookEl = document.getElementById('estBook') as HTMLAnchorElement;
+    let active = 'clearance';
+    const fmt = (n: number) => `€${n.toLocaleString(lang)}`;
+    const val = (f: string) => (root!.querySelector(`[data-f="${f}"]`) as HTMLInputElement | null)?.value ?? '';
+    const checked = (f: string) => (root!.querySelector(`[data-f="${f}"]`) as HTMLInputElement | null)?.checked ?? false;
+
+    function compute() {
+      const r = active === 'clearance'
+        ? estimateClearance(val('size') as any, val('full') as any, val('access') as any)
+        : active === 'windows'
+          ? estimateWindows(val('property') as any, checked('chassis'), checked('waccess'), checked('veranda'))
+          : estimatePressure(Number(val('area')) || 0, val('surface') as any);
+      valueEl.textContent = fmt(r.low);
+      const svc = (BOOKING_SERVICE as Record<string, string>)[active];
+      bookEl.href = `${bookPath}?service=${svc}&est=${r.low}`;
+    }
+
+    function setTab(id: string) {
+      active = id;
+      tabs.forEach((tab) => {
+        const on = tab.dataset.tab === id;
+        tab.setAttribute('aria-pressed', String(on));
+        tab.classList.toggle('bg-ink', on);
+        tab.classList.toggle('text-white', on);
+        tab.classList.toggle('border-ink', on);
+        tab.classList.toggle('border-line', !on);
+        tab.classList.toggle('text-ink-soft', !on);
+      });
+      panels.forEach((p) => p.classList.toggle('hidden', p.dataset.panel !== id));
+      compute();
+    }
+
+    tabs.forEach((tab) => tab.addEventListener('click', () => setTab(tab.dataset.tab!)));
+    root.addEventListener('input', compute);
+    setTab('clearance');
+  }
+</script>

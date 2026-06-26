@@ -14,6 +14,7 @@ const labels = {
   months: r('book.calendar.months') as string[], days: r('book.calendar.days') as string[],
   steps: [t('book.service'), t('book.date'), t('book.details')],
   time: t('book.time'), services: t('book.service'), address: t('book.address'), dash: '—',
+  estimate: t('est.result'),
 };
 const services = SERVICES.map((s) => ({ key: s, title: t(`services.${s}.title`) }));
 // Preferred start times — locale-neutral numerals, so they live here, not in ui.ts.
@@ -135,7 +136,7 @@ const TIMES = ['08:00', '09:00', '10:00', '11:00', '13:00', '14:00', '15:00', '1
   const S = JSON.parse(document.getElementById('bookingLabels')!.textContent || '{}') as {
     success: string; error: string; thanks: string; available: string; none: string;
     submit: string; next: string; back: string; months: string[]; days: string[]; steps: string[];
-    time: string; services: string; address: string; dash: string;
+    time: string; services: string; address: string; dash: string; estimate: string;
   };
 
   const $ = (id: string) => document.getElementById(id)!;
@@ -290,5 +291,22 @@ const TIMES = ['08:00', '09:00', '10:00', '11:00', '13:00', '14:00', '15:00', '1
     $('doneMsg').textContent = S.success;
   }
 
+  // Prefill from the estimator: ?service= preselects a service, ?est= seeds the note.
+  function prefill() {
+    const q = new URLSearchParams(location.search);
+    const svc = q.get('service');
+    const est = q.get('est');
+    if (svc) {
+      const btn = segBtns.find((b) => b.dataset.service === svc);
+      if (btn) { segBtns.forEach((b) => b.setAttribute('aria-pressed', 'false')); btn.setAttribute('aria-pressed', 'true'); }
+    }
+    if (est && /^\d+$/.test(est)) {
+      const note = $('f_message') as HTMLTextAreaElement;
+      const line = `${S.estimate}: €${Number(est).toLocaleString(lang)}`;
+      note.value = note.value ? `${line}\n${note.value}` : line;
+    }
+  }
+
+  prefill();
   setStep(1); loadSlots(); renderCal(); refresh();
 </script>

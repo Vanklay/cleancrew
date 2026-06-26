@@ -1,6 +1,7 @@
 ---
 import { LANGUAGES, LANG_KEYS, SITE, type Lang } from '../i18n/config';
 import { useTranslations } from '../i18n/ui';
+import { pricingOffers } from '../lib/pricing';
 
 interface Props {
   lang: Lang;
@@ -37,11 +38,7 @@ const localBusiness = {
   address: { '@type': 'PostalAddress', addressLocality: SITE.city, addressCountry: SITE.country },
   geo: { '@type': 'GeoCoordinates', latitude: SITE.geo.lat, longitude: SITE.geo.lng },
   knowsLanguage: ['fr', 'de', 'en', 'lb', 'pt', 'es'],
-  makesOffer: [
-    { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Garage clearance', serviceType: 'Garage clearance and removal' } },
-    { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Window cleaning', serviceType: 'Residential and commercial window cleaning' } },
-    { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Driveway & surface cleaning', serviceType: 'Pressure washing of driveways, terraces and paved areas' } },
-  ],
+  makesOffer: pricingOffers(),
 };
 
 const faqSchema = faq && faq.length ? {
